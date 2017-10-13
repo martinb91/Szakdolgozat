@@ -1,0 +1,35 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{t1enc}
+\def\magyarOptions{defaults=hu-min}
+
+\begin{document}
+
+A rendszer segít eligazodni a fesztiválok világában, és az érdeklődőknek eldönteni, hogy melyik fesztiválon szeretne részt venni
+A rendszer funkciói(back-end):\\
+Stílusok felvitele, módosítása (mely értékkészletből, majd hozzá lehet adni a zenekarokhoz, és a fesztiválokhoz)\\
+Zenekarok felvitele, módosítása, esetleges archiválása\\
+Fesztiválok felvitele, módosítása, a meglévő fesztiválhoz koncert rendelése(fellépő + időpont)\\
+A fesztiválokhoz szállások és jegyek felvitele(jövőben ha lesz rá idő.)\\
+Zenekarok keresése és listázása név vagy stílus alapján, ugyan ez fesztiválokra is + fesztiváloknál még helyi, regionális keresés is lehetséges.\\
+
+front-end(van backend része is):
+A lekérdezett zenekarra rákattintva visszatér a zenekar adataival és a letárolt fellépéseit is megmutatja kronológia vagy relevancia(egyéb is lehet priorítás) szerint.
+Fesztiválra kattintva dobja a fellépőket, melyek megtekinthetők hyperlink segítségével.(Azért lehet hasznos, ha esetleg nem ismerné a felhasználó a zenekart, vagy ha kíváncsi, hogy hol lesz még fellépése).
+
+Konkrét interfészek(b.e. szempontjából):
+\\- amin befelé jön több stílus(letárolás) illetve egy zenekar amelyiket letároljuk és felszereljük az adott stílusokat (lehet create vagy modify)
+\\- amin befelé jön egy stílus(letárolás)
+\\- ami stílus szerint adja vissza a zenekarokat.
+\\- ami a zenekarok listáját visszaadja
+\\- ami a fesztiválok listáját visszaadja
+\\- ami név szerint ad vissza egy fesztivált
+\\- ami név szerint ad vissza egy zenekart
+\\- amin befelé jön egy fesztivál és zenekarok listája, hozzá fűzve egy időpont is(amikor fel fog lépni(ehhez külön osztály és db-ben is változás lesz)).
+ 
+????
+kép hogy megy át json-ben.(elérési utat adok át?)
+
+
+
+\end{document}
