@@ -56,12 +56,16 @@ MVC modell:\\
 
 -Contoller: Itt találhatjuk meg az üzleti logikát. Itt történnek meg a számítások, innen jönnek a válaszok a felhasználó felé és innen mennek a kérések a modellhez. A Kontroller a kapocs a Modell és a Nézet (View) között.\\
 
+-Service: A Spring-ben szokás bevezetni egy új réteget, ez lesz a Service, ennek segítségével ki fog válni az üzleti logika a Controller-ből, és ezt a funkcióját átveszi a Service. A Contoller innentől forgalom írányítóként fog üzemelni.
+
 Annotációk a Springben: Minden osztályban feltűnnek az annotációk. Melyek a keretrendszernek szóló üzenetek, ezek alapján tudja eldönteni a Spring, hogy miként bánjon az egyes osztályokkal, metódusokkal, adattagokkal.\\
 
-@Configuration\\
-@EnableAutoConfiguration\\
-@ComponentScan\\
-@Contoller\\
+@Configuration: A bean leírások információforrása.\\
+@EnableAutoConfiguration:\\
+@ComponentScan A konténernek megmondja, hogy melyik csomagokba vizsgálja meg, hogy Bean-e vagy sem, ha bean akkor azt jegyezze is fel, hisz akkor úgy is kell bánni vele. Megadási módja, ha elég csak az a csomag amiben a @ComponentScan-nel annotált osztály elhelyezkedik, akkor nem kell paramétert megadni neki. Viszont ha ez nem elég számunkra, akkor paraméterezni kell. A paraméterezés ilyen módon történik: @ComponentScan({"hu.egyik", "hu.masik"}), tehát zárójelen belül, ha többet szeretnénk felsorolni, akkor kapcsos zárójelen belül, elemenként idézőjelek között felsorolva a csomagok nevét, és vesszővel el választva. Természetesen csak azokat az osztályokat találja meg, amelyik jelzi, hogy ő egy bean, pl.: @Component. \\
+@Service: Jelzi a konténer számára, hogy ő a @Service réteghez tartozik, valami kalkulációt végezni fog.
+@Contoller:\\
+@Bean:\\
 
 @RestContoller: Jelzi a konténer felé, hogy innen érkezhetnek kérések, illetve itt tudjuk fogadni ezeket. És mint a neve is mutatja REST API segítségével. RestContoller elég nagy szabadság fokot biztosít, hisz szinte minden féle struktúrában adhatunk választ és fogadhatunk kérést, hisz ezeket értelmezni tudja. Tipikusan JSON-t fogunk használni, de lehetőség lenne akár XML, HTML választ is adni, a népszerűbb technológiákat kiemelve, de akár egyszerű konstans szöveget is. Tehát ennek az annotációnak a segítségével tudja a Spring, hogy ezzel az osztállyal lehet kommunikálni, ami azt jelenti, hogy tud küldeni és fogadni is adatot.\\
 
@@ -78,7 +82,9 @@ Session: Egy Session-höz kötjük a bean-t, a klasszikus példa erre a bevásá
 Az életciklusok megadásához a @Scope annotáció használatos, zárójelben idéző jelek között megadva a típust. pl.: @Scope("prototype")\\
 
 @Autowired: A Dependency Injection használatához van erre szükségünk. A keretrendszer aszerint injektálja a Bean-t amilyen a típusánál be van állítva, ha singleton akkor mindig ugyan azt az egyet adja át minden kérés esetén, ha prototype akkor minden egyes alakalommal új példányt ad át és így tovább.
-3 fajta megadási mód létezik, az adattag felett megadjuk és ez esetben, ha létrejön az objektum akkor a keretrendszer beleinjektálja az objektumot, amely ebben az esetben egy osztály szintű változó (static). Nehezen tesztelhető ez a fajta megadás. A második mód a setter alapú megadási mód. Itt létrehozunk a változóhoz egy setter-t és a felett adjuk meg az annotációt. Az utolsó verzió a konstruktor alapú, itt a konstruktor felett adjuk meg, a már jól ismert @Autowired annotációt.
+3 fajta megadási mód létezik, az adattag felett megadjuk és ez esetben, ha létrejön az objektum akkor a keretrendszer beleinjektálja az objektumot, amely ebben az esetben egy osztály szintű változó (static). Nehezen tesztelhető ez a fajta megadás. 
+A második mód a setter alapú megadási mód. Itt létrehozunk a változóhoz egy setter-t és a felett adjuk meg az annotációt. 
+Az utolsó verzió a konstruktor alapú, itt a konstruktor felett adjuk meg, a már jól ismert @Autowired annotációt.
 
 
 
