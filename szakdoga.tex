@@ -28,36 +28,58 @@ Konkrét interfészek(b.e. szempontjából):
 \\- amin befelé jön egy fesztivál és zenekarok listája, hozzá fűzve egy időpont is(amikor fel fog lépni(ehhez külön osztály és db-ben is változás lesz)).
  
 ????
-kép hogy megy át json-ben.(elérési utat adok át?)
-\\
-\\ -Spring MVC: 2002-ben hozta létre Rod Johnson. Ingyenesen elérhető és nyílt forráskódú Java alapú keretrendszer. Jelenleg egy Pivotal nevű cég foglalkozik a keretrendszer sorsával. Nagyon népszerű, hazánkban is rengeteg a keretrendszer ismerő fejlesztőt keresnek. Alkalmazási területe sokrétű, banki szektortól a telekommunikációig mindenhol feltűnik.
+kép hogy megy át json-ben.(elérési utat adok át?)\\
 
-\\ -Nyílt forráskód: Elérhető akárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projektel találkozunk. Pl Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.
 
-\\ -A Java webalakalmazások készítéséhez két alapvető írány alakult ki: a Java Enterprise Edition (Java EE) és a Spring Framework. A Java EE az Oracle a Java jelenlegi készítője által támogatott eredeti verzió. Ezt korábban a Sun Microsystems készítette, melyet felvásárolt az Oracle Corporation 7,4 milliárd dollárért 2009-ben. Mind a kettő moduláris felépítésű, és funkcionalítását tekintve nagyon hasonló modulok jelennek meg. Megtehetjük, hogy az egyiket választjuk vagy a másikat, de akár kombinálhatjuk is őket.
 
-\\ -IoC – DI
+Spring MVC: 2002-ben hozta létre Rod Johnson. Ingyenesen elérhető és nyílt forráskódú Java alapú keretrendszer. Jelenleg egy Pivotal nevű cég foglalkozik a keretrendszer sorsával. Nagyon népszerű, hazánkban is rengeteg a keretrendszer ismerő fejlesztőt keresnek. Alkalmazási területe sokrétű, banki szektortól a telekommunikációig mindenhol feltűnik.\\
 
-DI-ből 2 fajta van a konstruktor alapú, ahol a konstruktorban adom át a függőséget, illetve ahol a setter metódusban adom át a konstruktort. Mind a két esetben egy már a heap-ben élő objektumot adunk át.
+Nyílt forráskód: Elérhető akárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projektel találkozunk. Pl Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.\\
 
-\\ -Spring Boot: egy relatíve új Springre épülő keretrendszer, mely rengeteg konfigurálási feladatot levesz a programozó válláról és magában a keretrendszerben még egy Tomcat szerver is van, melynek segítségével képes létre hozni egy belső futtató környezetet. Természetesen az alapbeállítások megváltoztathatóak, de már egy kerdő projekt is egy valódi webalkalmazást reprezentál. Nem kell hozzá mélyen ismerni a Spring-
-et, és összeválogathatóak bele ugyanúgy a Spring modulok. 
+A Java webalakalmazások készítéséhez két alapvető írány alakult ki: a Java Enterprise Edition (Java EE) és a Spring Framework. A Java EE az Oracle a Java jelenlegi készítője által támogatott eredeti verzió. Ezt korábban a Sun Microsystems készítette, melyet felvásárolt az Oracle Corporation 7,4 milliárd dollárért 2009-ben. Mind a kettő moduláris felépítésű, és funkcionalítását tekintve nagyon hasonló modulok jelennek meg. Megtehetjük, hogy az egyiket választjuk vagy a másikat, de akár kombinálhatjuk is őket.\\
 
-\\ -Web-szolgáltatás és web-applikáció közötti különbség: Webservice az, ami XML vagy Json, stb. válaszokat tud adni egy kérésre (request) amely egy klienstől érkezik, ezek érkezhetnek bármilyen applikációból, akár egy iOS alapú vagy android alapú eszközről is. Míg egy Webapplication egy honlapon adja vissza a lekérések eredményeit, a webapplication is a webserviceken keresztül szerzi meg az adatokat, amiket meg szeretne jeleníteni. A webszolgáltatás általánosságban egy adatbázishoz is csatlakozik.
+IoC – DI\\
 
-\\ -Maven: Minden Maven projekthez tartozik egy pom.xml nevű fájl, melyben tartalmaz egy listát a külső függőségeiről, amikre szüksége lesz a projektnek ahhoz, hogy leforduljon. A Maven ennek a fájlnak az alapján megtalálja ezeket és letölti és a helyére is másolja, így ezeket a műveleteket nem nekünk kell kézzel elvégeznünk.
+DI-ből 2 fajta van a konstruktor alapú, ahol a konstruktorban adom át a függőséget, illetve ahol a setter metódusban adom át a konstruktort. Mind a két esetben egy már a heap-ben élő objektumot adunk át.\\
 
-\\ -MVC modell:
-\\ -View: A megjelenítésért felelős része a modellnek, itt találhatóak a képek, a gombok, az űrlapok, ezzel találkozik a felhasználó. Én ezt a részét nem fogom használni a Springnek. egy RESTful API-n fogunk a világháló felé kommunikálni JSON formátumban.
-\\ -Model: A model, magyarul modell. Az adatok tárolásáért felelős része a kódnak, a perzisztenciáért is ez a rész felelős. Hasonló struktúrát kell követnie, mint az adatbázisnak. Én itt JPA-t és JDBC-t fogok használni. A JPA a perzisztenciáért fog felelni, míg a JDBC az adatbázishoz kapcsolódásért, az adatok törléséért, módosításáért, felviteléért és lekérdezéséért.
-\\ -Contoller: Itt találhatjuk meg az üzleti logikát. Itt történnek meg a számítások, innen jönnek a válaszok a felhasználó felé és innen mennek a kérések a modellhez. A Kontroller a kapocs a Modell és a Nézet (View) között.
-\\ -Annotációk a Springben: Minden osztályban feltűnnek az annotációk. Melyek a keretrendszernek szóló üzenetek, ezek alapján tudja eldönteni a Spring, hogy miként bánjon az egyes osztályokkal, metódusokkal, adattagokkal.
-\\ -@Configuration
-\\ -@EnableAutoConfiguration
-\\ -@ComponentScan
-\\ -@Contoller
-\\ -@RestContoller: Jelzi a konténer felé, hogy innen érkezhetnek kérések, illetve itt tudjuk fogadni ezeket. És mint a neve is mutatja REST API segítségével. RestContoller elég nagy szabadság fokot biztosít, hisz szinte minden féle struktúrában adhatunk választ és fogadhatunk kérést, hisz ezeket értelmezni tudja. Tipikusan JSON-t fogunk használni, de lehetőség lenne akár XML, HTML választ is adni, a népszerűbb technológiákat kiemelve, de akár egyszerű konstans szöveget is. Tehát ennek az annotációnak a segítségével tudja a Spring, hogy ezzel az osztállyal lehet kommunikálni, ami azt jelenti, hogy tud küldeni és fogadni is adatot.
-\\ -@RequestMapping: A ReqestMapping annotáció segítségével megadhatjuk, hogy melyik csatornát figyelje a metódusunk. A megadás módja @ReqestMapping("/"), tehát az annotáció után zárójelben, dupla idézőjelek között adjuk meg, hogy a honnan érkező kéréseket figyelje, a példában beállított a gyökércsatornán érkező kéréseket figyeli. (de ha /kiscica-t adok meg, akkor azokat fogja figyelni, ami azon a csatornán jön.)
+Spring Boot: egy relatíve új Springre épülő keretrendszer, mely rengeteg konfigurálási feladatot levesz a programozó válláról és magában a keretrendszerben még egy Tomcat szerver is van, melynek segítségével képes létre hozni egy belső futtató környezetet. Természetesen az alapbeállítások megváltoztathatóak, de már egy kerdő projekt is egy valódi webalkalmazást reprezentál. Nem kell hozzá mélyen ismerni a Spring-et, és összeválogathatóak bele ugyanúgy a Spring modulok. \\
+
+Web-szolgáltatás és web-applikáció közötti különbség: Webservice az, ami XML vagy Json, stb. válaszokat tud adni egy kérésre (request) amely egy klienstől érkezik, ezek érkezhetnek bármilyen applikációból, akár egy iOS alapú vagy android alapú eszközről is. Míg egy Webapplication egy honlapon adja vissza a lekérések eredményeit, a webapplication is a webservice-en keresztül szerzi meg az adatokat, amiket meg szeretne jeleníteni. A webszolgáltatás általánosságban egy adatbázishoz is csatlakozik.\\
+
+Maven: Minden Maven projekthez tartozik egy pom.xml nevű fájl, melyben tartalmaz egy listát a külső függőségeiről, amikre szüksége lesz a projektnek ahhoz, hogy leforduljon. A Maven ennek a fájlnak az alapján megtalálja ezeket és letölti és a helyére is másolja, így ezeket a műveleteket nem nekünk kell kézzel elvégeznünk.\\
+
+MVC modell:\\
+
+-View: A megjelenítésért felelős része a modellnek, itt találhatóak a képek, a gombok, az űrlapok, ezzel találkozik a felhasználó. Én ezt a részét nem fogom használni a Springnek. egy RESTful API-n fogunk a világháló felé kommunikálni JSON formátumban.\\
+
+-Model: A model, magyarul modell. Az adatok tárolásáért felelős része a kódnak, a perzisztenciáért is ez a rész felelős. Hasonló struktúrát kell követnie, mint az adatbázisnak. Én itt JPA-t és JDBC-t fogok használni. A JPA a perzisztenciáért fog felelni, míg a JDBC az adatbázishoz kapcsolódásért, az adatok törléséért, módosításáért, felviteléért és lekérdezéséért.\\
+
+-Contoller: Itt találhatjuk meg az üzleti logikát. Itt történnek meg a számítások, innen jönnek a válaszok a felhasználó felé és innen mennek a kérések a modellhez. A Kontroller a kapocs a Modell és a Nézet (View) között.\\
+
+Annotációk a Springben: Minden osztályban feltűnnek az annotációk. Melyek a keretrendszernek szóló üzenetek, ezek alapján tudja eldönteni a Spring, hogy miként bánjon az egyes osztályokkal, metódusokkal, adattagokkal.\\
+
+@Configuration\\
+@EnableAutoConfiguration\\
+@ComponentScan\\
+@Contoller\\
+
+@RestContoller: Jelzi a konténer felé, hogy innen érkezhetnek kérések, illetve itt tudjuk fogadni ezeket. És mint a neve is mutatja REST API segítségével. RestContoller elég nagy szabadság fokot biztosít, hisz szinte minden féle struktúrában adhatunk választ és fogadhatunk kérést, hisz ezeket értelmezni tudja. Tipikusan JSON-t fogunk használni, de lehetőség lenne akár XML, HTML választ is adni, a népszerűbb technológiákat kiemelve, de akár egyszerű konstans szöveget is. Tehát ennek az annotációnak a segítségével tudja a Spring, hogy ezzel az osztállyal lehet kommunikálni, ami azt jelenti, hogy tud küldeni és fogadni is adatot.\\
+
+@RequestMapping: A ReqestMapping annotáció segítségével megadhatjuk, hogy melyik csatornát figyelje a metódusunk, és ha a megadott csatornán jön valami, akkor meghívódik a hozzárendelt metódus.  A megadás módja @ReqestMapping("/"), tehát az annotáció után zárójelben, dupla idézőjelek között adjuk meg, hogy a honnan érkező kéréseket figyelje, a példában beállított a gyökércsatornán érkező kéréseket figyeli. (de ha /kiscica-t adok meg, akkor azokat fogja figyelni, ami azon a "kiscica" csatornán jön.)\\
+
+DevTools Maven-ben: arra használható, hogy ne kelljen minden módosítás után újrafordítanunk, hanem ha megváltozott a forráskód akkor megteszi helyettünk az IDE.\\
+
+Spring Bean Scope:\\
+A Spring Babok életciklusai.\\
+Singleton: Csak egyetlen példány jön létre belőle. Ez a Springben az alapértelmezett, ha létrejön egy osztály az singleton lesz, ha másként nem rendelkezel.(pl. @RestContoller)\\
+Prototype: Minden egyes alkalommal új példány készül.
+Request: Mindenegyes HTTP lekérdezéssel új példányt készül belőle.\\
+Session: Egy Session-höz kötjük a bean-t, a klasszikus példa erre a bevásárlókocsi a webáruházaknál, a kocsiba pakolt termékek addig maradnak amíg a felhasználó ki nem lép a böngészőből, vagy ki nem jelentkezik a weboldalról, így nem kell egy weblap frissítés után újra belepakolni a termékeket amiket meg szeretnénk vásárolni.\\
+Az életciklusok megadásához a @Scope annotáció használatos, zárójelben idéző jelek között megadva a típust. pl.: @Scope("prototype")\\
+
+@Autowired: A Dependency Injection használatához van erre szükségünk. A keretrendszer aszerint injektálja a Bean-t amilyen a típusánál be van állítva, ha singleton akkor mindig ugyan azt az egyet adja át minden kérés esetén, ha prototype akkor minden egyes alakalommal új példányt ad át és így tovább.
+3 fajta megadási mód létezik, az adattag felett megadjuk és ez esetben, ha létrejön az objektum akkor a keretrendszer beleinjektálja az objektumot, amely ebben az esetben egy osztály szintű változó (static). Nehezen tesztelhető ez a fajta megadás. A második mód a setter alapú megadási mód. Itt létrehozunk a változóhoz egy setter-t és a felett adjuk meg az annotációt. Az utolsó verzió a konstruktor alapú, itt a konstruktor felett adjuk meg, a már jól ismert @Autowired annotációt.
+
 
 
 \end{document}
