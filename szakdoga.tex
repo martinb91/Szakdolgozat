@@ -3,9 +3,36 @@
 \usepackage{t1enc}
 \def\magyarOptions{defaults=hu-min}
 
+% Bevezetés 1-2
+% Fesztiválok, szolgáltatások 4-5
+% Technológia bemutatása 5
+% Alkalmazás funkciói 8
+% Alkalmazás felépítése 8
+% Implementáció részletezése 6
+% Hatékonyság vizsgálata 4
+% Összegzés 1-2
+% Hivatkozások 2
+
 \begin{document}
 
+\begin{center}
+\huge Fesztiválkereső webes alkalmazás
+\end{center}
+
+\section*{Bevezetés}
+
+front-end(van backend része is):
+A lekérdezett zenekarra rákattintva visszatér a zenekar adataival és a letárolt fellépéseit is megmutatja kronológia vagy relevancia(egyéb is lehet priorítás) szerint.
+Fesztiválra kattintva dobja a fellépőket, melyek megtekinthetők hyperlink segítségével.(Azért lehet hasznos, ha esetleg nem ismerné a felhasználó a zenekart, vagy ha kíváncsi, hogy hol lesz még fellépése).
+
 A rendszer segít eligazodni a fesztiválok világában, és az érdeklődőknek eldönteni, hogy melyik fesztiválon szeretne részt venni
+
+% TODO: Ezt elég csak a végén fixálni!
+
+\section{Fesztiválokhoz kapcsolódó szolgáltatások}
+
+% TODO: Összeszedni lehetőleg az összes olyan funkciót, amelyik fesztiválokhoz kapcsolható lehet, mint releváns szolgáltatás/funkció!
+
 A rendszer funkciói(back-end):\\
 Stílusok felvitele, módosítása (mely értékkészletből, majd hozzá lehet adni a zenekarokhoz, és a fesztiválokhoz)\\
 Zenekarok felvitele, módosítása, esetleges archiválása\\
@@ -13,24 +40,9 @@ Fesztiválok felvitele, módosítása, a meglévő fesztiválhoz koncert rendel�
 A fesztiválokhoz szállások és jegyek felvitele(jövőben ha lesz rá idő.)\\
 Zenekarok keresése és listázása név vagy stílus alapján, ugyan ez fesztiválokra is + fesztiváloknál még helyi, regionális keresés is lehetséges.\\
 
-front-end(van backend része is):
-A lekérdezett zenekarra rákattintva visszatér a zenekar adataival és a letárolt fellépéseit is megmutatja kronológia vagy relevancia(egyéb is lehet priorítás) szerint.
-Fesztiválra kattintva dobja a fellépőket, melyek megtekinthetők hyperlink segítségével.(Azért lehet hasznos, ha esetleg nem ismerné a felhasználó a zenekart, vagy ha kíváncsi, hogy hol lesz még fellépése).
+% TODO: Megnézni a hasonló célú, elterjedt alkalmazásokat!
 
-Konkrét interfészek(b.e. szempontjából):
-\\- amin befelé jön több stílus(letárolás) illetve egy zenekar amelyiket letároljuk és felszereljük az adott stílusokat (lehet create vagy modify)
-\\- amin befelé jön egy stílus(letárolás)
-\\- ami stílus szerint adja vissza a zenekarokat.
-\\- ami a zenekarok listáját visszaadja
-\\- ami a fesztiválok listáját visszaadja
-\\- ami név szerint ad vissza egy fesztivált
-\\- ami név szerint ad vissza egy zenekart
-\\- amin befelé jön egy fesztivál és zenekarok listája, hozzá fűzve egy időpont is(amikor fel fog lépni(ehhez külön osztály és db-ben is változás lesz)).
- 
-????
-kép hogy megy át json-ben.(elérési utat adok át?)\\
-
-
+\section{Technológia}
 
 Spring MVC: 2002-ben hozta létre Rod Johnson. Ingyenesen elérhető és nyílt forráskódú Java alapú keretrendszer. Jelenleg egy Pivotal nevű cég foglalkozik a keretrendszer sorsával. Nagyon népszerű, hazánkban is rengeteg a keretrendszer ismerő fejlesztőt keresnek. Alkalmazási területe sokrétű, banki szektortól a telekommunikációig mindenhol feltűnik.\\
 
@@ -46,7 +58,7 @@ Spring Boot: egy relatíve új Springre épülő keretrendszer, mely rengeteg ko
 
 Web-szolgáltatás és web-applikáció közötti különbség: Webservice az, ami XML vagy Json, stb. válaszokat tud adni egy kérésre (request) amely egy klienstől érkezik, ezek érkezhetnek bármilyen applikációból, akár egy iOS alapú vagy android alapú eszközről is. Míg egy Webapplication egy honlapon adja vissza a lekérések eredményeit, a webapplication is a webservice-en keresztül szerzi meg az adatokat, amiket meg szeretne jeleníteni. A webszolgáltatás általánosságban egy adatbázishoz is csatlakozik.\\
 
-Maven: Minden Maven projekthez tartozik egy pom.xml nevű fájl, melyben tartalmaz egy listát a külső függőségeiről, amikre szüksége lesz a projektnek ahhoz, hogy leforduljon. A Maven ennek a fájlnak az alapján megtalálja ezeket és letölti és a helyére is másolja, így ezeket a műveleteket nem nekünk kell kézzel elvégeznünk.\\
+Maven: Minden Maven projekthez tartozik egy \texttt{pom.xml} nevű fájl, melyben tartalmaz egy listát a külső függőségeiről, amikre szüksége lesz a projektnek ahhoz, hogy leforduljon. A Maven ennek a fájlnak az alapján megtalálja ezeket és letölti és a helyére is másolja, így ezeket a műveleteket nem nekünk kell kézzel elvégeznünk.\\
 
 MVC modell:\\
 
@@ -60,32 +72,130 @@ MVC modell:\\
 
 Annotációk a Springben: Minden osztályban feltűnnek az annotációk. Melyek a keretrendszernek szóló üzenetek, ezek alapján tudja eldönteni a Spring, hogy miként bánjon az egyes osztályokkal, metódusokkal, adattagokkal.\\
 
-@Configuration: A bean leírások információforrása.\\
-@EnableAutoConfiguration:\\
-@ComponentScan A konténernek megmondja, hogy melyik csomagokba vizsgálja meg, hogy Bean-e vagy sem, ha bean akkor azt jegyezze is fel, hisz akkor úgy is kell bánni vele. Megadási módja, ha elég csak az a csomag amiben a @ComponentScan-nel annotált osztály elhelyezkedik, akkor nem kell paramétert megadni neki. Viszont ha ez nem elég számunkra, akkor paraméterezni kell. A paraméterezés ilyen módon történik: @ComponentScan({"hu.egyik", "hu.masik"}), tehát zárójelen belül, ha többet szeretnénk felsorolni, akkor kapcsos zárójelen belül, elemenként idézőjelek között felsorolva a csomagok nevét, és vesszővel el választva. Természetesen csak azokat az osztályokat találja meg, amelyik jelzi, hogy ő egy bean, pl.: @Component. \\
-@Service: Jelzi a konténer számára, hogy ő a @Service réteghez tartozik, valami kalkulációt végezni fog.
-@Contoller:\\
-@Bean:\\
+\texttt{@Configuration}
 
-@RestContoller: Jelzi a konténer felé, hogy innen érkezhetnek kérések, illetve itt tudjuk fogadni ezeket. És mint a neve is mutatja REST API segítségével. RestContoller elég nagy szabadság fokot biztosít, hisz szinte minden féle struktúrában adhatunk választ és fogadhatunk kérést, hisz ezeket értelmezni tudja. Tipikusan JSON-t fogunk használni, de lehetőség lenne akár XML, HTML választ is adni, a népszerűbb technológiákat kiemelve, de akár egyszerű konstans szöveget is. Tehát ennek az annotációnak a segítségével tudja a Spring, hogy ezzel az osztállyal lehet kommunikálni, ami azt jelenti, hogy tud küldeni és fogadni is adatot.\\
+A bean leírások információforrása.
 
-@RequestMapping: A ReqestMapping annotáció segítségével megadhatjuk, hogy melyik csatornát figyelje a metódusunk, és ha a megadott csatornán jön valami, akkor meghívódik a hozzárendelt metódus.  A megadás módja @ReqestMapping("/"), tehát az annotáció után zárójelben, dupla idézőjelek között adjuk meg, hogy a honnan érkező kéréseket figyelje, a példában beállított a gyökércsatornán érkező kéréseket figyeli. (de ha /kiscica-t adok meg, akkor azokat fogja figyelni, ami azon a "kiscica" csatornán jön.)\\
+\texttt{@EnableAutoConfiguration}
 
-DevTools Maven-ben: arra használható, hogy ne kelljen minden módosítás után újrafordítanunk, hanem ha megváltozott a forráskód akkor megteszi helyettünk az IDE.\\
+\texttt{@ComponentScan}
 
-Spring Bean Scope:\\
-A Spring Babok életciklusai.\\
-Singleton: Csak egyetlen példány jön létre belőle. Ez a Springben az alapértelmezett, ha létrejön egy osztály az singleton lesz, ha másként nem rendelkezel.(pl. @RestContoller)\\
+A konténernek megmondja, hogy melyik csomagokba vizsgálja meg, hogy Bean-e vagy sem, ha bean akkor azt jegyezze is fel, hisz akkor úgy is kell bánni vele. Megadási módja, ha elég csak az a csomag amiben a @ComponentScan-nel annotált osztály elhelyezkedik, akkor nem kell paramétert megadni neki. Viszont ha ez nem elég számunkra, akkor paraméterezni kell. A paraméterezés ilyen módon történik:
+\begin{verbatim}
+@ComponentScan(\{"hu.egyik", "hu.masik"\})
+\end{verbatim}
+tehát zárójelen belül, ha többet szeretnénk felsorolni, akkor kapcsos zárójelen belül, elemenként idézőjelek között felsorolva a csomagok nevét, és vesszővel el választva. Természetesen csak azokat az osztályokat találja meg, amelyik jelzi, hogy ő egy bean, pl.: @Component. \\
+
+\texttt{@Service}
+
+Jelzi a konténer számára, hogy ő a @Service réteghez tartozik, valami kalkulációt végezni fog.
+
+\texttt{@Contoller}
+
+\texttt{@Bean}
+
+\texttt{@RestContoller}
+
+Jelzi a konténer felé, hogy innen érkezhetnek kérések, illetve itt tudjuk fogadni ezeket. És mint a neve is mutatja REST API segítségével. RestContoller elég nagy szabadság fokot biztosít, hisz szinte minden féle struktúrában adhatunk választ és fogadhatunk kérést, hisz ezeket értelmezni tudja. Tipikusan JSON-t fogunk használni, de lehetőség lenne akár XML, HTML választ is adni, a népszerűbb technológiákat kiemelve, de akár egyszerű konstans szöveget is. Tehát ennek az annotációnak a segítségével tudja a Spring, hogy ezzel az osztállyal lehet kommunikálni, ami azt jelenti, hogy tud küldeni és fogadni is adatot.
+
+\texttt{@RequestMapping}
+
+A ReqestMapping annotáció segítségével megadhatjuk, hogy melyik csatornát figyelje a metódusunk, és ha a megadott csatornán jön valami, akkor meghívódik a hozzárendelt metódus.  A megadás módja \texttt{@ReqestMapping("/")}, tehát az annotáció után zárójelben, dupla idézőjelek között adjuk meg, hogy a honnan érkező kéréseket figyelje, a példában beállított a gyökércsatornán érkező kéréseket figyeli. (de ha /kiscica-t adok meg, akkor azokat fogja figyelni, ami azon a "kiscica" csatornán jön.)
+
+DevTools Maven-ben: arra használható, hogy ne kelljen minden módosítás után újrafordítanunk, hanem ha megváltozott a forráskód akkor megteszi helyettünk az IDE.
+
+\subsection{Spring Bean Scope}
+
+A Spring Babok életciklusai.
+Singleton: Csak egyetlen példány jön létre belőle. Ez a Springben az alapértelmezett, ha létrejön egy osztály az singleton lesz, ha másként nem rendelkezel.(pl. @RestContoller)
 Prototype: Minden egyes alkalommal új példány készül.
-Request: Mindenegyes HTTP lekérdezéssel új példányt készül belőle.\\
-Session: Egy Session-höz kötjük a bean-t, a klasszikus példa erre a bevásárlókocsi a webáruházaknál, a kocsiba pakolt termékek addig maradnak amíg a felhasználó ki nem lép a böngészőből, vagy ki nem jelentkezik a weboldalról, így nem kell egy weblap frissítés után újra belepakolni a termékeket amiket meg szeretnénk vásárolni.\\
-Az életciklusok megadásához a @Scope annotáció használatos, zárójelben idéző jelek között megadva a típust. pl.: @Scope("prototype")\\
+Request: Mindenegyes HTTP lekérdezéssel új példányt készül belőle.
+Session: Egy Session-höz kötjük a bean-t, a klasszikus példa erre a bevásárlókocsi a webáruházaknál, a kocsiba pakolt termékek addig maradnak amíg a felhasználó ki nem lép a böngészőből, vagy ki nem jelentkezik a weboldalról, így nem kell egy weblap frissítés után újra belepakolni a termékeket amiket meg szeretnénk vásárolni.
 
-@Autowired: A Dependency Injection használatához van erre szükségünk. A keretrendszer aszerint injektálja a Bean-t amilyen a típusánál be van állítva, ha singleton akkor mindig ugyan azt az egyet adja át minden kérés esetén, ha prototype akkor minden egyes alakalommal új példányt ad át és így tovább.
-3 fajta megadási mód létezik, az adattag felett megadjuk és ez esetben, ha létrejön az objektum akkor a keretrendszer beleinjektálja az objektumot, amely ebben az esetben egy osztály szintű változó (static). Nehezen tesztelhető ez a fajta megadás. 
-A második mód a setter alapú megadási mód. Itt létrehozunk a változóhoz egy setter-t és a felett adjuk meg az annotációt. 
-Az utolsó verzió a konstruktor alapú, itt a konstruktor felett adjuk meg, a már jól ismert @Autowired annotációt.
+Az életciklusok megadásához a \texttt{@Scope} annotáció használatos, zárójelben idéző jelek között megadva a típust, például \texttt{@Scope("prototype")}.
 
+\textit{@Autowired}
 
+A Dependency Injection használatához van erre szükségünk. A keretrendszer aszerint injektálja a Bean-t amilyen a típusánál be van állítva, ha singleton akkor mindig ugyan azt az egyet adja át minden kérés esetén, ha prototype akkor minden egyes alakalommal új példányt ad át és így tovább.
+3 fajta megadási mód létezik, az adattag felett megadjuk és ez esetben, ha létrejön az objektum akkor a keretrendszer beleinjektálja az objektumot, amely ebben az esetben egy osztály szintű változó (static). Nehezen tesztelhető ez a fajta megadás.
+
+A második mód a setter alapú megadási mód. Itt létrehozunk a változóhoz egy setter-t és a felett adjuk meg az annotációt.
+
+Az utolsó verzió a konstruktor alapú, itt a konstruktor felett adjuk meg, a már jól ismert \texttt{@Autowired} annotációt.
+
+\section{Az alkalmazás funkciói}
+
+Egy alkalmazáson belül lehet látni, hogy egy előadónak hogy néz ki az adott turnéja. Fellépőre lehet majd tudni keresni.
+
+Javaslatokat adni azokra a koncertekre, amelyekre az előző keresése, és részvételek alapján érdemes lehet mennie az illetőnek.
+
+Statisztikákat csinálni az előadók és koncertszervezők felé. Nekik is lehet így akkor ajánlásokat tenni.
+
+Koncertprogram összeállítása. Megoldani, hogy lehessen ellenőrízni azt, hogy egy koncerten minden elterjedt stílus képviseli magát. A cél az lenne, hogy a koncert minél nagyobb érdeklődési kört lefedjen, de azért maradjon egységes a programja.
+
+Lehet majd távolságokat definiálni stílus, és közös koncertek alapján. Arra kell törekedni, hogy a koncert prograja ez alapján kiegyensúlyozott legyen majd.
+
+\section{Az alkalmazás felépítése}
+
+\subsection{Backend}
+
+% TODO: Az adatbázis séma részletezése.
+
+A szerver oldali rész részletezése.
+
+\subsection{Frontend}
+
+A kliens oldali rész részletezése.
+
+\section{Implementáció részletezése}
+
+% TODO: Tesztelési módszerről írni pár dolgot. Külön kitérni a library, szerver oldal és a kliens tesztelésére!
+
+- Java library tesztek
+- Spring-en keresztül való tesztelés
+- Egységtesztek a klienshez (Angular-os részhez)
+- Integrációs teszt féle, hogy egészében működik-e a rendszer.
+
+% TODO: Készíteni valamilyen szerkezeti ábrát, hogy az alkalmazás egyes részei hogy kapcsolódnak majd egymáshoz.
+
+Konkrét interfészek (backend szempontjából):
+\begin{itemize}
+\item amin befelé jön több stílus(letárolás) illetve egy zenekar amelyiket letároljuk és felszereljük az adott stílusokat (lehet create vagy modify)
+\item amin befelé jön egy stílus(letárolás)
+\item ami stílus szerint adja vissza a zenekarokat.
+\item ami a zenekarok listáját visszaadja
+\item ami a fesztiválok listáját visszaadja
+\item ami név szerint ad vissza egy fesztivált
+\item ami név szerint ad vissza egy zenekart
+\item amin befelé jön egy fesztivál és zenekarok listája, hozzá fűzve egy időpont is(amikor fel fog lépni(ehhez külön osztály és db-ben is változás lesz)).
+\end{itemize}
+
+Képek feltöltése
+
+- Hogy lehet megoldani, hogy elegánsan nézzen ki a fájlfeltöltéshez a gomb?
+- Drag and drop funkciók
+- Formátum ellenőrzése (Ne lehessen feltölteni például zip-et vagy exe-t.)
+- A képhez fájnév generálása
+- Képhez tartozó adatok rögzítése az adatbázisban
+
+\section{Hatékonyság vizsgálata}
+
+% TODO: Megnézni, hogy az egyes lekérdezések mennyi idő alatt, milyen válaszidővel futnak le!
+
+- Tesztadatok generálása
+- Java/szerver oldali profilozás
+- Hálózaton keresztül történő mérés (JMeter)
+
+Ezek alapján legalábbis javaslatok az optimalizálásra vonatkozóan.
+
+\section*{Összegzés}
+
+% TODO: Ezt elég csak a végén megcsinálni!
+
+\section*{Hivatkozások}
+
+Konkurrens alkalmazások
+Java Spring
+AngularJS
 
 \end{document}
