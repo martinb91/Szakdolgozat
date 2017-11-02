@@ -1,7 +1,11 @@
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{t1enc}
+\usepackage{hyperref}
 \def\magyarOptions{defaults=hu-min}
+\hypersetup{
+  colorlinks, linkcolor=DarkBlue
+}
 
 % Bevezetés 1-2
 % Fesztiválok, szolgáltatások 4-5
@@ -25,7 +29,7 @@ front-end(van backend része is):
 A lekérdezett zenekarra rákattintva visszatér a zenekar adataival és a letárolt fellépéseit is megmutatja kronológia vagy relevancia(egyéb is lehet priorítás) szerint.
 Fesztiválra kattintva dobja a fellépőket, melyek megtekinthetők hyperlink segítségével.(Azért lehet hasznos, ha esetleg nem ismerné a felhasználó a zenekart, vagy ha kíváncsi, hogy hol lesz még fellépése).
 
-A rendszer segít eligazodni a fesztiválok világában, és az érdeklődőknek eldönteni, hogy melyik fesztiválon szeretne részt venni
+A rendszer segít eligazodni a fesztiválok világában, és az érdeklődőknek eldönteni, hogy melyik fesztiválon szeretne részt venni.
 
 % TODO: Ezt elég csak a végén fixálni!
 
@@ -42,17 +46,66 @@ Zenekarok keresése és listázása név vagy stílus alapján, ugyan ez fesztiv
 
 % TODO: Megnézni a hasonló célú, elterjedt alkalmazásokat!
 
+Az interneten fellelhető már egypár elterjed Fesztivál/Esemény kereső alkalmazás, mindegyiknek van hiányossága és tartalmaznak jó ötleteket is. Vegyünk sorra néhányat.
+
+1. http://www.fesztivalkalauz.hu : Az első dolog amivel a felhasználó találkozik az a felhasználói felület, amelynek körülbelül a felét használta ki a fejlesztő. Jelenleg egy 14"-os kijelzőn nézve ez zavaróan kicsi. Feltehetőleg ez azért is van így, mert nagyjából 10 éves fejlesztés, és akkor még nem volt ekkora kijelző választék - sem méret, sem eszköz tekintetében - amelyeken weboldalakat jelenítettünk meg, így elég volt egy statikus méretre és betűtípusra beállítani a weboldalt. Jelenleg divatosak a reszponzív weboldalak, amelyek igyekeznek kiküszöbölni ezt a problémát.
+[1] A reszponzív weboldal (RWD) egy olyan megközelítéssel tervezett weboldal, amelynek a célja az, hogy optimális megjelenést biztosítson - könnyű olvashatóság, egyszerű navigáció a lehető legkevesebb átméretezéssel és görgetéssel - a legkülönfélébb eszközökön (az asztali számítógép monitorjától egészen a mobiltelefonokig).
+A viszonylag fejlett fesztiválkereső nekem tetszik, sok mindenre rálehet keresni, könnyen és átláthatóan.
+Lehet település, kerület, illetve megye szerint is keresni. Típus és dátum szerinti keresés is támogatott. Sőt módunkban áll a következőhavi eseményeket is lekérdezni egy kattintással, erről ha szeretnénk, hírlevelet is kérhetünk. A szabad szavas kereső, annyira azért mégsem szabad, mert csak a címben keres a leírásban sajnos nem.
+
+2. https://www.utazzitthon.hu/program : Az oldal mint a szlogenje is mondja: "Belföldi szállás, program és látnivaló 1 helyen", szállásokat és programokat közvetít az érdeklődőknek. A felület már reszponzív tervezés eredménye, ennek köszönhetően átlátható és könnyen használható akár mobileszközről is. A keresés nagyon világos, kereshetünk régió, tájegység, város szerint és program, látnivaló típusok alapján. Az adatbázisuk programok tekintetében elég gazdag, amikor megtekintettem közel 8000 programot ajánlottak. Itt jegyet is vásárolhatunk az egyes programokra.
+
+3. http://www.fesztival.eu/: A weboldal régi dizájnnal készült. A keresője nagyjából hasonló funkciókat tükrözött, mint az eddigiekben megjelenő keresési lehetőségek. Sajnos az adatbázisában csak egy fesztivál volt megtalálható, amikor ott jártam, így tesztelni nem volt módom.
+
+4. http://www.fesztivalnaptar.hu : Az iranymagyarorszag.hu által működtetett weboldal. Feltehetően az utazzitthon.hu-hoz hasonlóan a szállások közvetítése a főprofilja, és ezek mellé jönnek be a fesztiválok, koncertek mint kiegészítőszolgáltatások. Szabad szavas kereséssel és kronológiai sorrend szerinti érhetőek el a programok. A szabad szavas kereső viszont keres a leírásban is, ami sokat könnyít a felhasználó számára. A felület nem reszponzív és régebbi stílusú. Nem nagy meglepetés, hogy 100-nál kevesebb esemény programját találjuk meg. Itt jelenik meg egyedül a nemzetköziesítés, a magyaron kívül angolul és németül is elérhetőek a programok, habár a programokhoz tartozó leírások csak magyarul érhetőek el.
+
+5. https://www.programturizmus.hu/ : Az utolsó keresést támogató rendszerhez érkeztünk amit találtam, és szerintem a legletisztultabb felülettel és szolgáltatásokkal. Természetesen modern weboldal lévén, platformtól és kijelző mérettől függetlenül szépen megjelenik bármilyen eszközön. Az oldal nem csak fesztiválokra, hanem szinte minden olyan lehetőséget hivatott bemutatni, ami kimozdítja a fotelból a felületen böngésző felhasználót, ez a hozzáállás a szlogenben is tükröződik - "Ne maradj otthon!". Találunk itt a vásárok, látnivalók, és gasztronómián belül, Kolbásztöltő versenytől, a Kutyakiállításon át a Régiségvásárig mindent. Persze megjelennek a már klasszikusnak mondható szállások is. A keresés a már az előzőekben megszokott lehetőségek szerint lehetséges. Viszont az "Események" mellett megjelenik három új lehetőség is, az egyik az "Ajánlat" menü, a másik az "Érdekesség", ezek valami alapján kitüntetett események, viszont az utolsó talán a legérdekesebb. Ez pedig a koordináták alapján megmutatja, hogy hol is lesznek helyileg az események egy google térképen. A jegyet itt is vásárolhatunk. Ha egy fesztivált részletesebben megnézünk, meglepőmódon a jegyen, a címen és szálláson kívül még a környékbeli étkezési lehetőségeket is tanácsolja számunkra a weboldal.
+
+5+1. http://elmenyem.hu : Az oldal nem rendelkezik fesztiválkereső résszel, ez inkább egy blog. De rengeteg aktualitással, hírekkel szolgál a jövőben megrendezendő eseményekkel kapcsolatban. 
+
+%???Egy mátrixot érdemes lehet-e készíteni az oldalakról, hogy melyik oldalnak, milyen lehetőségeik vannak.
+
+Extra lehetőségek, amelyekkel nem éltek az itt feltüntetett weboldalak: 
+SZÉP-kártya, és egyéb fizetési lehetőségek feltüntetése.
+Gyerek illetve kutyabarát-e a rendezvény. Könnyen megvalósítható, mégis látványos lehetőségeket rejt magában, hiszen egy cumi, vagy egy mancs elhelyezése az esemény mellett vagy alatt, adatbázis szinten pedig csak egy boolean változó bevezetése.
+Dohányzásra, alkoholfogyasztásra, korhatárra is lehetne bevezetni hasonló kis ikonokat, ezeket is egyszerű paraméterként fel lehetne szerelni.
+Értékmegőrzésre, telefon töltésre van-e lehetőség. 
+Ingyenes-e a rendezvény: Ez is könnyen felkeltheti az érdeklődők figyelmét. Itt is alkalmazható lenne a már jól bevált ikonos megoldás.
+A nemzetköziesítés is szempont lehet, habár ezek az oldalak elsősorban hazai piacra készültek. Ideértve az árak más valutában való megjelenítését is a leírások szövege mellett.
+Közlekedés: Érdemes lehet feltüntetni, magát a fesztivál koordinátáit, mint ezt a programturizmus.hu weboldalon láthattuk, emellett érdemes lehet parkolási lehetőségekről térképen előre informálni az odaérkezőket, egy nagyobb eseményre akár több ezer személyautóval is érkezhetnek. A buszpályaudvarról és vasútállomásról a célhoz eljutást segítő helyi járatok menetrendjét is lehetne mellékelni. Az eseménnyel szerződött taxivállalatok telefonszámait felsorolni. A gyalogos eljutást térkép segítségével megmutatni.
+Szállás: Mint láthattuk, majdnem mindegyik weboldal ajánlott szállást hotelekben. De a fesztiválok klasszikus közönsége, az nem szállodákban alszik. Általában sátorban, faházakban, kollégiumokban, vagy épp ahol eléri az álom. Érdemes lenne jelezni a felhasználó felé, hogy lehet-e sátrazni, és ha igen, van-e ennek extra költsége. A kollégiumokat, faházakat is lehetne ilyen módon jelezni.
+Időjárás: Ez sajnos nem jósolható hónapokkal előre, de pár héttel a fesztivál kezdete előtt ez is felkerülhetne. Hisz mint tudjuk, ezen események javarészt fedetlen vagy részben fedett helyeken zajlanak.
+Visszacsatolás: A legtöbb ilyen eseményt többször megrendezik, vannak olyanok amik már 20-30 éves hagyományra tekintenek vissza. Így az értékelések, mind a szervezők, mind a szolgáltatást igénybe vevők számára hasznos információt nyújtanak.
+
 \section{Technológia}
 
-Spring MVC: 2002-ben hozta létre Rod Johnson. Ingyenesen elérhető és nyílt forráskódú Java alapú keretrendszer. Jelenleg egy Pivotal nevű cég foglalkozik a keretrendszer sorsával. Nagyon népszerű, hazánkban is rengeteg a keretrendszer ismerő fejlesztőt keresnek. Alkalmazási területe sokrétű, banki szektortól a telekommunikációig mindenhol feltűnik.\\
+Spring MVC: 2002-ben hozta létre Rod Johnson. Ingyenesen elérhető és nyílt forráskódú Java alapú keretrendszer. Jelenleg egy Pivotal nevű cég foglalkozik a keretrendszer sorsával. Nagyon népszerű, hazánkban is rengeteg a keretrendszert ismerő fejlesztőt keresnek. Alkalmazási területe sokrétű, banki szektortól a telekommunikációig mindenhol feltűnik.\\
 
-Nyílt forráskód: Elérhető akárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projektel találkozunk. Pl Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.\\
+Nyílt forráskód: Elérhető akárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projektel találkozunk. Például Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.\\
 
-A Java webalakalmazások készítéséhez két alapvető írány alakult ki: a Java Enterprise Edition (Java EE) és a Spring Framework. A Java EE az Oracle a Java jelenlegi készítője által támogatott eredeti verzió. Ezt korábban a Sun Microsystems készítette, melyet felvásárolt az Oracle Corporation 7,4 milliárd dollárért 2009-ben. Mind a kettő moduláris felépítésű, és funkcionalítását tekintve nagyon hasonló modulok jelennek meg. Megtehetjük, hogy az egyiket választjuk vagy a másikat, de akár kombinálhatjuk is őket.\\
+A Java webalkalmazások készítéséhez két alapvető irány alakult ki: a Java Enterprise Edition (Java EE) és a Spring Framework. A Java EE az Oracle a Java jelenlegi készítője által támogatott eredeti verzió. Ezt korábban a Sun Microsystems készítette, melyet felvásárolt az Oracle Corporation 7,4 milliárd dollárért 2009-ben. Mind a kettő moduláris felépítésű, és funkcionalitását tekintve nagyon hasonló modulok jelennek meg. Megtehetjük, hogy az egyiket választjuk vagy a másikat, de akár kombinálhatjuk is őket.\\
 
-IoC – DI\\
+[2]A számítógép-programozásban a dependency injection egy technika, aminek lényege, hogy egy objektum más objektumok függőségeit követeli. A függőség objektum szolgáltatást nyújt, az injekció pedig a függőség átadása a függő objektumnak, a kliensnek. A szolgáltatás a kliens állapotának része.[3] A minta alapkövetelménye a szolgáltatás kliensnek való átadása ahelyett, hogy a szolgáltató objektumot a kliens hozná létre.
 
-DI-ből 2 fajta van a konstruktor alapú, ahol a konstruktorban adom át a függőséget, illetve ahol a setter metódusban adom át a konstruktort. Mind a két esetben egy már a heap-ben élő objektumot adunk át.\\
+A szolgáltató osztály szempontjából ez azt jelenti, hogy a kliens nem hívhat rajta konstruktort, vagy statikus metódust. Paramétereit más osztályoktól kapja, azok állítják be. A függőséget előállítja valaki más, például a kontextus vagy a konténer problémája lesz.
+
+A minta célja, hogy annyira leválassza a szolgáltató objektumot a kliensről, hogy ha kicserélik, akkor ne kelljen módosítani a klienst.
+
+[6] A kontroll megfordítása (angolul inversion of control, röviden IoC) főleg objektumorientált programozási nyelvekben használt technika a komponensek összeillesztésére, konfigurálására és kezelésére.
+
+A technika lényege, hogy a komponenskezelést (pl. létrehozást, példányosítást, paraméterezést, megszüntetést, metódus hívás) kiemeljük a programkódból, és általában egy külső keretrendszerre bízzuk, mint pl. a Spring.
+
+A dependency injection a vezérlés megfordításának egyik formája. Ahelyett, hogy az alacsony szintű kód hívná a magas szintűt, a magas szintű fogadja az alacsony szintűt, amit hívhat. Ez megfordítja a procedurális programozás szokásos vezérlési mintáját.
+
+Ahogy a vezérlés megfordításának többi formája, a dependency injection alkalmazza a felelősség megfordításának elvét. A kliens külső kódnak delegálja függőségeinek létrehozását az injektornak, amit azonban nem hívhat.[4] Fordítva, az injektor hívja a klienst, és adja át neki az objektumot. A kliensnek nem kell tudnia, hogyan kell létrehozni a szolgáltatót, és nem kell tudnia az injektor kódról sem. Csak a szolgáltató interfészét kell ismernie, mert ez definiálja, hogyan hívhatja meg a szolgáltatásokat. Ez elkülöníti egymástól a létrehozás és a használat felelősségét.
+
+A kliens három különböző módon fogadhatja a szolgáltatásokat: szetter, interfész és konstruktor alapú injekcióban. Mind a három esetben egy már a heap-ben élő objektumot adunk át. A szetter és a konstruktor injekció abban különbözik, hogy mikor lehet őket használni. Ezektől az interfész alapú injekció abban különbözik, hogy a szolgáltató objektum ellenőrizheti injekcióját. Mindezek megkövetelik, hogy egy külön kód, az injektor hozza létre a kapcsolatot a másik két elem között.[5]
+
+ORM: Object-relational mapping, egy olyan megközelítése az adattárolásnak ami szerint az objektumorientált programozási nyelvekben az objektumok átalakíthatóak a táblázat soraivá.
+
+[7] Perzisztencia: A perzisztencia szót az informatikában olyan adatra használjuk, mely túléli az őt létrehozó folyamatot. 
+[7] JPA: A Java perzisztenciát hasonlóképpen definiálhatjuk, csak ez esetben arról van szó, hogy a tárolás a Java programozási nyelv segítségével történik. Legtöbb esetben az adat nagy része főként relációs adatbázisokban tárolódik, melyekhez sokféle módon hozzáférhetünk a Java programból – ezen módok közül egy a JPA.
+[8] A Java Database Connectivity, röviden JDBC egy API a Java programozási nyelvhez, amely az adatbázishozzáférést támogatja. A JDBC definiálja az adatbázisok lekérdezéséhez és módosításához szükséges osztályokat és metódusokat. A relációs adatmodellhez igazodik.
 
 Spring Boot: egy relatíve új Springre épülő keretrendszer, mely rengeteg konfigurálási feladatot levesz a programozó válláról és magában a keretrendszerben még egy Tomcat szerver is van, melynek segítségével képes létre hozni egy belső futtató környezetet. Természetesen az alapbeállítások megváltoztathatóak, de már egy kerdő projekt is egy valódi webalkalmazást reprezentál. Nem kell hozzá mélyen ismerni a Spring-et, és összeválogathatóak bele ugyanúgy a Spring modulok. \\
 
@@ -85,6 +138,10 @@ A konténernek megmondja, hogy melyik csomagokba vizsgálja meg, hogy Bean-e vag
 @ComponentScan(\{"hu.egyik", "hu.masik"\})
 \end{verbatim}
 tehát zárójelen belül, ha többet szeretnénk felsorolni, akkor kapcsos zárójelen belül, elemenként idézőjelek között felsorolva a csomagok nevét, és vesszővel el választva. Természetesen csak azokat az osztályokat találja meg, amelyik jelzi, hogy ő egy bean, pl.: @Component. \\
+
+@EnableAutoConfiguration: Mindent állítson be magától a keretrendszer, amit csak tud.
+@Controller: Controllerrel annotált osztály esetén Request mapping egy nézettel tér vissza (pl JSP vagy HTML file nevével.)
+
 
 \texttt{@Service}
 
@@ -193,6 +250,24 @@ Ezek alapján legalábbis javaslatok az optimalizálásra vonatkozóan.
 % TODO: Ezt elég csak a végén megcsinálni!
 
 \section*{Hivatkozások}
+
+[1]\url{ https://hu.wikipedia.org/wiki/Reszponzív\_weboldal }
+
+[2]\url{ https://hu.wikipedia.org/wiki/Dependency\_injection#cite_note-JamesShore-1 }	
+% A 3,4,5 az a [2]-nek a továbbhivatkozása
+
+[3]\url{ http://www.jamesshore.com/Blog/Dependency-Injection-Demystified.html }
+
+[4]\url{ http://wiki.c2.com/?HollywoodPrinciple }
+
+[5]\url{ https://martinfowler.com/articles/injection.html }
+
+[6]\url{ https://hu.wikipedia.org/wiki/A_kontroll_megfordítása }
+
+[7]\url{ https://hu.wikipedia.org/wiki/Java_Persistence_API#cite_note-1 }
+
+[8]\url{ https://hu.wikipedia.org/wiki/Java_Database_Connectivity }
+
 
 Konkurrens alkalmazások
 Java Spring
