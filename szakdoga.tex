@@ -76,12 +76,13 @@ Közlekedés: Érdemes lehet feltüntetni, magát a fesztivál koordinátáit, m
 Szállás: Mint láthattuk, majdnem mindegyik weboldal ajánlott szállást hotelekben. De a fesztiválok klasszikus közönsége, az nem szállodákban alszik. Általában sátorban, faházakban, kollégiumokban, vagy épp ahol eléri az álom. Érdemes lenne jelezni a felhasználó felé, hogy lehet-e sátrazni, és ha igen, van-e ennek extra költsége. A kollégiumokat, faházakat is lehetne ilyen módon jelezni.
 Időjárás: Ez sajnos nem jósolható hónapokkal előre, de pár héttel a fesztivál kezdete előtt ez is felkerülhetne. Hisz mint tudjuk, ezen események javarészt fedetlen vagy részben fedett helyeken zajlanak.
 Visszacsatolás: A legtöbb ilyen eseményt többször megrendezik, vannak olyanok amik már 20-30 éves hagyományra tekintenek vissza. Így az értékelések, mind a szervezők, mind a szolgáltatást igénybe vevők számára hasznos információt nyújtanak.
+Étkezés: Amire csak a programturizmus.hu gondolt, és alapvetően egy jó kis kiegészítő szolgáltatás, hisz fiziológiai szükségletet elégít ki.
 
 \section{Technológia}
 
 Spring MVC: 2002-ben hozta létre Rod Johnson. Ingyenesen elérhető és nyílt forráskódú Java alapú keretrendszer. Jelenleg egy Pivotal nevű cég foglalkozik a keretrendszer sorsával. Nagyon népszerű, hazánkban is rengeteg a keretrendszert ismerő fejlesztőt keresnek. Alkalmazási területe sokrétű, banki szektortól a telekommunikációig mindenhol feltűnik.\\
 
-Nyílt forráskód: Elérhető akárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projektel találkozunk. Például Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.\\
+Nyílt forráskód: Elérhető akárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projekttel találkozunk. Például Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.\\
 
 A Java webalkalmazások készítéséhez két alapvető irány alakult ki: a Java Enterprise Edition (Java EE) és a Spring Framework. A Java EE az Oracle a Java jelenlegi készítője által támogatott eredeti verzió. Ezt korábban a Sun Microsystems készítette, melyet felvásárolt az Oracle Corporation 7,4 milliárd dollárért 2009-ben. Mind a kettő moduláris felépítésű, és funkcionalitását tekintve nagyon hasonló modulok jelennek meg. Megtehetjük, hogy az egyiket választjuk vagy a másikat, de akár kombinálhatjuk is őket.\\
 
@@ -188,9 +189,9 @@ Javaslatokat adni azokra a koncertekre, amelyekre az előző keresése, és rés
 
 Statisztikákat csinálni az előadók és koncertszervezők felé. Nekik is lehet így akkor ajánlásokat tenni.
 
-Koncertprogram összeállítása. Megoldani, hogy lehessen ellenőrízni azt, hogy egy koncerten minden elterjedt stílus képviseli magát. A cél az lenne, hogy a koncert minél nagyobb érdeklődési kört lefedjen, de azért maradjon egységes a programja.
+Koncertprogram összeállítása. Megoldani, hogy lehessen ellenőrizni azt, hogy egy koncerten minden elterjedt stílus képviseli magát. A cél az lenne, hogy a koncert minél nagyobb érdeklődési kört lefedjen, de azért maradjon egységes a programja.
 
-Lehet majd távolságokat definiálni stílus, és közös koncertek alapján. Arra kell törekedni, hogy a koncert prograja ez alapján kiegyensúlyozott legyen majd.
+Lehet majd távolságokat definiálni stílus, és közös koncertek alapján. Arra kell törekedni, hogy a koncert programja ez alapján kiegyensúlyozott legyen majd.
 
 \section{Az alkalmazás felépítése}
 
@@ -215,16 +216,41 @@ A kliens oldali rész részletezése.
 
 % TODO: Készíteni valamilyen szerkezeti ábrát, hogy az alkalmazás egyes részei hogy kapcsolódnak majd egymáshoz.
 
-Konkrét interfészek (backend szempontjából):
+Konkrét interfészek:
 \begin{itemize}
-\item amin befelé jön több stílus(letárolás) illetve egy zenekar amelyiket letároljuk és felszereljük az adott stílusokat (lehet create vagy modify)
-\item amin befelé jön egy stílus(letárolás)
-\item ami stílus szerint adja vissza a zenekarokat.
-\item ami a zenekarok listáját visszaadja
-\item ami a fesztiválok listáját visszaadja
-\item ami név szerint ad vissza egy fesztivált
-\item ami név szerint ad vissza egy zenekart
-\item amin befelé jön egy fesztivál és zenekarok listája, hozzá fűzve egy időpont is(amikor fel fog lépni(ehhez külön osztály és db-ben is változás lesz)).
+\item összes stílus,
+\item összes fesztivál időrendben,
+\item egy fesztivál id alapján,
+\item fesztiválok stílus alapján,
+\item Fesztiválok település alapján,
+\item Fesztiválok koordinátától x távolságra esők.(persze az ilyen koordináták, vmilyen térékép segítségével adhatóak meg, nem a usernek kell beírnia)
+\item Fesztiválok 2 időpont között, illetve vagy egy dátumnál nagyobb vagy egy dátumnál kisebb,
+\item Fesztiválok fellépő alapján(ezt talán a koncert mint entitás majd megoldja)
+\item Koncertek fellépő alapján(fellépő turnéja),
+\item koncertek fesztivál alapján,
+\item Fellépők betűrendben,
+\item Fellépő név szerint,
+\item Fellépők stílus szerint.
+\item Fesztiváltól a szállások x km-en belül.
+\item --------------------------------------
+\item + Stílus hozzáadása zenekarhoz, 
+\item + Stílus hozzáadása fesztiválhoz,
+\item Szállás felvitele,
+\item Fesztivál felvitele,
+\item Koncert felvitele,
+\item Zenekar felvitele,
+\item --------------------------------------
+\item Törléseket elég adatbázis szinten végezni.
+\item Stílust esetleg érdemes lehet törölni,
+\item Koncertet is érdemes lehet törölni.
+\item --------------------------------------
+\item Ami elmúlt azt archiválni kell. Archiválás: vagy átmozgatni másik táblába, vagy egy + változót bevezetni, és átbillenteni true-ról false-ra.
+\item ---------------------------------------
+\item Zenekar módosítás,
+\item Stílust nem érdemes módosítani inkább törölni, és újat felvinni
+\item Helyszín módosítás,
+\item Fesztivál módosítása, 
+\item koncert módosítása.
 \end{itemize}
 
 Képek feltöltése
