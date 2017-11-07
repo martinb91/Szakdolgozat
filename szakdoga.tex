@@ -25,28 +25,56 @@
 
 \section*{Bevezetés}
 
-front-end(van backend része is):
-A lekérdezett zenekarra rákattintva visszatér a zenekar adataival és a letárolt fellépéseit is megmutatja kronológia vagy relevancia(egyéb is lehet priorítás) szerint.
-Fesztiválra kattintva dobja a fellépőket, melyek megtekinthetők hyperlink segítségével.(Azért lehet hasznos, ha esetleg nem ismerné a felhasználó a zenekart, vagy ha kíváncsi, hogy hol lesz még fellépése).
-
 A rendszer segít eligazodni a fesztiválok világában, és az érdeklődőknek eldönteni, hogy melyik fesztiválon szeretne részt venni.
 
+[21]"Fesztivál minden olyan – egy vagy több téma köré szerveződő, rendszeresen megrendezésre kerülő, egy vagy több helyszínen történő, meghirdetett programmal rendelkező kulturális, művészeti, gasztronómiai, sport vagy egyéb – eseménysorozat, melynek célja, hogy közönsége részére kiemelten színvonalas, értékközvetítő, minőségi, ismereteket is bővítő és egyben szórakoztató, szabadidős közösségi élményt nyújtson (Magyar Fesztivál Szövetség, 2009)".
+A hazai turizmus jelentős részét a program azon belül a fesztiválturizmus adja.
 % TODO: Ezt elég csak a végén fixálni!
 
 \section{Fesztiválokhoz kapcsolódó szolgáltatások}
 
 % TODO: Összeszedni lehetőleg az összes olyan funkciót, amelyik fesztiválokhoz kapcsolható lehet, mint releváns szolgáltatás/funkció!
 
-A rendszer funkciói(back-end):\\
-Stílusok felvitele, módosítása (mely értékkészletből, majd hozzá lehet adni a zenekarokhoz, és a fesztiválokhoz)\\
-Zenekarok felvitele, módosítása, esetleges archiválása\\
-Fesztiválok felvitele, módosítása, a meglévő fesztiválhoz koncert rendelése(fellépő + időpont)\\
-A fesztiválokhoz szállások és jegyek felvitele(jövőben ha lesz rá idő.)\\
-Zenekarok keresése és listázása név vagy stílus alapján, ugyan ez fesztiválokra is + fesztiváloknál még helyi, regionális keresés is lehetséges.\\
+Én a klasszikus értelembe vett zenei vagy zenei vonatkozású fesztiválokra fókuszálok.
+A fesztiválokhoz nagyon változatos és sokrétű funkció csoportok tartoznak, melyeket több szempont alapján kategorizálhatunk. Szedjük ezeket szét többféleképpen, hogy meg tudjuk határozni, hogy mik legyenek a szoftvertermékünk valódi megvalósult funkciói.
 
-% TODO: Megnézni a hasonló célú, elterjedt alkalmazásokat!
+A fesztiválozáshoz, mint szolgáltatáshoz közvetlenül és közvetve kapcsolódó funkciók:
+Közvetlenül kapcsolódó funkciók: Amelyekért a szolgáltatást igénybe veszi a használója.
+Vegyük sorra ezeket: 
+\begin{itemize}
+\item Fellépők, a legnagyobb vonzereje a szolgáltatásnak, ezeket kellő időben és helyen kell megismertetni a közönséggel. Ide értve nem csak a zenei produkciókat, de egyéb performance-t, és előadásokat, prevenciókat.
+\item Élelmiszer és ital, a zenei fesztiválok jelentős része 3-10 napos periódusban gondolkodik. Alapvető szükségletet elégít ki, általában egy ilyen esemény alatt nagyobb összeget költenek erre a kategóriára, mint magára a belépőre, utazásra, szállásra.
+\item Egyéb sport, kulturális, szellemi programok, vetélkedők. Technológiai bemutatók kipróbálási lehetőséggel.
+\item VIP szolgáltatások, közönségtalálkozók.
+\end{itemize}
 
-Az interneten fellelhető már egypár elterjed Fesztivál/Esemény kereső alkalmazás, mindegyiknek van hiányossága és tartalmaznak jó ötleteket is. Vegyünk sorra néhányat.
+Közvetve kapcsolódó funkciók: Amelyeket nem érzékel, amikért nem fizetne önmagában, illetve nem kell tudnia a fesztiválozónak, de kényelmetlenül érezné magát, ha nem valósulnának meg az alábbi szolgáltatások.
+\begin{itemize}
+\item Takarítás, WC használat, esetenként a zuhanyzási és alvási lehetőség.
+\item A színpadok, dekorációk, kerítések építése, karbantartása, lebontása.
+\item A fellépők oda és haza juttatása zökkenőmentesen.
+\item Készletgazdálkodás, promóciók, kérdőívek.
+\item Média megjelenés.
+\item Elektronikus, internetes hálózat, közvilágítás.
+\item Biztonság, az időjárás viszontagságai ellen védelem, értékmegőrzés.
+\item Rekreáció, egészségmegőrzés.
+\item Fodrász, kozmetikus a feltűnő és kreatív megjelenés érdekében.
+\item Véradásért cserében valami ellen szolgáltatás.
+\end{itemize}
+
+Melyek azok a szolgáltatások, amelyek érdekelni fogják a felhasználót, szeretne előretudni róla, és ezeket egy információs rendszerben meg lehet jeleníteni: \begin{itemize}
+\item Fellépők listája, mint már említettem ez az egyik legfőbb vonzerő.
+\item Az extrém nem mindenhol kipróbálható sportolási, technológiai lehetőség.
+\item Hasznos lehet a környékbeli étkezők elérhetősége, akár étlapja árakkal. Tudjuk, hogy a fesztiválok a magas áraikról és főleg a gyors kajáikról híresek. Érdemes lehet az olcsóbb, vagy a gasztronómia szerelmeseinek a környező elit éttermekről előre információt nyújtani.
+\item Dohányboltok, illetve dohányzás. Magyarországon jelenleg a jogszabályi környezet befolyásolja a dohányáruk vásárlási helyét, erről nyújthat információt egy alkalmazás, és arról is, hogy lehetséges-e dohányozni a fesztiválterületen vagy sem.
+\item Szállás, vannak olyan fesztiválok, amelyek sátorhelyet és/vagy faházat biztosítanak a közönségük számára. Emellett megjeleníthetőek a kollégiumok, apartmanok, szállodák.
+\item Kutyabarátság, kutya bevihető-e a rendezvényre.
+\item Gyerekbarátság, gyermekek bevihetőek-e, esetleg vannak-e számukra külön programok.
+\item Jegyek, kell-e fizetnünk a fesztiválra belépésért vagy ingyenesen látogatható. Ha igen, akkor milyen jegytípusok érhetőek el.
+\item Strandolási lehetőség. A zenei fesztiválok jelentős része nyáron van és vízközelben, hogy a közönségnek legyen lehetősége védekezni a meleg ellen.
+\end{itemize}
+
+Az interneten fellelhető már egypár elterjed Fesztivál/Esemény kereső alkalmazás, vannak hiányosságaik és tartalmaznak frappáns ötleteket is. Vegyünk sorra néhányat:
 
 1. http://www.fesztivalkalauz.hu : Az első dolog amivel a felhasználó találkozik az a felhasználói felület, amelynek körülbelül a felét használta ki a fejlesztő. Jelenleg egy 14"-os kijelzőn nézve ez zavaróan kicsi. Feltehetőleg ez azért is van így, mert nagyjából 10 éves fejlesztés, és akkor még nem volt ekkora kijelző választék - sem méret, sem eszköz tekintetében - amelyeken weboldalakat jelenítettünk meg, így elég volt egy statikus méretre és betűtípusra beállítani a weboldalt. Jelenleg divatosak a reszponzív weboldalak, amelyek igyekeznek kiküszöbölni ezt a problémát.
 [1] A reszponzív weboldal (RWD) egy olyan megközelítéssel tervezett weboldal, amelynek a célja az, hogy optimális megjelenést biztosítson - könnyű olvashatóság, egyszerű navigáció a lehető legkevesebb átméretezéssel és görgetéssel - a legkülönfélébb eszközökön (az asztali számítógép monitorjától egészen a mobiltelefonokig).
@@ -63,7 +91,7 @@ Lehet település, kerület, illetve megye szerint is keresni. Típus és dátum
 
 5+1. http://elmenyem.hu : Az oldal nem rendelkezik fesztiválkereső résszel, ez inkább egy blog. De rengeteg aktualitással, hírekkel szolgál a jövőben megrendezendő eseményekkel kapcsolatban. 
 
-%???Egy mátrixot érdemes lehet-e készíteni az oldalakról, hogy melyik oldalnak, milyen lehetőségeik vannak.
+%???Egy mátrixot érdemes lehet-e készíteni az oldalakról, hogy melyik oldalnak, milyen lehetőségei vannak.
 
 Extra lehetőségek, amelyekkel nem éltek az itt feltüntetett weboldalak: 
 SZÉP-kártya, és egyéb fizetési lehetőségek feltüntetése.
@@ -71,7 +99,7 @@ Gyerek illetve kutyabarát-e a rendezvény. Könnyen megvalósítható, mégis l
 Dohányzásra, alkoholfogyasztásra, korhatárra is lehetne bevezetni hasonló kis ikonokat, ezeket is egyszerű paraméterként fel lehetne szerelni.
 Értékmegőrzésre, telefon töltésre van-e lehetőség. 
 Ingyenes-e a rendezvény: Ez is könnyen felkeltheti az érdeklődők figyelmét. Itt is alkalmazható lenne a már jól bevált ikonos megoldás.
-A nemzetköziesítés is szempont lehet, habár ezek az oldalak elsősorban hazai piacra készültek. Ideértve az árak más valutában való megjelenítését is a leírások szövege mellett.
+A nemzetköziesítés is szempont lehet, habár ezek az oldalak elsősorban hazai piacra készültek, amelyek fesztiválok nemzetközi vendégeket várnak, azoknak a marketingprogramja is külföldre pozíciónál, és saját weboldallal is rendelkeznek. Ideértve az árak más valutában való megjelenítését is a leírások szövege mellett.
 Közlekedés: Érdemes lehet feltüntetni, magát a fesztivál koordinátáit, mint ezt a programturizmus.hu weboldalon láthattuk, emellett érdemes lehet parkolási lehetőségekről térképen előre informálni az odaérkezőket, egy nagyobb eseményre akár több ezer személyautóval is érkezhetnek. A buszpályaudvarról és vasútállomásról a célhoz eljutást segítő helyi járatok menetrendjét is lehetne mellékelni. Az eseménnyel szerződött taxivállalatok telefonszámait felsorolni. A gyalogos eljutást térkép segítségével megmutatni.
 Szállás: Mint láthattuk, majdnem mindegyik weboldal ajánlott szállást hotelekben. De a fesztiválok klasszikus közönsége, az nem szállodákban alszik. Általában sátorban, faházakban, kollégiumokban, vagy épp ahol eléri az álom. Érdemes lenne jelezni a felhasználó felé, hogy lehet-e sátrazni, és ha igen, van-e ennek extra költsége. A kollégiumokat, faházakat is lehetne ilyen módon jelezni.
 Időjárás: Ez sajnos nem jósolható hónapokkal előre, de pár héttel a fesztivál kezdete előtt ez is felkerülhetne. Hisz mint tudjuk, ezen események javarészt fedetlen vagy részben fedett helyeken zajlanak.
@@ -82,7 +110,7 @@ Visszacsatolás: A legtöbb ilyen eseményt többször megrendezik, vannak olyan
 
 Spring MVC: 2002-ben hozta létre Rod Johnson. Ingyenesen elérhető és nyílt forráskódú Java alapú keretrendszer. Jelenleg egy Pivotal nevű cég foglalkozik a keretrendszer sorsával. Nagyon népszerű, hazánkban is rengeteg a keretrendszert ismerő fejlesztőt keresnek. Alkalmazási területe sokrétű, banki szektortól a telekommunikációig mindenhol feltűnik.\\
 
-Nyílt forráskód: Elérhető akárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projekttel találkozunk. Például Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.\\
+Nyílt forráskód: Elérhető bárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projekttel találkozunk. Például Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.\\
 
 A Java webalkalmazások készítéséhez két alapvető irány alakult ki: a Java Enterprise Edition (Java EE) és a Spring Framework. A Java EE az Oracle a Java jelenlegi készítője által támogatott eredeti verzió. Ezt korábban a Sun Microsystems készítette, melyet felvásárolt az Oracle Corporation 7,4 milliárd dollárért 2009-ben. Mind a kettő moduláris felépítésű, és funkcionalitását tekintve nagyon hasonló modulok jelennek meg. Megtehetjük, hogy az egyiket választjuk vagy a másikat, de akár kombinálhatjuk is őket.\\
 
@@ -105,14 +133,16 @@ A kliens három különböző módon fogadhatja a szolgáltatásokat: szetter, i
 ORM: Object-relational mapping, egy olyan megközelítése az adattárolásnak ami szerint az objektumorientált programozási nyelvekben az objektumok átalakíthatóak a táblázat soraivá.
 
 [7] Perzisztencia: A perzisztencia szót az informatikában olyan adatra használjuk, mely túléli az őt létrehozó folyamatot. 
+
 [7] JPA: A Java perzisztenciát hasonlóképpen definiálhatjuk, csak ez esetben arról van szó, hogy a tárolás a Java programozási nyelv segítségével történik. Legtöbb esetben az adat nagy része főként relációs adatbázisokban tárolódik, melyekhez sokféle módon hozzáférhetünk a Java programból – ezen módok közül egy a JPA.
+
 [8] A Java Database Connectivity, röviden JDBC egy API a Java programozási nyelvhez, amely az adatbázishozzáférést támogatja. A JDBC definiálja az adatbázisok lekérdezéséhez és módosításához szükséges osztályokat és metódusokat. A relációs adatmodellhez igazodik.
 
-Spring Boot: egy relatíve új Springre épülő keretrendszer, mely rengeteg konfigurálási feladatot levesz a programozó válláról és magában a keretrendszerben még egy Tomcat szerver is van, melynek segítségével képes létre hozni egy belső futtató környezetet. Természetesen az alapbeállítások megváltoztathatóak, de már egy kerdő projekt is egy valódi webalkalmazást reprezentál. Nem kell hozzá mélyen ismerni a Spring-et, és összeválogathatóak bele ugyanúgy a Spring modulok. \\
+Spring Boot: egy relatíve új Springre épülő keretrendszer, mely rengeteg konfigurálási feladatot levesz a programozó válláról és magában a keretrendszerben még egy Tomcat szerver is van, melynek segítségével képes létre hozni egy belső futtató környezetet. Természetesen az alapbeállítások megváltoztathatóak, de már egy kezdő projekt is egy valódi webalkalmazást reprezentál. Nem kell hozzá mélyen ismerni a Spring-et, és összeválogathatóak bele ugyanúgy a Spring modulok. \\
 
-Web-szolgáltatás és web-applikáció közötti különbség: Webservice az, ami XML vagy Json, stb. válaszokat tud adni egy kérésre (request) amely egy klienstől érkezik, ezek érkezhetnek bármilyen applikációból, akár egy iOS alapú vagy android alapú eszközről is. Míg egy Webapplication egy honlapon adja vissza a lekérések eredményeit, a webapplication is a webservice-en keresztül szerzi meg az adatokat, amiket meg szeretne jeleníteni. A webszolgáltatás általánosságban egy adatbázishoz is csatlakozik.\\
+Web-szolgáltatás és web-applikáció közötti különbség: Webservice az, ami XML, JSON, vagy bármilyen jól strukturált választ tud adni egy kérésre (request), amely egy klienstől érkezik, ezek érkezhetnek bármilyen applikációból, akár egy iOS alapú vagy android alapú eszköz alkalmazásától is. Míg egy Webapplication egy honlapon adja vissza a lekérések eredményeit. A web-applikáció is a web-szolgáltatásokon keresztül szerzi meg az adatokat, amiket meg kell jelenítenie. A webszolgáltatások általában egy vagy több adatbázishoz is csatlakoznak, ez nem kritérium, de jellemzően igényelnek adattárolást.\\
 
-Maven: Minden Maven projekthez tartozik egy \texttt{pom.xml} nevű fájl, melyben tartalmaz egy listát a külső függőségeiről, amikre szüksége lesz a projektnek ahhoz, hogy leforduljon. A Maven ennek a fájlnak az alapján megtalálja ezeket és letölti és a helyére is másolja, így ezeket a műveleteket nem nekünk kell kézzel elvégeznünk.\\
+Maven: Minden Maven projekthez tartozik egy \texttt{pom.xml} nevű fájl, melyben tartalmaz egy listát a külső függőségeiről, amikre szüksége van a projektnek ahhoz, hogy leforduljon. A Maven ennek a fájlnak segítségével megtalálja ezeket és letölti és a helyére is másolja, így ezeket a műveleteket nem nekünk kell kézzel elvégeznünk.\\
 
 MVC modell:\\
 
@@ -122,50 +152,46 @@ MVC modell:\\
 
 -Contoller: Itt találhatjuk meg az üzleti logikát. Itt történnek meg a számítások, innen jönnek a válaszok a felhasználó felé és innen mennek a kérések a modellhez. A Kontroller a kapocs a Modell és a Nézet (View) között.\\
 
--Service: A Spring-ben szokás bevezetni egy új réteget, ez lesz a Service, ennek segítségével ki fog válni az üzleti logika a Controller-ből, és ezt a funkcióját átveszi a Service. A Contoller innentől forgalom írányítóként fog üzemelni.
+-Service: A Spring-ben szokás bevezetni egy új réteget, ez lesz a Service, ennek segítségével ki fog válni az üzleti logika a Controller-ből, és ezt a funkcióját átveszi a Service. A Contoller innentől forgalomirányítóként fog üzemelni.
 
 Annotációk a Springben: Minden osztályban feltűnnek az annotációk. Melyek a keretrendszernek szóló üzenetek, ezek alapján tudja eldönteni a Spring, hogy miként bánjon az egyes osztályokkal, metódusokkal, adattagokkal.\\
 
-\texttt{@Configuration}
+Bean: Java komponensek, melyekből bármikor kérhetünk egy példányt a konténertől.
 
-A bean leírások információforrása.
+Konténer: A konténer tárolja és menedzseli a bean-ek - magyarul babok - élet ciklusait.
 
-\texttt{@EnableAutoConfiguration}
+[9] \texttt{@Bean} Explicit módon adhatjuk meg vele a bean-eket a konténer számára.
 
-\texttt{@ComponentScan}
+\texttt{@Component} A komponensek is bean-ek csak ezeket automatikusan konfigurálja a keretrendszer. A Komponenseknek két válfaja van a \texttt{@Service} és a \texttt{@Repository}. A \texttt{@ComponentScan} annotációban megadott ösvényeket végigjárva keresi meg azokat az osztályokat, amelyeknek a definíciójában megtalálható valamelyik komponens típus.
 
-A konténernek megmondja, hogy melyik csomagokba vizsgálja meg, hogy Bean-e vagy sem, ha bean akkor azt jegyezze is fel, hisz akkor úgy is kell bánni vele. Megadási módja, ha elég csak az a csomag amiben a @ComponentScan-nel annotált osztály elhelyezkedik, akkor nem kell paramétert megadni neki. Viszont ha ez nem elég számunkra, akkor paraméterezni kell. A paraméterezés ilyen módon történik:
+\texttt{@Configuration} A bean leírások információforrása.
+
+\texttt{@EnableAutoConfiguration} Automatikus konfigurálás engedélyezése, ez az annotáció szól a Spring keretrendszernek, hogy amit tud azt állítson be magától, az alapértelmezett beállításokkal, és generálja le az ehhez kellő babokat.
+
+\texttt{@ComponentScan} A konténernek megmondja, hogy melyik csomagokba vizsgálja meg, hogy bean-e vagy sem, ha bean akkor azt feljegyzi, hisz akkor úgy is kell kezelnie  a konténernek. Ha valamelyik osztály kér egy példányt egy bean-ből, akkor csak a konténerben beregisztráltak közül tudunk kiosztani számára. Megadási módja, ha elég csak az a csomag amiben a @ComponentScan-nel annotált osztály elhelyezkedik, akkor nem kell paramétert megadni neki. Viszont, ha ez nem elég számunkra, akkor paraméterezni kell. A paraméterezés ilyen módon történik:
 \begin{verbatim}
 @ComponentScan(\{"hu.egyik", "hu.masik"\})
 \end{verbatim}
-tehát zárójelen belül, ha többet szeretnénk felsorolni, akkor kapcsos zárójelen belül, elemenként idézőjelek között felsorolva a csomagok nevét, és vesszővel el választva. Természetesen csak azokat az osztályokat találja meg, amelyik jelzi, hogy ő egy bean, pl.: @Component. \\
+tehát zárójelen belül, ha többet szeretnénk felsorolni, akkor kapcsos zárójelen belül, elemenként idézőjelek között felsorolva a csomagok nevét, és vesszővel el választva. Természetesen csak azokat az osztályokat találja meg, amelyik jelzi a konténer számára, hogy ő egy bean, pl.: @Component. \\
 
-@EnableAutoConfiguration: Mindent állítson be magától a keretrendszer, amit csak tud.
-@Controller: Controllerrel annotált osztály esetén Request mapping egy nézettel tér vissza (pl JSP vagy HTML file nevével.)
+\texttt{@EnableAutoConfiguration}: Mindent állítson be magától a keretrendszer, amit csak tud.
 
+\texttt{@Controller}: Controllerrel annotált osztály esetén @Requestmapping egy statikus file nevét téríti vissza (pl JSP vagy HTML file nevével.)
 
-\texttt{@Service}
+\texttt{@Service}: Jelzi a konténer számára, hogy ő a @Service réteghez tartozik, valami kalkulációt végezni fog.
 
-Jelzi a konténer számára, hogy ő a @Service réteghez tartozik, valami kalkulációt végezni fog.
-
-\texttt{@Contoller}
-
-\texttt{@Bean}
-
-\texttt{@RestContoller}
-
+\texttt{@RestContoller}:
 Jelzi a konténer felé, hogy innen érkezhetnek kérések, illetve itt tudjuk fogadni ezeket. És mint a neve is mutatja REST API segítségével. RestContoller elég nagy szabadság fokot biztosít, hisz szinte minden féle struktúrában adhatunk választ és fogadhatunk kérést, hisz ezeket értelmezni tudja. Tipikusan JSON-t fogunk használni, de lehetőség lenne akár XML, HTML választ is adni, a népszerűbb technológiákat kiemelve, de akár egyszerű konstans szöveget is. Tehát ennek az annotációnak a segítségével tudja a Spring, hogy ezzel az osztállyal lehet kommunikálni, ami azt jelenti, hogy tud küldeni és fogadni is adatot.
 
-\texttt{@RequestMapping}
-
+\texttt{@RequestMapping}:
 A ReqestMapping annotáció segítségével megadhatjuk, hogy melyik csatornát figyelje a metódusunk, és ha a megadott csatornán jön valami, akkor meghívódik a hozzárendelt metódus.  A megadás módja \texttt{@ReqestMapping("/")}, tehát az annotáció után zárójelben, dupla idézőjelek között adjuk meg, hogy a honnan érkező kéréseket figyelje, a példában beállított a gyökércsatornán érkező kéréseket figyeli. (de ha /kiscica-t adok meg, akkor azokat fogja figyelni, ami azon a "kiscica" csatornán jön.)
 
-DevTools Maven-ben: arra használható, hogy ne kelljen minden módosítás után újrafordítanunk, hanem ha megváltozott a forráskód akkor megteszi helyettünk az IDE.
+DevTools Maven-ben arra használható, hogy ne kelljen minden módosítás után újrafordítanunk, hanem ha megváltozott a forráskód akkor megteszi helyettünk az IDE.
 
 \subsection{Spring Bean Scope}
 
 A Spring Babok életciklusai.
-Singleton: Csak egyetlen példány jön létre belőle. Ez a Springben az alapértelmezett, ha létrejön egy osztály az singleton lesz, ha másként nem rendelkezel.(pl. @RestContoller)
+Singleton: Csak egyetlen példány jön létre belőle. Ez a Springben az alapértelmezett, ha létrejön egy osztály az singleton lesz, ha másként nem rendelkezünk.(például: @RestContoller)
 Prototype: Minden egyes alkalommal új példány készül.
 Request: Mindenegyes HTTP lekérdezéssel új példányt készül belőle.
 Session: Egy Session-höz kötjük a bean-t, a klasszikus példa erre a bevásárlókocsi a webáruházaknál, a kocsiba pakolt termékek addig maradnak amíg a felhasználó ki nem lép a böngészőből, vagy ki nem jelentkezik a weboldalról, így nem kell egy weblap frissítés után újra belepakolni a termékeket amiket meg szeretnénk vásárolni.
@@ -182,6 +208,59 @@ A második mód a setter alapú megadási mód. Itt létrehozunk a változóhoz 
 Az utolsó verzió a konstruktor alapú, itt a konstruktor felett adjuk meg, a már jól ismert \texttt{@Autowired} annotációt.
 
 \section{Az alkalmazás funkciói}
+
+Az eddigiek alapján meg kell határozni, hogy miket szeretnénk, ha megvalósítana az alkalmazásunk, miben lesz más vagy jobb mint a többi a piacon fellelhető alkalmazás. Én igyekszem két új aspektust bevezetni, amelyeket ott nem, vagy nem egészen így alkalmaztak. Az egyik a fellépő alapú szemlélet. Szeretném, ha nem csak a fesztiválról tudnánk meg többet, hanem az ott fellépő zenekarokról is érhetnénk el információkat. Ha nem ismerem őket, akkor rákattintva megtudhatok róluk pár információt, illetve az oldalra felvitt fesztiválok alapján a turné állomásokat. A másik aspektus a kulcsszavak bevezetése mint fesztivál, mint fellépő oldalon. Hasonlóval találkozhattunk egy-két általam is bemutatott oldalon. Amilyen paraméterek számításba jöhetnek: zenei stílusok, fesztivál stílusok, sátrazási lehetőség, kutyabarát. A divatos nevén a hashtag-ek.
+[22]A „hashtag” a metaadat egyik formája, amely egy szóból vagy kifejezésből áll, amely elé hash jelet (\#) tesznek. A hashtageket gyakran használják a közösségi hálókon, hogy azonosítsák, kategorizálják az érdeklődési köröket, „topikokat”, illetve megkönnyítsék a kulcsszavak szerinti kutatást.
+Adatbázis és program szinten stílusnak neveztem el, de talán ez egy kicsit tágabb fogalom.
+
+Konkrét interfészek:
+\begin{itemize}
+\item Összes stílus,
+\item összes fesztivál időrendben,
+\item egy fesztivál id alapján,
+\item fesztiválok stílus alapján,
+\item Fesztiválok település alapján,
+\item Fesztiválok koordinátától x távolságra esők.(persze az ilyen koordináták, vmilyen térékép segítségével adhatóak meg, nem a usernek kell beírnia)
+\item Fesztiválok 2 időpont között, illetve vagy egy dátumnál nagyobb vagy egy dátumnál kisebb,
+\item Fesztiválok fellépő alapján(ezt talán a koncert mint entitás majd megoldja)
+\item Koncertek fellépő alapján(fellépő turnéja),
+\item koncertek fesztivál alapján,
+\item Fellépők betűrendben,
+\item Fellépő név szerint,
+\item Fellépők stílus szerint.
+\item Fesztiváltól a szállások x km-en belül.
+\item --------------------------------------
+\item + Stílus hozzáadása zenekarhoz, 
+\item + Stílus hozzáadása fesztiválhoz,
+\item Szállás felvitele,
+\item Fesztivál felvitele,
+\item Koncert felvitele,
+\item Zenekar felvitele,
+\item --------------------------------------
+\item Törléseket elég adatbázis szinten végezni.
+\item Stílust esetleg érdemes lehet törölni,
+\item Koncertet is érdemes lehet törölni.
+\item --------------------------------------
+\item Ami elmúlt azt archiválni kell. Archiválás: vagy átmozgatni másik táblába, vagy egy + változót bevezetni, és átbillenteni true-ról false-ra.
+\item ---------------------------------------
+\item Zenekar módosítás,
+\item Stílust nem érdemes módosítani inkább törölni, és újat felvinni
+\item Helyszín módosítás,
+\item Fesztivál módosítása, 
+\item koncert módosítása.
+\end{itemize}
+
+A rendszer funkciói(back-end):\\
+Stílusok felvitele, módosítása (mely értékkészletből, majd hozzá lehet adni a zenekarokhoz, és a fesztiválokhoz)\\
+Zenekarok felvitele, módosítása, esetleges archiválása\\
+Fesztiválok felvitele, módosítása, a meglévő fesztiválhoz koncert rendelése(fellépő + időpont)\\
+A fesztiválokhoz szállások és jegyek felvitele(jövőben ha lesz rá idő.)\\
+Zenekarok keresése és listázása név vagy stílus alapján, ugyan ez fesztiválokra is + fesztiváloknál még helyi, regionális keresés is lehetséges.\\
+front-end(van backend része is):
+A lekérdezett zenekarra rákattintva visszatér a zenekar adataival és a letárolt fellépéseit is megmutatja kronológia vagy relevancia(egyéb is lehet priorítás) szerint.
+Fesztiválra kattintva dobja a fellépőket, melyek megtekinthetők hyperlink segítségével.(Azért lehet hasznos, ha esetleg nem ismerné a felhasználó a zenekart, vagy ha kíváncsi, hogy hol lesz még fellépése).
+
+---------------------
 
 Egy alkalmazáson belül lehet látni, hogy egy előadónak hogy néz ki az adott turnéja. Fellépőre lehet majd tudni keresni.
 
@@ -216,42 +295,6 @@ A kliens oldali rész részletezése.
 
 % TODO: Készíteni valamilyen szerkezeti ábrát, hogy az alkalmazás egyes részei hogy kapcsolódnak majd egymáshoz.
 
-Konkrét interfészek:
-\begin{itemize}
-\item összes stílus,
-\item összes fesztivál időrendben,
-\item egy fesztivál id alapján,
-\item fesztiválok stílus alapján,
-\item Fesztiválok település alapján,
-\item Fesztiválok koordinátától x távolságra esők.(persze az ilyen koordináták, vmilyen térékép segítségével adhatóak meg, nem a usernek kell beírnia)
-\item Fesztiválok 2 időpont között, illetve vagy egy dátumnál nagyobb vagy egy dátumnál kisebb,
-\item Fesztiválok fellépő alapján(ezt talán a koncert mint entitás majd megoldja)
-\item Koncertek fellépő alapján(fellépő turnéja),
-\item koncertek fesztivál alapján,
-\item Fellépők betűrendben,
-\item Fellépő név szerint,
-\item Fellépők stílus szerint.
-\item Fesztiváltól a szállások x km-en belül.
-\item --------------------------------------
-\item + Stílus hozzáadása zenekarhoz, 
-\item + Stílus hozzáadása fesztiválhoz,
-\item Szállás felvitele,
-\item Fesztivál felvitele,
-\item Koncert felvitele,
-\item Zenekar felvitele,
-\item --------------------------------------
-\item Törléseket elég adatbázis szinten végezni.
-\item Stílust esetleg érdemes lehet törölni,
-\item Koncertet is érdemes lehet törölni.
-\item --------------------------------------
-\item Ami elmúlt azt archiválni kell. Archiválás: vagy átmozgatni másik táblába, vagy egy + változót bevezetni, és átbillenteni true-ról false-ra.
-\item ---------------------------------------
-\item Zenekar módosítás,
-\item Stílust nem érdemes módosítani inkább törölni, és újat felvinni
-\item Helyszín módosítás,
-\item Fesztivál módosítása, 
-\item koncert módosítása.
-\end{itemize}
 
 Képek feltöltése
 
@@ -294,6 +337,11 @@ Ezek alapján legalábbis javaslatok az optimalizálásra vonatkozóan.
 
 [8]\url{ https://hu.wikipedia.org/wiki/Java_Database_Connectivity }
 
+[9]\url{ https://stackoverflow.com/questions/10604298/spring-component-versus-bean }
+
+[21]\url{ http://www.rgvi.gtk.szie.hu/system/files/upload/course_material/fesztivalok.pdf }
+
+[22]\url{ https://hu.wikipedia.org/wiki/Hashtag#cite_note-1 }
 
 Konkurrens alkalmazások
 Java Spring
