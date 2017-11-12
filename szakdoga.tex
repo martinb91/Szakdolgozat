@@ -243,11 +243,11 @@ Az egyedek között fent álló relációk a következőek:
 
 Konkrét interfészek:
 \begin{itemize}
-\item Összes stílus,
-\item összes fesztivál időrendben,
-\item egy fesztivál id alapján,
-\item fesztiválok stílus alapján,
-\item Fesztiválok település alapján,
+\item Összes stílust visszaadó funkció, amely értékkészletből könnyebben tud választani, ha esetleg nem jutna eszébe, vagy nem gondolna az esetleges kategóriákra.
+\item Az összes fesztivált visszaadó funkció, amely mindezt a kezdés időpontja szerint adja vissza. Ez az alapértelmezett, ha a fesztiválok menüpontra kattintunk.
+\item Fesztivál visszaadás Id alapján. Egy fesztivált kiválasztunk, a részleteit, illetve a programját az azonosítója alapján kapjuk vissza. 
+\item Kiválasztott stílus alapján megkapjuk azon fesztiválok listáját, amelyek a kategória alá tartoznak.
+\item Fesztiválok település alapján, ez megvalósulhat API alapján, illetve amíg az nincs addig az egyed leírásából kinyerhető lesz. 
 \item Fesztiválok koordinátától x távolságra esők.(persze az ilyen koordináták, vmilyen térékép segítségével adhatóak meg, nem a usernek kell beírnia)
 \item Fesztiválok 2 időpont között, illetve vagy egy dátumnál nagyobb vagy egy dátumnál kisebb,
 \item Fesztiválok fellépő alapján(ezt talán a koncert mint entitás majd megoldja)
@@ -332,6 +332,17 @@ Képek feltöltése
 - A képhez fájnév generálása
 - Képhez tartozó adatok rögzítése az adatbázisban
 
+\section{Telepítés}
+
+[23] Spring alkalmazást minimum Java 6-os fordítóval lehet lefordítani futtatható alkalmazássá. Én a Spring Boot 1.5.8.RELEASE kiadást használtam. Itt már csak a Java 7-es verziója használható - a 8 vagy újabb ajánlott - fordításra. Én a Java 8-at használtam, amikor belevágtam a fejlesztésbe, akkor még a Java 9 nem volt elérhető. Azóta már megjelent a 9 is, de én nem váltottam verziót. Alapvetően Java 8 specifikus dolgokat sem használtam, a Java 9-cel még nem volt időm megismerkedni.
+Maven segítségével töltöttem le azokat a jar fájlokat amelyektől függ az alkalmazásunk. A 3.5.0 verzió volt akkor a legújabb verzió és általam is használt verzió. A Maven 3.5.0 szintén igényli a minimum a Java hetedik verzióját.
+
+spring-boot-starter-web
+spring-boot-starter-data-jpa
+spring-boot-starter-test
+spring-boot-devtools
+ojdbc14 % Az adatbázis még nem bíztos hogy oracle lesz, jelenleg H2-van alatta.
+
 \section{Hatékonyság vizsgálata}
 
 % TODO: Megnézni, hogy az egyes lekérdezések mennyi idő alatt, milyen válaszidővel futnak le!
@@ -370,6 +381,8 @@ Ezek alapján legalábbis javaslatok az optimalizálásra vonatkozóan.
 [21]\url{ http://www.rgvi.gtk.szie.hu/system/files/upload/course_material/fesztivalok.pdf }
 
 [22]\url{ https://hu.wikipedia.org/wiki/Hashtag#cite_note-1 }
+
+[23] \url{ https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-system-requirements.html }
 
 Konkurrens alkalmazások
 Java Spring
