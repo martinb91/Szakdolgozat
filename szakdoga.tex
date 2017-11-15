@@ -241,41 +241,47 @@ Az egyedek között fent álló relációk a következőek:
 \item Az előzőhöz hasonlóan a fesztiválstílusok és a fesztivál között is ilyen a kapcsolat.
 \end{itemize}
 
-Konkrét interfészek:
+Konkrét funkciók:
 \begin{itemize}
+\item Lekérdezések: % a címeket formázni. 
 \item Összes stílust visszaadó funkció, amely értékkészletből könnyebben tud választani, ha esetleg nem jutna eszébe, vagy nem gondolna az esetleges kategóriákra.
 \item Az összes fesztivált visszaadó funkció, amely mindezt a kezdés időpontja szerint adja vissza. Ez az alapértelmezett, ha a fesztiválok menüpontra kattintunk.
 \item Fesztivál visszaadás Id alapján. Egy fesztivált kiválasztunk, a részleteit, illetve a programját az azonosítója alapján kapjuk vissza. 
 \item Kiválasztott stílus alapján megkapjuk azon fesztiválok listáját, amelyek a kategória alá tartoznak.
-\item Fesztiválok település alapján, ez megvalósulhat API alapján, illetve amíg az nincs addig az egyed leírásából kinyerhető lesz. 
-\item Fesztiválok koordinátától x távolságra esők.(persze az ilyen koordináták, vmilyen térékép segítségével adhatóak meg, nem a usernek kell beírnia)
-\item Fesztiválok 2 időpont között, illetve vagy egy dátumnál nagyobb vagy egy dátumnál kisebb,
-\item Fesztiválok fellépő alapján(ezt talán a koncert mint entitás majd megoldja)
-\item Koncertek fellépő alapján(fellépő turnéja),
-\item koncertek fesztivál alapján,
-\item Fellépők betűrendben,
-\item Fellépő név szerint,
-\item Fellépők stílus szerint.
-\item Fesztiváltól a szállások x km-en belül.
-\item --------------------------------------
-\item + Stílus hozzáadása zenekarhoz, 
-\item + Stílus hozzáadása fesztiválhoz,
-\item Szállás felvitele,
-\item Fesztivál felvitele,
-\item Koncert felvitele,
-\item Zenekar felvitele,
-\item --------------------------------------
-\item Törléseket elég adatbázis szinten végezni.
-\item Stílust esetleg érdemes lehet törölni,
-\item Koncertet is érdemes lehet törölni.
-\item --------------------------------------
-\item Ami elmúlt azt archiválni kell. Archiválás: vagy átmozgatni másik táblába, vagy egy + változót bevezetni, és átbillenteni true-ról false-ra.
-\item ---------------------------------------
-\item Zenekar módosítás,
-\item Stílust nem érdemes módosítani inkább törölni, és újat felvinni
-\item Helyszín módosítás,
-\item Fesztivál módosítása, 
-\item koncert módosítása.
+\item Fesztiválok település alapján, ez megvalósulhat API alapján, illetve amíg az nincs addig az egyed leírásából kinyerhető lesz a helyszín. 
+\item Fesztivál koordinátáitól 10 km távolságra eső szállások. Akár lehet megadott távolság is, de a szállás keresést nem szeretném a felhasználóra bízni. Hanem a fesztivál kiválasztásakor ajánl a rendszer a fesztiválhoz közeli szállásokat. De akár ez megvalósulhat önálló funkcióként is, ahol megadott koordinátától, megadott távolságra lévő szállásokat tudunk megkeresni, itt a megadott koordináta lehet a fesztivál, a felhasználó meg kiválaszthatja, hogy milyen távolságon belül keres szállást.
+\item Fesztiválok keresése két dátum közötti intervallumban, ha a felhasználó az egyiket üresen hagyja, arra is fel kell készíteni a rendszert.
+\item Fesztiválok fellépő alapján listázzuk ki az összes olyan fesztivált, amelyiken fellép a kiválasztott fellépő.
+\item Koncertek fellépő alapján, hasonló mint az előző, csak itt a pontos időpont is kiderül, hogy mikor lesz a fellépés, illetve a koncert specifikus részletek. %lehet bevezetek egy új adattagot leírás néven a koncerthez.
+\item Koncertek fesztivál alapján:  Kiválasztott fesztivál programja. itt érdemes lehet valamilyen rendezési elvet használni. Napokra bontani, betűrend szerint rendezni, vagy színpad szerint csoportosítani. % ehhez kell egy színpad adattag.
+\item Fellépők listázása betűrendben.
+\item Fellépők visszaadása név, vagy névrészlet alapján.
+\item Az összes olyan fellépő visszaadása amelyiknek a stílusa megegyezik a lekért stílussal. A kérés érkezhet egy hashtag-re kattintásból, de lehetőség lesz stílusra is keresni.
+\item Lakóhelytől, vagy egy a felhasználótól bekért pozíciótól megadott távolságon belüli fesztiválok.
+
+\item Új elemek hozzáadása:
+\item Szállások felvitele pozíciójával együtt.
+\item Fesztivál felvitele pozíciójával és stílusaival együtt.
+\item Koncert felvitele, ami valójában egy fellépő és egy fesztivál összekapcsolása.
+\item Zenekar felvitele a stílusaival együtt.
+\item Új további stílusok hozzáadása zenekarhoz. 
+\item Plusz stílusok hozzáadása egy fesztiválhoz.
+
+\item Elemek törlése:
+\item Stílusok törlése. Vonatkozik mind a zenei, mind a fesztivál stílusokra. 
+\item Koncert törlése.
+\item Fesztivál törlése, itt figyelni kell arra, hogy a törlés előtt fel kell szabadítani minden olyan erőforrást ami függ tőle. Tehát törölni kell a koncertjeit, stílusait és a koncert helyszínt is.
+\item Fellépő törlése nem jellemző, ha mégis kell akkor azt meg lehet oldani adatbázis szinten is.
+\item Szállás törlésénél is figyelni kell, hogy a hozzátartozó helyszínt is törölni kell vele együtt.
+\item Amelyik fesztivál és koncert elmúlt, tehát a befejezés dátumán már az aktuális naptári idő  túlhaladt, azt archiválni kell. Erre a funkcióra elég egy triggert írni. Archiválás megvalósítása megoldható úgy, hogy átmozgatjuk egy másik táblába, vagy egy új változó bevezetésével, és azt hogy elérhető-e elég igazról hamisra állítani.
+
+\item Módosítások:
+\item Helyszín módosítása.
+\item Stílust nem érdemes módosítani. Jobb megoldás a törölés, és helyette egy másikat felvinni.
+\item Fesztivál módosítása Ezen belül meghívható a helyszín módosítás és itt hajtható végre a stílusok törlés vagy új felvitele.
+\item Zenekar módosítása. A fesztivál törléséhez hasonlóan itt lehet a stílus törlését is elérni a felületen.
+\item Koncert módosítása.
+\item Szállás módosítása, beleértve a pozíciójának a módosítását. 
 \end{itemize}
 
 A rendszer funkciói(back-end):\\
@@ -336,12 +342,18 @@ Képek feltöltése
 
 [23] Spring alkalmazást minimum Java 6-os fordítóval lehet lefordítani futtatható alkalmazássá. Én a Spring Boot 1.5.8.RELEASE kiadást használtam. Itt már csak a Java 7-es verziója használható - a 8 vagy újabb ajánlott - fordításra. Én a Java 8-at használtam, amikor belevágtam a fejlesztésbe, akkor még a Java 9 nem volt elérhető. Azóta már megjelent a 9 is, de én nem váltottam verziót. Alapvetően Java 8 specifikus dolgokat sem használtam, a Java 9-cel még nem volt időm megismerkedni.
 Maven segítségével töltöttem le azokat a jar fájlokat amelyektől függ az alkalmazásunk. A 3.5.0 verzió volt akkor a legújabb verzió és általam is használt verzió. A Maven 3.5.0 szintén igényli a minimum a Java hetedik verzióját.
-
+A Maven-nek az alábbi csomagokat kell letöltenie: 
 spring-boot-starter-web
 spring-boot-starter-data-jpa
 spring-boot-starter-test
 spring-boot-devtools
 ojdbc14 % Az adatbázis még nem bíztos hogy oracle lesz, jelenleg H2-van alatta.
+
+[31]A front-end részhez először telepítettem egy NodeJS-et. Az akkor elérhető legfrissebb verziót, amely a 9.2.0 volt. Ez a keretrendszer oldaláról letölthető. Erre azért volt szükségünk, mert ebben található egy npm nevű modul. Az npm vagy Node Package Manager, mint a neve is mutatja csomagok telepítésére és karbantartására való.
+Egy csomagot két féle képen lehet installálni az egyik a helyi telepítés és a globális telepítés. Globálisan olyan csomagokat szokás telepíteni amiket többnyire terminálból akarunk futtatni.
+Mi az Angular CLI 1.5-öt globálisan telepítettük npm segítségével, hiszen parancssorból szeretnénk indítani majd a szervert.
+A következő paranccsal érhetjük ezt el, hogy a legfrissebb verziót telepítse: npm install -g @angular/cli
+Elvileg visszafelé kompatibilis a rendszer, tehát ha a legújabb globális verzió van fent a gépen akkor a régebbi vagy azonos verziószámú projektet képes lesz futtatni. Én Angular 5.0.0-ás verziószámú projektet futtattam benne, és minden gond nélkül elindult.
 
 \section{Hatékonyság vizsgálata}
 
@@ -383,6 +395,8 @@ Ezek alapján legalábbis javaslatok az optimalizálásra vonatkozóan.
 [22]\url{ https://hu.wikipedia.org/wiki/Hashtag#cite_note-1 }
 
 [23] \url{ https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-system-requirements.html }
+
+[31] \url{ http://nodehun.blogspot.hu/2015/05/mi-az-az-npm.html }
 
 Konkurrens alkalmazások
 Java Spring
