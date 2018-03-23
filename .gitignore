@@ -1,2 +1,8 @@
-
 Spring MVC.docx
+*.aux
+*.gz
+*.log
+*.out
+*.pdf
+*.thm
+*.toc
