@@ -7,3 +7,18 @@
 % TODO: Frontend teszteléséhez használható eszközök bemutatása és néhány konkrét példa a tesztekre.
 
 % TODO: Java egységtesztek bemutatása. Például kereséshez, szűréshez, regisztrációhoz.
+
+[23] Spring alkalmazást minimum Java 6-os fordítóval lehet lefordítani futtatható alkalmazássá. Én a Spring Boot 1.5.8.RELEASE kiadást használtam. Itt már csak a Java 7-es verziója használható - a 8 vagy újabb ajánlott - fordításra. Én a Java 8-at használtam, amikor belevágtam a fejlesztésbe, akkor még a Java 9 nem volt elérhető. Azóta már megjelent a 9 is, de én nem váltottam verziót. Alapvetően Java 8 specifikus dolgokat sem használtam, a Java 9-cel még nem volt időm megismerkedni.
+Maven segítségével töltöttem le azokat a jar fájlokat amelyektől függ az alkalmazásunk. A 3.5.0 verzió volt akkor a legújabb verzió és általam is használt verzió. A Maven 3.5.0 szintén igényli a minimum a Java hetedik verzióját.
+A Maven-nek az alábbi csomagokat kell letöltenie: 
+spring-boot-starter-web
+spring-boot-starter-data-jpa
+spring-boot-starter-test
+spring-boot-devtools
+ojdbc14 % Az adatbázis még nem bíztos hogy oracle lesz, jelenleg H2-van alatta.
+
+[31]A front-end részhez először telepítettem egy NodeJS-et. Az akkor elérhető legfrissebb verziót, amely a 9.2.0 volt. Ez a keretrendszer oldaláról letölthető. Erre azért volt szükségünk, mert ebben található egy npm nevű modul. Az npm vagy Node Package Manager, mint a neve is mutatja csomagok telepítésére és karbantartására való.
+Egy csomagot két féle képen lehet installálni az egyik a helyi telepítés és a globális telepítés. Globálisan olyan csomagokat szokás telepíteni amiket többnyire terminálból akarunk futtatni.
+Mi az Angular CLI 1.5-öt globálisan telepítettük npm segítségével, hiszen parancssorból szeretnénk indítani majd a szervert.
+A következő paranccsal érhetjük ezt el, hogy a legfrissebb verziót telepítse: npm install -g @angular/cli
+Elvileg visszafelé kompatibilis a rendszer, tehát ha a legújabb globális verzió van fent a gépen akkor a régebbi vagy azonos verziószámú projektet képes lesz futtatni. Én Angular 5.0.0-ás verziószámú projektet futtattam benne, és minden gond nélkül elindult.
