@@ -45,10 +45,11 @@
       }
 
 %fancyhdr beállítása
-\fancyhead[L]{}
-\fancyhead[R]{}
-\fancyfoot[C]{}
-\fancyfoot[R]{\thepage}
+\fancyhead{}
+% \fancyhead[L,C,R]{\leftmark}
+\fancyhead[L]{\leftmark}
+\fancyfoot[L,R]{}
+\fancyfoot[C]{\thepage}
 
 %chapter átdefiniálása
 \renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
