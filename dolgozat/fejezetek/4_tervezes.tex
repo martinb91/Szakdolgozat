@@ -6,11 +6,11 @@
 
 % TODO: Az alkalmazás felépítéséről UML ábrák. Minél részletesebben bemutatva, hogy minek kellene majd elkészülnie.
 \section{Technológia}
-Spring MVC: 2002-ben hozta létre Rod Johnson. Ingyenesen elérhető és nyílt forráskódú Java alapú keretrendszer. Jelenleg egy Pivotal nevű cég foglalkozik a keretrendszer sorsával. Nagyon népszerű, hazánkban is rengeteg a keretrendszert ismerő fejlesztőt keresnek. Alkalmazási területe sokrétű, banki szektortól a telekommunikációig mindenhol feltűnik.
+Spring MVC: 2002-ben hozta létre Rod Johnson. Ingyenesen elérhető és nyílt forráskódú Java alapú keretrendszer. Jelenleg egy Pivotal nevű cég foglalkozik a keretrendszer sorsával. Nagyon népszerű, hazánkban is rengeteg a keretrendszert ismerő fejlesztőt keresnek. Alkalmazási területe sokrétű, banki szektortól a telekommunikációig mindenhol feltűnik.\\
 
-Nyílt forráskód: Elérhető bárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projekttel találkozunk. Például Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.
+Nyílt forráskód: Elérhető bárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projekttel találkozunk. Például Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.\\
 
-A Java webalkalmazások készítéséhez két alapvető irány alakult ki: a Java Enterprise Edition (Java EE) és a Spring Framework. A Java EE az Oracle a Java jelenlegi készítője által támogatott eredeti verzió. Ezt korábban a Sun Microsystems készítette, melyet felvásárolt az Oracle Corporation 7,4 milliárd dollárért 2009-ben. Mind a kettő moduláris felépítésű, és funkcionalitását tekintve nagyon hasonló modulok jelennek meg. Megtehetjük, hogy az egyiket választjuk vagy a másikat, de akár kombinálhatjuk is őket.
+A Java webalkalmazások készítéséhez két alapvető irány alakult ki: a Java Enterprise Edition (Java EE) és a Spring Framework. A Java EE az Oracle a Java jelenlegi készítője által támogatott eredeti verzió. Ezt korábban a Sun Microsystems készítette, melyet felvásárolt az Oracle Corporation 7,4 milliárd dollárért 2009-ben. Mind a kettő moduláris felépítésű, és funkcionalitását tekintve nagyon hasonló modulok jelennek meg. Megtehetjük, hogy az egyiket választjuk vagy a másikat, de akár kombinálhatjuk is őket.\\
 
 [2]A számítógép-programozásban a dependency injection egy technika, aminek lényege, hogy egy objektum más objektumok függőségeit követeli. A függőség objektum szolgáltatást nyújt, az injekció pedig a függőség átadása a függő objektumnak, a kliensnek. A szolgáltatás a kliens állapotának része.[3] A minta alapkövetelménye a szolgáltatás kliensnek való átadása ahelyett, hogy a szolgáltató objektumot a kliens hozná létre.
 
@@ -36,23 +36,23 @@ ORM: Object-relational mapping, egy olyan megközelítése az adattárolásnak a
 
 [8] A Java Database Connectivity, röviden JDBC egy API a Java programozási nyelvhez, amely az adatbázishozzáférést támogatja. A JDBC definiálja az adatbázisok lekérdezéséhez és módosításához szükséges osztályokat és metódusokat. A relációs adatmodellhez igazodik.
 
-Spring Boot: egy relatíve új Springre épülő keretrendszer, mely rengeteg konfigurálási feladatot levesz a programozó válláról és magában a keretrendszerben még egy Tomcat szerver is van, melynek segítségével képes létre hozni egy belső futtató környezetet. Természetesen az alapbeállítások megváltoztathatóak, de már egy kezdő projekt is egy valódi webalkalmazást reprezentál. Nem kell hozzá mélyen ismerni a Spring-et, és összeválogathatóak bele ugyanúgy a Spring modulok.
+Spring Boot: egy relatíve új Springre épülő keretrendszer, mely rengeteg konfigurálási feladatot levesz a programozó válláról és magában a keretrendszerben még egy Tomcat szerver is van, melynek segítségével képes létre hozni egy belső futtató környezetet. Természetesen az alapbeállítások megváltoztathatóak, de már egy kezdő projekt is egy valódi webalkalmazást reprezentál. Nem kell hozzá mélyen ismerni a Spring-et, és összeválogathatóak bele ugyanúgy a Spring modulok. \\
 
-Web-szolgáltatás és web-applikáció közötti különbség: Webservice az, ami XML, JSON, vagy bármilyen jól strukturált választ tud adni egy kérésre (request), amely egy klienstől érkezik, ezek érkezhetnek bármilyen applikációból, akár egy iOS alapú vagy android alapú eszköz alkalmazásától is. Míg egy Webapplication egy honlapon adja vissza a lekérések eredményeit. A web-applikáció is a web-szolgáltatásokon keresztül szerzi meg az adatokat, amiket meg kell jelenítenie. A webszolgáltatások általában egy vagy több adatbázishoz is csatlakoznak, ez nem kritérium, de jellemzően igényelnek adattárolást.
+Web-szolgáltatás és web-applikáció közötti különbség: Webservice az, ami XML, JSON, vagy bármilyen jól strukturált választ tud adni egy kérésre (request), amely egy klienstől érkezik, ezek érkezhetnek bármilyen applikációból, akár egy iOS alapú vagy android alapú eszköz alkalmazásától is. Míg egy Webapplication egy honlapon adja vissza a lekérések eredményeit. A web-applikáció is a web-szolgáltatásokon keresztül szerzi meg az adatokat, amiket meg kell jelenítenie. A webszolgáltatások általában egy vagy több adatbázishoz is csatlakoznak, ez nem kritérium, de jellemzően igényelnek adattárolást.\\
 
-Maven: Minden Maven projekthez tartozik egy \texttt{pom.xml} nevű fájl, melyben tartalmaz egy listát a külső függőségeiről, amikre szüksége van a projektnek ahhoz, hogy leforduljon. A Maven ennek a fájlnak segítségével megtalálja ezeket és letölti és a helyére is másolja, így ezeket a műveleteket nem nekünk kell kézzel elvégeznünk.
+Maven: Minden Maven projekthez tartozik egy \texttt{pom.xml} nevű fájl, melyben tartalmaz egy listát a külső függőségeiről, amikre szüksége van a projektnek ahhoz, hogy leforduljon. A Maven ennek a fájlnak segítségével megtalálja ezeket és letölti és a helyére is másolja, így ezeket a műveleteket nem nekünk kell kézzel elvégeznünk.\\
 
-\section{MVC modell}
+MVC modell:\\
 
--View: A megjelenítésért felelős része a modellnek, itt találhatóak a képek, a gombok, az űrlapok, ezzel találkozik a felhasználó. Én ezt a részét nem fogom használni a Springnek. egy RESTful API-n fogunk a világháló felé kommunikálni JSON formátumban.
+-View: A megjelenítésért felelős része a modellnek, itt találhatóak a képek, a gombok, az űrlapok, ezzel találkozik a felhasználó. Én ezt a részét nem fogom használni a Springnek. egy RESTful API-n fogunk a világháló felé kommunikálni JSON formátumban.\\
 
--Model: A model, magyarul modell. Az adatok tárolásáért felelős része a kódnak, a perzisztenciáért is ez a rész felelős. Hasonló struktúrát kell követnie, mint az adatbázisnak. Én itt JPA-t és JDBC-t fogok használni. A JPA a perzisztenciáért fog felelni, míg a JDBC az adatbázishoz kapcsolódásért, az adatok törléséért, módosításáért, felviteléért és lekérdezéséért.
+-Model: A model, magyarul modell. Az adatok tárolásáért felelős része a kódnak, a perzisztenciáért is ez a rész felelős. Hasonló struktúrát kell követnie, mint az adatbázisnak. Én itt JPA-t és JDBC-t fogok használni. A JPA a perzisztenciáért fog felelni, míg a JDBC az adatbázishoz kapcsolódásért, az adatok törléséért, módosításáért, felviteléért és lekérdezéséért.\\
 
--Contoller: Itt találhatjuk meg az üzleti logikát. Itt történnek meg a számítások, innen jönnek a válaszok a felhasználó felé és innen mennek a kérések a modellhez. A Kontroller a kapocs a Modell és a Nézet (View) között.
+-Contoller: Itt találhatjuk meg az üzleti logikát. Itt történnek meg a számítások, innen jönnek a válaszok a felhasználó felé és innen mennek a kérések a modellhez. A Kontroller a kapocs a Modell és a Nézet (View) között.\\
 
 -Service: A Spring-ben szokás bevezetni egy új réteget, ez lesz a Service, ennek segítségével ki fog válni az üzleti logika a Controller-ből, és ezt a funkcióját átveszi a Service. A Contoller innentől forgalomirányítóként fog üzemelni.
 
-Annotációk a Springben: Minden osztályban feltűnnek az annotációk. Melyek a keretrendszernek szóló üzenetek, ezek alapján tudja eldönteni a Spring, hogy miként bánjon az egyes osztályokkal, metódusokkal, adattagokkal.
+Annotációk a Springben: Minden osztályban feltűnnek az annotációk. Melyek a keretrendszernek szóló üzenetek, ezek alapján tudja eldönteni a Spring, hogy miként bánjon az egyes osztályokkal, metódusokkal, adattagokkal.\\
 
 Bean: Java komponensek, melyekből bármikor kérhetünk egy példányt a konténertől.
 
@@ -70,7 +70,7 @@ Konténer: A konténer tárolja és menedzseli a bean-ek - magyarul babok - éle
 \begin{verbatim}
 @ComponentScan(\{"hu.egyik", "hu.masik"\})
 \end{verbatim}
-tehát zárójelen belül, ha többet szeretnénk felsorolni, akkor kapcsos zárójelen belül, elemenként idézőjelek között felsorolva a csomagok nevét, és vesszővel el választva. Természetesen csak azokat az osztályokat találja meg, amelyik jelzi a konténer számára, hogy ő egy bean, pl.: @Component.
+tehát zárójelen belül, ha többet szeretnénk felsorolni, akkor kapcsos zárójelen belül, elemenként idézőjelek között felsorolva a csomagok nevét, és vesszővel el választva. Természetesen csak azokat az osztályokat találja meg, amelyik jelzi a konténer számára, hogy ő egy bean, pl.: @Component. \\
 
 \texttt{@EnableAutoConfiguration}: Mindent állítson be magától a keretrendszer, amit csak tud.
 
@@ -109,15 +109,12 @@ Az eddigiek alapján meg kell határozni, hogy miket szeretnénk, ha megvalósí
 [22]A „hashtag” a metaadat egyik formája, amely egy szóból vagy kifejezésből áll, amely elé hash jelet (\#) tesznek. A hashtagek-et gyakran használják a közösségi hálókon, hogy azonosítsák, kategorizálják az érdeklődési köröket, „topikokat”, illetve megkönnyítsék a kulcsszavak szerinti kutatást.
 Adatbázis és program szinten stílusnak neveztem el, de talán ez egy kicsit tágabb fogalom.
 
-ER-modellt használtam ahhoz, hogy szemléltessem az egyedek között fennálló relációkat és láthatóvá tegyem a megtervezett adatbázis architektúrát (\ref{fig:er}. ábra).
-
-\begin{figure}
-\centering
-\includegraphics[scale=0.2]{kepek/er.png}
-\caption{Az adatbázis ER diagramja}
-\label{fig:er}
-\end{figure}
-
+ER-modellt használtam ahhoz, hogy szemléltessem az egyedek között fennálló relációkat és láthatóvá tegyem a megtervezett adatbázis architektúrát:
+---------
+|		|
+|	kép	|
+|		|
+---------
 Lesz egy fellépő egyedünk, mivel zenei fesztiválokban gondolkodunk, így ezek zenekarok, vagy zenészek lesznek elsősorban. Egy fellépő több stílusban is játszhat, hisz ha egy zenekar népzenét játszik, az nem zárja ki, hogy ezt ötvözzék, rockzenei motívumokkal. Sőt rengeteg előadó játszik kevert zenét. A fellépőről tartunk számon egy rövid leírást. És elengedhetetlen, hogy az előadó nevét le ne tároljuk. Az egyedi azonosítót pedig automatikusan generáltatjuk. 
 
 Egy fesztiválkereső alkalmazást készítünk, így nem meglepő, hogy lesz egy ilyen nevű entitásunk is. És talán ez lesz a legnagyobb komplexitású is. Minden fesztiválnak van egy neve, amely alapján a legkönnyebben azonosítják a rendszer felhasználói. Mivel egy ilyen esemény nem tart általában egész évben, ezért van egy kezdetét és végét jelző dátum. Erre a két időpontra azért is lesz szükségünk, hogy az érdeklő előre tudja  tervezni a programjait, és egyáltalán tudja, hogy nem-e ütközik valami más eseménnyel az általa kiválasztott fesztivál. Egy fesztiválnak is lehet több stílusa akár csak egy zenekarnak. Ahogy fentebb írtam itt nem csak a stílusok férnek bele, hanem egyéb jelzők is. Az ID generálást itt is az adatbázisra bízzuk. A leírás részt azoknak az információknak tartjuk fent, amelyekre nem készítettük fel a rendszerünk, és a marketing szövegeknek is kiváló helyet biztosít. A jegy a fejlesztés első fázisában nem lesz bevezetve, így csak egy hyperlink-et tartalmaz majd a forgalmazó weboldalára és nem külön egyedként, hanem egy oszlopként reprezentálódik az adatbázisban.
@@ -183,17 +180,12 @@ Konkrét funkciók:
 \item Szállás módosítása, beleértve a pozíciójának a módosítását. 
 \end{itemize}
 
-A rendszer funkciói(back-end):
-Stílusok felvitele, módosítása (mely értékkészletből, majd hozzá lehet adni a zenekarokhoz, és a fesztiválokhoz)
-
-Zenekarok felvitele, módosítása, esetleges archiválása
-
-Fesztiválok felvitele, módosítása, a meglévő fesztiválhoz koncert rendelése(fellépő + időpont)
-
-A fesztiválokhoz szállások és jegyek felvitele(jövőben ha lesz rá idő.)
-
-Zenekarok keresése és listázása név vagy stílus alapján, ugyan ez fesztiválokra is + fesztiváloknál még helyi, regionális keresés is lehetséges.
-
+A rendszer funkciói(back-end):\\
+Stílusok felvitele, módosítása (mely értékkészletből, majd hozzá lehet adni a zenekarokhoz, és a fesztiválokhoz)\\
+Zenekarok felvitele, módosítása, esetleges archiválása\\
+Fesztiválok felvitele, módosítása, a meglévő fesztiválhoz koncert rendelése(fellépő + időpont)\\
+A fesztiválokhoz szállások és jegyek felvitele(jövőben ha lesz rá idő.)\\
+Zenekarok keresése és listázása név vagy stílus alapján, ugyan ez fesztiválokra is + fesztiváloknál még helyi, regionális keresés is lehetséges.\\
 front-end(van backend része is):
 A lekérdezett zenekarra rákattintva visszatér a zenekar adataival és a letárolt fellépéseit is megmutatja kronológia vagy relevancia(egyéb is lehet priorítás) szerint.
 Fesztiválra kattintva dobja a fellépőket, melyek megtekinthetők hyperlink segítségével.(Azért lehet hasznos, ha esetleg nem ismerné a felhasználó a zenekart, vagy ha kíváncsi, hogy hol lesz még fellépése).
