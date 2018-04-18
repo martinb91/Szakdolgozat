@@ -7,8 +7,6 @@
 % TODO: Az alkalmazás felépítéséről UML ábrák. Minél részletesebben bemutatva, hogy minek kellene majd elkészülnie.
 
 %DevTools Maven-ben arra használható, hogy ne kelljen minden módosítás után újrafordítanunk, hanem ha megváltozott a forráskód akkor megteszi helyettünk az IDE.
-
-%Az ER modell rész következik.
  
 Az alkalmazástervezési fázist megelőzte a technológiai tervezés fázisa. A kronológiai sorrendet betartva a felhasználandó technológia bemutatásával kezdem ezt a fejezetet.  
 
@@ -72,7 +70,18 @@ Angular: Az Angular egy TypeScript alapú keretrendszer melyet a Google fejleszt
 [11] REST: A REST (Representational State Transfer) egy szoftverarchitektúra típus, elosztott kapcsolat (loose coupling), nagy, internet alapú rendszerek számára, amilyen például a világháló. A Representational State Transfer kifejezést Roy Fielding vezette be és definiálta 2000-ben a doktori disszertációjában. Fielding egyike a HTTP specifikáció szerkesztőinek.
 Azokat a rendszereket, amelyek eleget tesznek a REST megszorításainak, "RESTful"-nak nevezik.
 
-Az alkalmazás szerver oldalon egy Spring Boot alkalmazás lesz ami JPA-n keresztül fér hozzá az adatbázisunkhoz. Ez kiegészül egy Spring Security modullal, amely az autentikációért és az autorizációért felelős, tehát  a felhasználók jogosultsági szintjüknek megfelelően férhessenek hozzá az adatokhoz. Ez egy RESTful API-n keresztül kommunikál az Angular keretrendszer segítségével elkészült front-enddel. 
+Az alkalmazás szerver oldalon egy Spring Boot alkalmazás lesz, ami JPA-n keresztül fér hozzá az adatbázisunkhoz. Ez kiegészül egy Spring Security modullal, amely az autentikációért és az autorizációért felelős, tehát  a felhasználók jogosultsági szintjüknek megfelelően férhessenek hozzá az adatokhoz. Ez egy RESTful API-n keresztül kommunikál az Angular keretrendszer segítségével elkészült front-enddel. 
+
+\subsubsection{Szerver-kliens architektúra}
+Hogy könnyebben átlátható legyen ezért készítettem az architektúráról egy általános ábrát (\ref{fig:architecture}. ábra). 
+A megvalósuló projektből kliens oldalon ki fog maradni a desktop és a mobil alkalmazás. Míg szerver oldalon az alkalmazás szerverhez nem lesznek forráskódok hozzárendelve, mert a megjelenítendő adatokat REST API-n keresztül kommunikálom a front-end felé, és ott válnak elérhetővé weblap formátumban.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.365]{kepek/architecture.jpg}
+\caption{Szerver-kliens architektúra}
+\label{fig:architecture}
+\end{figure}
 
 \subsection{Springről részletesebben, annotációk és bean-ek}	%Ez lehet, már az implementácsiós részhez kell majd.
 
@@ -147,18 +156,25 @@ Az ER modell egyik lényeges tulajdonsága, hogy grafikus jelölésrendszert alk
 
 \subsection{ER modell}
 
-ER-modellt használtam ahhoz, hogy szemléltessem az egyedek között fennálló relációkat és láthatóvá tegyem a megtervezett adatbázis architektúrát (\ref{fig:er}. ábra).
+ER-modellt használtam ahhoz, hogy szemléltessem az egyedek között fennálló relációkat és láthatóvá tegyem a megtervezett adatbázis architektúrát (\ref{fig:er}., {fig:usEr}. ábra).
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.2]{kepek/er.png}
+\includegraphics[scale=0.6]{kepek/er.jpg}
 \caption{Az adatbázis ER diagramja}
 \label{fig:er}
 \end{figure}
 
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{kepek/userER.jpg}
+\caption{Az adatbázis ER diagramja}
+\label{fig:usEr}
+\end{figure}
+
 Lesz egy fellépő egyedünk, mivel zenei fesztiválokban gondolkodunk, így ezek zenekarok, vagy zenészek lesznek elsősorban. Egy fellépő több stílusban is játszhat, hisz ha egy zenekar népzenét játszik, az nem zárja ki, hogy ezt ötvözzék rockzenei motívumokkal. Sőt rengeteg előadó játszik több stílusban. A fellépőről tartunk számon egy rövid leírást. És elengedhetetlen, hogy az előadó nevét letároljuk. Az egyedi azonosítót pedig automatikusan generáltatjuk. 
 
-Egy fesztiválkereső alkalmazást készítünk, így nem meglepő, hogy lesz egy ilyen nevű entitásunk is. És talán ez lesz a legnagyobb komplexitású is. Minden fesztiválnak van egy neve, amely alapján a legkönnyebben azonosítják a rendszer felhasználói. Mivel egy ilyen esemény nem tart általában egész évben, ezért van egy kezdetét és végét jelző dátum. Erre a két időpontra azért is lesz szükségünk, hogy az érdeklő előre tudja  tervezni a programjait, és egyáltalán tudja, hogy nem-e ütközik valami más eseménnyel az általa kiválasztott fesztivál. Egy fesztiválnak is lehet több stílusa akár csak egy zenekarnak. Ahogy fentebb írtam itt nem csak a stílusok férnek bele, hanem egyéb jelzők is. Az ID generálást itt is az adatbázisra bízzuk. A leírás részt azoknak az információknak tartjuk fent, amelyekre nem készítettük fel a rendszerünk, és a marketing szövegeknek is kiváló helyet biztosít. A jegy a fejlesztés első fázisában nem lesz bevezetve, így csak egy hyperlink-et tartalmaz majd a forgalmazó weboldalára és nem külön egyedként, hanem egy oszlopként reprezentálódik az adatbázisban.
+Egy fesztiválkereső alkalmazást készítünk, így nem meglepő, hogy lesz egy fesztivál nevű entitásunk is. És talán ez lesz a legnagyobb komplexitású is. Minden fesztiválnak van egy neve, amely alapján a legkönnyebben azonosítják a rendszer felhasználói. Mivel egy ilyen esemény nem tart általában egész évben, ezért van egy kezdetét és végét jelző dátum. Erre a két időpontra azért is lesz szükségünk, hogy az érdeklő előre tudja  tervezni a programjait, és egyáltalán tudja, hogy nem-e ütközik valami más eseménnyel az általa kiválasztott fesztivál. Egy fesztiválnak is lehet több stílusa akár csak egy zenekarnak. Ahogy fentebb írtam itt nem csak a stílusok férnek bele, hanem egyéb jelzők is. Az ID generálást itt is az adatbázisra bízzuk. A leírás részt azoknak az információknak tartjuk fent, amelyekre nem készítettük fel a rendszerünk, és a marketing szövegeknek is kiváló helyet biztosít. A jegy a fejlesztés első fázisában nem lesz bevezetve, így csak egy hyperlink-et tartalmaz majd a forgalmazó weboldalára és nem külön egyedként, hanem egy oszlopként reprezentálódik az adatbázisban.
 
 Koncert táblában két idegen kulcs lesz megtalálható, mivel ez a tábla kapcsolja össze a fellépőt a fesztivállal és ezáltal megtudjuk azt is, hogy milyen előadók vesznek részt az általunk preferált fesztiválon. Azt is megtudjuk nézni, hogy mikor kezdődik a számunkra érdekes előadás, mert egy kezdés nevű tulajdonságot is bevezettem. Lehetett volna tárolni azt is hogy mikor van vége. Alapvetően ez csak egy kapcsoló tábla, így nem szerettem volna túl bonyolítani, és ha valakit érdekel egy program, akkor úgyis kivárja a végét. Egyedi azonosítója ennek a táblának is lesz, amit itt is az adatbázisra bízunk.
 
@@ -166,7 +182,7 @@ Lesz egy helyszín nevű táblánk, amiben címek pozícióit lehet tárolni. Er
 
 A szállásokat is tároljuk az adatbázisunkban. Lesz egy fő nevű oszlopunk amely azt tárolja, hogy a szállás hány személyt képes befogadni, ez egy kisebb baráti társaság esetén lehet érdekes. Az ár tulajdonság egységárat tárol, tehát hogy mennyibe kerül egy éjszaka egy fő részére. Általában vannak egyedi konstrukciók, kedvezmények, de mivel mi nem foglalkozunk a foglalással, ezért csak irányárat mutatunk. Szolgáltatunk egy linket, ahol a foglalást el tudják végezni. Természetesen a szállás nevét is megadjuk. A címét az idegen kulcs segítségével könnyen megkaphatjuk. A leírásban minden egyebet tudunk rögzíteni. Az szállásadó elérhetőségeit is megadjuk az érdeklődök számára. A foglalási linken túl még egy telefonszámot és egy email címet is szolgáltat az alkalmazásunk.
 
-Végül, de nem utolsósorban jönnek a felhasználóink, az alkalmazás regisztráció nélkül is teljes értékű alkalmazást nyújt egy keresni szándékozó felhasználó számára. A regisztrációra csak annak van szüksége, aki fel szeretne vinni az adatbázisba rekordokat. Itt több jogosultság is  felmerülhet. Fesztiválmenedzseri, aki a koncerteket, fesztiválokat viheti fel, ő felelős egy vagy több fesztivál menedzseléséért, a zenekarmenedzser, hasonló mint a fesztivál menedzser csak ő a fellépőkért felel. Adminisztrátori neki mindenhez van jogosultsága ami elérhető az alkalmazásból. Mi csak az adminisztrátori jogot fogjuk kiosztani, illetve az átlag felhasználót. A felhasználó személyes adatai közül az e-mail címét, nevét, születési dátumát és a lakhelyét, valamint a jelszavát tároljuk, amit valamilyen hasító algoritmuson lefuttattatunk előtte. Mint mindig itt is az adatbázisunk generálja az azonosítót.
+Végül, de nem utolsósorban jönnek a felhasználóink, az alkalmazás regisztráció nélkül is teljes értékű alkalmazást nyújt egy keresni szándékozó felhasználó számára. A regisztrációra csak annak van szüksége, aki fel szeretne vinni az adatbázisba rekordokat. Itt több jogosultság is  felmerülhet. Fesztiválmenedzseri, aki a koncerteket, fesztiválokat viheti fel, ő felelős egy vagy több fesztivál menedzseléséért, a zenekarmenedzser, hasonló mint a fesztivál menedzser csak ő a fellépőkért felel. Adminisztrátori neki mindenhez van jogosultsága ami elérhető az alkalmazásból. Mi csak az adminisztrátori jogot fogjuk kiosztani, illetve az átlag felhasználót. A felhasználó személyes adatai közül az e-mail címét, nevét, születési dátumát és a lakhelyét, valamint a jelszavát tároljuk, amit valamilyen hasító algoritmuson lefuttathatunk előtte. Mint mindig itt is az adatbázisunk generálja az azonosítót.
 
 Az egyedek között fent álló relációk a következőek:
 \begin{itemize}
