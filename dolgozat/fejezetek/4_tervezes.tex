@@ -190,13 +190,14 @@ Az egyedek között fent álló relációk a következőek:
 \item A fesztivál és a koncert között is egy-több kapcsolat van. Egyértelműen megállapítható az, hogy egy koncert csak egy fesztiválon lehet megrendezve - hasonló lehet máshol is, de egy fesztiválon több koncert is szokott lenni.
 \item A fesztivál és a helyszín között egy-egy kapcsolat áll fent, habár a helyszín akár lehet egy település is. Egy fesztiválhoz egy helyszín tartozhat, és egy helyszínen akár több fesztivál is megszervezhető, de a redundancia elhanyagolható volta miatt elég lesz számunkra az egy-egy kapcsolat. Hisz egy fesztivál terület nem egy pont, hanem pontok halmaza. Lehetséges, hogy ugyanahhoz a helyszínhez több különböző pont is tartozik a térképen, így a redundancia tovább csökken.
 \item  A helyszín és a szállás között egy-egy kapcsolat van, hiszen egy szálláshoz csak egy cím tartozhat.
-\item A stílusok vagy metaadatok és a előadók között több-több kapcsolat van, de túl sok erőforrás pazarlásnak tartottam egy kapcsoló táblát bevezetni egy stílus miatt amiben semmi más nem tárolódik. Ezzel kapcsolatban több megoldást is számba vettem, ezek közül néhány: JSON vagy valamilyen no-SQL-ben eltárolom, és nem hozok létre a számára új táblát. Egy másik lehetőség egy saját struktúrának a bevezetése, például kettőskeresztekkel elválasztva, és ez esetben sem lett volna új táblára szükségünk. Ezek a megoldások valamennyit gyorsíthattak is volna a megoldáson, de természetesen ezt tesztelés után lehetne eldönteni. Az egy-több kapcsolat megvalósításnál maradtam.
+\item A stílusok vagy metaadatok és a előadók között több-több kapcsolat van, de túl sok erőforrás pazarlásnak tartottam egy kapcsoló táblát bevezetni egy stílus miatt amiben semmi más nem tárolódik. Ezzel kapcsolatban több megoldást is számba vettem, ezek közül néhány: JSON vagy valamilyen no-SQL-ben eltárolom, és nem hozok létre a számára új táblát. Egy másik lehetőség egy saját struktúrának a bevezetése, például kettős keresztekkel elválasztva, és ez esetben sem lett volna új táblára szükségünk. Ezek a megoldások valamennyit gyorsíthattak is volna a megoldáson, de természetesen ezt tesztelés után lehetne eldönteni. Az egy-több kapcsolat megvalósításnál maradtam.
 \item Az előzőhöz hasonlóan a fesztiválstílusok és a fesztivál között is ilyen a kapcsolat.
 \end{itemize}
 
-Konkrét funkciók:
+\subsection{Konkrét funkciók:}
+
+Lekérdezések: % a címeket formázni. 
 \begin{itemize}
-\item Lekérdezések: % a címeket formázni. 
 \item Összes stílust visszaadó funkció, amely értékkészletből könnyebben tud választani, ha esetleg nem jutna eszébe, vagy nem gondolna az esetleges kategóriákra.
 \item Az összes fesztivált visszaadó funkció, amely mindezt a kezdés időpontja szerint adja vissza. Ez az alapértelmezett, ha a fesztiválok menüpontra kattintunk.
 \item Fesztivál visszaadás Id alapján. Egy fesztivált kiválasztunk, a részleteit, illetve a programját az azonosítója alapján kapjuk vissza. 
@@ -211,24 +212,29 @@ Konkrét funkciók:
 \item Fellépők visszaadása név, vagy névrészlet alapján.
 \item Az összes olyan fellépő visszaadása amelyiknek a stílusa megegyezik a lekért stílussal. A kérés érkezhet egy hashtag-re kattintásból, de lehetőség lesz stílusra is keresni.
 \item Lakóhelytől, vagy egy a felhasználótól bekért pozíciótól megadott távolságon belüli fesztiválok.
+\end{itemize}
 
-\item Új elemek hozzáadása:
+Új elemek hozzáadása:
+\begin{itemize}
 \item Szállások felvitele pozíciójával együtt.
 \item Fesztivál felvitele pozíciójával és stílusaival együtt.
 \item Koncert felvitele, ami valójában egy fellépő és egy fesztivál összekapcsolása.
 \item Zenekar felvitele a stílusaival együtt.
-\item Új további stílusok hozzáadása zenekarhoz. 
+\item Új további stílusok hozzáadása zenekarhoz. Itt esetleg bevezetésre kerülhet egy érték készlet is.
 \item Plusz stílusok hozzáadása egy fesztiválhoz.
+\end{itemize}
 
-\item Elemek törlése:
+ Elemek törlése:
+\begin{itemize}
 \item Stílusok törlése. Vonatkozik mind a zenei, mind a fesztivál stílusokra. 
 \item Koncert törlése.
 \item Fesztivál törlése, itt figyelni kell arra, hogy a törlés előtt fel kell szabadítani minden olyan erőforrást ami függ tőle. Tehát törölni kell a koncertjeit, stílusait és a koncert helyszínt is.
 \item Fellépő törlése nem jellemző, ha mégis kell akkor azt meg lehet oldani adatbázis szinten is.
 \item Szállás törlésénél is figyelni kell, hogy a hozzátartozó helyszínt is törölni kell vele együtt.
-\item Amelyik fesztivál és koncert elmúlt, tehát a befejezés dátumán már az aktuális naptári idő  túlhaladt, azt archiválni kell. Erre a funkcióra elég egy triggert írni. Archiválás megvalósítása megoldható úgy, hogy átmozgatjuk egy másik táblába, vagy egy új változó bevezetésével, és azt hogy elérhető-e elég igazról hamisra állítani.
-
-\item Módosítások:
+\item Amelyik fesztivál és koncert elmúlt, tehát a befejezés dátumán már az aktuális naptári idő  túlhaladt, azt archiválni kell. Erre a funkcióra elég egy triggert írni. Archiválás megvalósítása megoldható úgy, hogy átmozgatjuk egy másik táblába, vagy egy új változó bevezetésével, és azt hogy elérhető-e elég igazról hamisra állítani. Esetleg a mindent vissza adó függvény csak azt adja vissza amelynek a befejező dátuma nagyobb mint az aktuális dátum.
+\end{itemize}
+Módosítások:
+\begin{itemize}
 \item Helyszín módosítása.
 \item Stílust nem érdemes módosítani. Jobb megoldás a törölés, és helyette egy másikat felvinni.
 \item Fesztivál módosítása Ezen belül meghívható a helyszín módosítás és itt hajtható végre a stílusok törlés vagy új felvitele.
@@ -237,17 +243,4 @@ Konkrét funkciók:
 \item Szállás módosítása, beleértve a pozíciójának a módosítását. 
 \end{itemize}
 
-A rendszer funkciói(back-end):
-Stílusok felvitele, módosítása (mely értékkészletből, majd hozzá lehet adni a zenekarokhoz, és a fesztiválokhoz)
-
-Zenekarok felvitele, módosítása, esetleges archiválása
-
-Fesztiválok felvitele, módosítása, a meglévő fesztiválhoz koncert rendelése(fellépő + időpont)
-
-A fesztiválokhoz szállások és jegyek felvitele(jövőben ha lesz rá idő.)
-
-Zenekarok keresése és listázása név vagy stílus alapján, ugyan ez fesztiválokra is + fesztiváloknál még helyi, regionális keresés is lehetséges.
-
-front-end(van backend része is):
-A lekérdezett zenekarra rákattintva visszatér a zenekar adataival és a letárolt fellépéseit is megmutatja kronológia vagy relevancia(egyéb is lehet priorítás) szerint.
-Fesztiválra kattintva dobja a fellépőket, melyek megtekinthetők hyperlink segítségével.(Azért lehet hasznos, ha esetleg nem ismerné a felhasználó a zenekart, vagy ha kíváncsi, hogy hol lesz még fellépése).
+\subsection{Struktúra}
