@@ -1,17 +1,26 @@
-\Chapter{Fesztiválokról általánosságban, hasonló alkalmazások}
+\Chapter{Fesztivál alkalmazások}
+
 % TODO: Táblázatos formában a fő funkciókat összehasonlítani. (Sorokban a weboldalak, oszlopokban a funkciók, és pipálgatni, hogy melyiknél melyik van meg.)
+
+Az elkészülő alkalmazás specifikációja előtt érdemes áttekinteni, hogy pontosan milyen szolgáltatások kapcsolódnak egy fesztiválhoz. Ez segít majd behatárolni az alkalmazás szükséges funkciót. Fontos továbbá ennek kapcsán megvizsgálni, hogy milyen hasonló alkalmazások érhetők már el, illetve azok milyen feladatokat és milyen formában látnak el.
 
 \section{Fesztiválokhoz kapcsolódó szolgáltatások}
 
-[21]"Fesztivál minden olyan – egy vagy több téma köré szerveződő, rendszeresen megrendezésre kerülő, egy vagy több helyszínen történő, meghirdetett programmal rendelkező kulturális, művészeti, gasztronómiai, sport vagy egyéb – eseménysorozat, melynek célja, hogy közönsége részére kiemelten színvonalas, értékközvetítő, minőségi, ismereteket is bővítő és egyben szórakoztató, szabadidős közösségi élményt nyújtson (Magyar Fesztivál Szövetség, 2009)".
+Először nézzük meg, hogy pontosan hogyan definiálhatnánk, hogy mi tekintünk fesztiválnak.
+
+,,Fesztivál minden olyan – egy vagy több téma köré szerveződő, rendszeresen megrendezésre kerülő, egy vagy több helyszínen történő, meghirdetett programmal rendelkező kulturális, művészeti, gasztronómiai, sport vagy egyéb – eseménysorozat, melynek célja, hogy közönsége részére kiemelten színvonalas, értékközvetítő, minőségi, ismereteket is bővítő és egyben szórakoztató, szabadidős közösségi élményt nyújtson.'' (Magyar Fesztivál Szövetség, 2009) [21]
+
 A hazai turizmus bevételeinek jelentős részét a program azon belül a fesztiválturizmus adja.
 
-Én a klasszikus értelembe vett zenei vagy zenei vonatkozású fesztiválokra fókuszálok.
-A fesztiválokhoz nagyon változatos és sokrétű funkció csoportok tartoznak, melyeket több szempont alapján kategorizálhatunk. Szedjük ezeket szét többféleképpen, hogy meg tudjuk határozni, hogy mik legyenek a szoftvertermékünk valódi megvalósult funkciói.
+\begin{comment}{Az előző állítást valamilyen forrással, konkrét számadatokkal alá kellene támasztani.}
+\end{comment}
 
-A fesztiválozáshoz, mint szolgáltatáshoz közvetlenül és közvetve kapcsolódó funkciók:
-Közvetlenül kapcsolódó funkciók: Amelyekért a szolgáltatást igénybe veszi a használója.
-Vegyük sorra ezeket: 
+A dolgozatomban a klasszikus értelembe vett zenei vagy zenei vonatkozású fesztiválokra fókuszálok.
+A fesztiválokhoz nagyon változatos és sokrétű funkció csoportok tartoznak, melyeket több szempont alapján kategorizálhatunk. Az elkészülő szoftver funkcióinak behatárolásához, a követelményspecifikáció elkészítéséhez vegyük ezeket sorra.
+
+\subsection{Közvetlenül kapcsolódó funkciók}
+
+A fesztiválozáshoz, mint szolgáltatáshoz közvetlenül kapcsolódó funkciók az alábbiak.
 \begin{itemize}
 \item Fellépők, a legnagyobb vonzereje a szolgáltatásnak, ezeket kellő időben és helyen kell megismertetni a közönséggel. Ide értve nem csak a zenei produkciókat, de egyéb performance-t, és előadásokat, prevenciókat.
 \item Élelmiszer és ital, a zenei fesztiválok jelentős része 3-10 napos periódusban gondolkodik. Alapvető szükségletet elégít ki, általában egy ilyen esemény alatt nagyobb összeget költenek erre a kategóriára, mint magára a belépőre, utazásra, szállásra.
@@ -19,7 +28,12 @@ Vegyük sorra ezeket:
 \item VIP szolgáltatások, közönségtalálkozók.
 \end{itemize}
 
-Közvetve kapcsolódó funkciók: Amelyeket nem érzékel, amikért nem fizetne önmagában, illetve nem kell tudnia a fesztiválozónak, de kényelmetlenül érezné magát, ha nem valósulnának meg az alábbi szolgáltatások.
+\begin{comment}{Ezek itt jók, de át kellene fogalmazni, hogy tényleg funkcióra/szolgáltatásra vonatkozzanak.}
+\end{comment}
+
+\subsection{Közvetve kapcsolódó funkciók}
+
+Közvetve kapcsolódó funkciók: Amelyeket nem érzékel, amikért nem fizetne önmagában, illetve nem kell tudnia a fesztiválozónak, de kényelmetlenül érezné magát, ha nem valósulnának meg. Ilyenek például az alábbiak.
 \begin{itemize}
 \item Takarítás, WC használat, esetenként a zuhanyzási és alvási lehetőség.
 \item A színpadok, dekorációk, kerítések építése, karbantartása, lebontása.
@@ -30,10 +44,13 @@ Közvetve kapcsolódó funkciók: Amelyeket nem érzékel, amikért nem fizetne 
 \item Biztonság, az időjárás viszontagságai ellen védelem, értékmegőrzés.
 \item Rekreáció, egészségmegőrzés.
 \item Fodrász, kozmetikus a feltűnő és kreatív megjelenés érdekében.
-\item Véradásért cserében valami ellen szolgáltatás.
+\item Véradásért cserében valamilyen ellenszolgáltatás.
 \end{itemize}
 
-Melyek azok a szolgáltatások, amelyek érdekelni fogják a felhasználót, szeretne előretudni róla, és ezeket egy információs rendszerben meg lehet jeleníteni: \begin{itemize}
+\subsection{Az alkalmazás szempontjából kiemelt funkciók}
+
+Melyek azok a szolgáltatások, amelyek érdekelni fogják a felhasználót, szeretne előretudni róla, és ezeket egy információs rendszerben meg lehet jeleníteni.
+\begin{itemize}
 \item Fellépők listája, mint már említettem ez az egyik legfőbb vonzerő.
 \item Az extrém nem mindenhol kipróbálható sportolási, technológiai lehetőség.
 \item Hasznos lehet a környékbeli étkezők elérhetősége, akár étlapja árakkal. Tudjuk, hogy a fesztiválok a magas áraikról és főleg a gyors kajáikról híresek. Érdemes lehet az olcsóbb, vagy a gasztronómia szerelmeseinek a környező elit éttermekről előre információt nyújtani.
@@ -45,9 +62,9 @@ Melyek azok a szolgáltatások, amelyek érdekelni fogják a felhasználót, sze
 \item Strandolási lehetőség. A zenei fesztiválok jelentős része nyáron van és vízközelben, hogy a közönségnek legyen lehetősége védekezni a meleg ellen.
 \end{itemize}
 
-Az interneten fellelhető már egypár elterjed Fesztivál/Esemény kereső alkalmazás, vannak hiányosságaik és tartalmaznak frappáns ötleteket is. Vegyünk sorra néhányat:
-
 \section{Konkurens alkalmazások}
+
+Az interneten fellelhető már egypár elterjed Fesztivál/Esemény kereső alkalmazás, vannak hiányosságaik és tartalmaznak frappáns ötleteket is. A következő szakaszok ezeket tekintik át.
 
 \subsection{Fesztiválkalauz.hu}
 
@@ -76,11 +93,12 @@ Lehet település, kerület, illetve megye szerint is keresni. Típus és dátum
 
 5+1. http://elmenyem.hu : Az oldal nem rendelkezik fesztiválkereső résszel, ez inkább egy blog. De rengeteg aktualitással, hírekkel szolgál a jövőben megrendezendő eseményekkel kapcsolatban. 
 
-\subsection{Konklúziók levonása}
+\section{További lehetséges szolgáltatások}
 
 Az itt felsorolt weboldalak természetesen a jövőben változásokon eshetnek át. Ezek a szakdolgozat írás közbeni állapotokat tükröznek.
 
-Extra lehetőségek, amelyekkel nem éltek az itt feltüntetett weboldalak: 
+Extra lehetőségek, amelyekkel nem éltek az itt feltüntetett weboldalak:
+
 SZÉP-kártya, és egyéb fizetési lehetőségek feltüntetése.
 
 Gyerek illetve kutyabarát-e a rendezvény. Könnyen megvalósítható, mégis látványos lehetőségeket rejt magában, hiszen egy cumi, vagy egy mancs elhelyezése az esemény mellett vagy alatt, adatbázis szinten pedig csak egy boolean változó bevezetése.
