@@ -10,11 +10,22 @@
  
 Az alkalmazástervezési fázist megelőzte a technológiai tervezés fázisa. A kronológiai sorrendet betartva a felhasználandó technológia bemutatásával kezdem ezt a fejezetet.  
 
+\begin{comment}{Az időrendi sorrend helyett célszerűbb vagy a szerver vagy a kliens irányából megközelíteni a tervezés bemutatását.}
+\end{comment}
+
 \section{Technológia}
+
+\begin{comment}{Az ilyen jellegű rész inkább a bevezetés részbe kerülhet majd. Itt minél inkább tárgyilagosan érdemes megnézni azt, hogy miért az adott technológiára esett a választás.}
+\end{comment}
+
 Még a felhasznált technológiák közül soha egyiket sem alkalmaztam a szakdolgozat készítése előtt. Így rengeteg kihívással találtam magam szembe, sőt a webes-technológiákat és alkalmazásokat sem igazán ismertem. Amikor belevágtam a projektbe akkortájt helyezkedtem el egy nagy vállalatnál és ott sikerült közelebb kerülnöm a Java EE-hez, habár csak az 1.4 verziójával, amely finoman szólva sem túl modern. Az iparban dolgozó vagy az informatikával jó barátságot ápoló ismerőseim közül többektől hallottam, hogy a Java-s világban a Spring keretrendszer eléggé közkedvelté vált manapság. Kis utána olvasással rájöttem, hogy egy ilyen alkalmazást készítek, hiszen valóban piacképesnek tűnik. A többi alkalmazott technológiát témavezetőmnek, Piller Imrének köszönhetem. 
 
 \subsection{Alapfogalmak}
+
 A technológiák bemutatás előtt be kell vezetnünk néhány alapfogalmat, melyekre a későbbiekben hivatkozunk:
+
+\begin{comment}{Ezek a definíciók túl általánosak ide. Konkrét, saját példákkal kellene bemutatni, hogy melyikre, és milyen formában volt szükség. (Ez esetleg átkerülhet az implementációs részbe is.)}
+\end{comment}
 
 Nyílt forráskód: Elérhető bárki számára és kedvére módosíthatja is. A fősodrású keretrendszer újabb változataiba természetesen csak azok a módosítások kerülhetnek bele, amelyeket átnézték és arra érdemesnek ítélték. A nyílt forráskód előnye, hogy rengeteg hibát észrevesznek a fejlesztők, hiszen mindenkinek van hozzáférése a kódbázishoz. Nem szabad lebecsülni a nyílt forráskódú projekteket, az informatikában rengeteg ilyen sikeres projekttel találkozunk. Például Unix/Linux rendszerek, melyek nagy vállalati környezetben elengedhetetlenek.
 
@@ -45,9 +56,12 @@ Back-end és Front-end: Ezeknek a szavaknak nem igazán van magyar megfelelője.
 \item Service: A Spring-ben szokás bevezetni egy új réteget, ez lesz a Service, ennek segítségével ki fog válni az üzleti logika a Controller-ből, és ezt a funkcióját átveszi a Service. A Contoller innentől forgalomirányítóként fog üzemelni.
 \end{itemize}
 
+\begin{comment}{Ide jöhet majd még egy MVC-s ábra. (Többféleképpen is meg szokták adni, ezért ki kell majd választani az ide vonatkozót.)}
+\end{comment}
+
 \subsection{Felhasznált webes technológiák}
 
-Na de lássuk akkor, hogy miket fogunk felhasználni a dolgozathoz: 
+Az alkalmazás elkészítéséhez az alábbi technológiák használata mellett döntöttem.
 
 A Java webalkalmazások készítéséhez két alapvető irány alakult ki: a Java Enterprise Edition (Java EE) és a Spring Framework. A Java EE az Oracle a Java jelenlegi készítője által támogatott eredeti verzió. Ezt korábban a Sun Microsystems készítette, melyet felvásárolt az Oracle Corporation 7,4 milliárd dollárért 2009-ben. Mindkettő moduláris felépítésű, és funkcionalitását tekintve nagyon hasonló modulok jelennek meg. Megtehetjük, hogy az egyiket választjuk vagy a másikat, de akár kombinálhatjuk is őket.
 
@@ -70,9 +84,13 @@ Angular: Az Angular egy TypeScript alapú keretrendszer melyet a Google fejleszt
 [11] REST: A REST (Representational State Transfer) egy szoftverarchitektúra típus, elosztott kapcsolat (loose coupling), nagy, internet alapú rendszerek számára, amilyen például a világháló. A Representational State Transfer kifejezést Roy Fielding vezette be és definiálta 2000-ben a doktori disszertációjában. Fielding egyike a HTTP specifikáció szerkesztőinek.
 Azokat a rendszereket, amelyek eleget tesznek a REST megszorításainak, "RESTful"-nak nevezik.
 
-Az alkalmazás szerver oldalon egy Spring Boot alkalmazás lesz, ami JPA-n keresztül fér hozzá az adatbázisunkhoz. Ez kiegészül egy Spring Security modullal, amely az autentikációért és az autorizációért felelős, tehát  a felhasználók jogosultsági szintjüknek megfelelően férhessenek hozzá az adatokhoz. Ez egy RESTful API-n keresztül kommunikál az Angular keretrendszer segítségével elkészült front-enddel. 
+Az alkalmazás szerver oldalon egy Spring Boot alkalmazás lesz, ami JPA-n keresztül fér hozzá az adatbázisunkhoz. Ez kiegészül egy Spring Security modullal, amely az autentikációért és az autorizációért felelős, tehát  a felhasználók jogosultsági szintjüknek megfelelően férhessenek hozzá az adatokhoz. Ez egy RESTful API-n keresztül kommunikál az Angular keretrendszer segítségével elkészült front-enddel.
+
+\begin{comment}{Ez így egy kicsit mesélős, de kiegészítésekkel és kis átfogalmazással rendben lesz.}
+\end{comment}
 
 \subsubsection{Szerver-kliens architektúra}
+
 Hogy könnyebben átlátható legyen ezért készítettem az architektúráról egy általános ábrát (\ref{fig:architecture}. ábra). 
 A megvalósuló projektből kliens oldalon ki fog maradni a desktop és a mobil alkalmazás. Míg szerver oldalon az alkalmazás szerverhez nem lesznek forráskódok hozzárendelve, mert a megjelenítendő adatokat REST API-n keresztül kommunikálom a front-end felé, és ott válnak elérhetővé weblap formátumban.
 
@@ -83,7 +101,9 @@ A megvalósuló projektből kliens oldalon ki fog maradni a desktop és a mobil 
 \label{fig:architecture}
 \end{figure}
 
-\subsection{Springről részletesebben, annotációk és bean-ek}	%Ez lehet, már az implementácsiós részhez kell majd.
+\subsection{Springről részletesebben, annotációk és bean-ek}
+
+% Ez lehet, már az implementácsiós részhez kell majd.
 
 Annotációk a Springben: Minden osztályban feltűnnek az annotációk. Melyek a keretrendszernek szóló üzenetek, ezek alapján tudja eldönteni a Spring, hogy miként bánjon az egyes osztályokkal, metódusokkal, adattagokkal.
 
@@ -138,7 +158,10 @@ Három fajta megadási mód létezik:
 \item Az utolsó verzió a konstruktor alapú, itt a konstruktor felett adjuk meg, a már jól ismert \texttt{@Autowired} annotációt.
 \end{itemize}
 
-\section{Alkalmazástervezés}
+\section{Az alkalmazás tervezése}
+
+\begin{comment}{Az alább említett dolgok még a specifikációhoz tartoznak. A fejezet már elég ha csak azzal foglalkozik, hogy a specifikált dolgokat hogy lehet megvalósítani.}
+\end{comment}
 
 Az eddigiek alapján meg kell határozni, hogy miket szeretnénk, ha megvalósítana az alkalmazásunk, miben lesz más vagy jobb mint a többi a piacon fellelhető alkalmazás. Én igyekszem két új aspektust bevezetni, amelyeket ott nem, vagy nem egészen így alkalmaztak. Az egyik a fellépő alapú szemlélet. Szeretném, ha nemcsak a fesztiválról tudnánk meg többet, hanem az ott fellépő zenekarokról is érhetnénk el információkat. Ha nem ismerem őket, akkor rákattintva megtudhatok róluk pár információt, illetve az oldalra felvitt fesztiválok alapján a turné állomásokat. A másik aspektus a kulcsszavak bevezetése mint fesztivál, mint fellépő oldalon. Hasonlóval találkozhattunk egy-két általam is bemutatott oldalon. Amilyen paraméterek számításba jöhetnek: zenei stílusok, fesztivál stílusok, sátrazási lehetőség, kutyabarát. A divatos nevén a hashtag-ek. Adatbázis és program szinten stílusnak nevezem el, de talán ez egy kicsit tágabb fogalom.
 
@@ -194,7 +217,10 @@ Az egyedek között fent álló relációk a következőek:
 \item Az előzőhöz hasonlóan a fesztiválstílusok és a fesztivál között is ilyen a kapcsolat.
 \end{itemize}
 
-\subsection{Konkrét funkciók:}
+\subsection{Konkrét funkciók}
+
+\begin{comment}{Ezt itt érdemes részletesebben kifejteni, vagy specifikációs jelleggel, vagy pedig már a konkrét implementációt emlegetve.}
+\end{comment}
 
 Lekérdezések: % a címeket formázni. 
 \begin{itemize}
@@ -242,5 +268,11 @@ Módosítások:
 \item Koncert módosítása.
 \item Szállás módosítása, beleértve a pozíciójának a módosítását. 
 \end{itemize}
+
+\begin{comment}{Az egyes hibalehetőségeket is sorra kellene majd venni!}
+\end{comment}
+
+\begin{comment}{Meg kellene nézni, hogy hogy lehetne esetleg még jobban csoportosítani a listaelemekben említett dolgokat, és inkább alpontokba rendezni alcímekkel együtt.}
+\end{comment}
 
 \subsection{Struktúra}
