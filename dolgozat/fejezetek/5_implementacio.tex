@@ -1,9 +1,43 @@
 \Chapter{Implementáció}
 
 % TODO: Ide kerülhetnek a konkrét kódrészek.
-
 % TODO: Le lehet írni, hogy mit volt egyszerűbb/komplikáltabb összerakni.
 
 \begin{java}
-
 \end{java}
+
+A fesztiválok megkereséséhez használtam a legkomplexebb folyamatot. Amelyben először a felület felől meg kell vizsgálni, hogy a keresett paramétereket megadta-e a felhasználó, és csak azokat a paramétereket küldjük el a szerveroldalra . Az x és y koordinátát egy google maps API-n keresztül szerzem meg, ahol beírja a felhasználó a kívánt települést én pedig már a településhez tartozó koordinátákkal dolgozok tovább. Ha nem ír be semmit, akkor ezek az értékek üresek maradnak és a helytől való távolságot sem érdemes elküldeni a túloldalra. Amint látható a HttpParams objektumnak csak string típusú változókat lehet átadni, így castolni kellett karakterlánccá az értékeket. A dolog érdekessége, hogy a Spring oldalon ki lehet venni más típusként is, pedig a Java egy szigorúbban típusos nyelv mint az Angular.
+A lekérdezésből visszaérkezett adathalmazt leképezzük a modellnek megfelelő formára és a modellekből készült tömbbel tér vissza a metódus a megjelenítési réteghez.
+
+\begin{verbatim}
+  getEventsByQuery(posX: number, posY: number, maxFromPos: number, 
+  isFree: boolean, styleName: string, begin: Date, end: Date)
+   : Observable<EventModel[]> {
+    let prms = new HttpParams();
+    if(posX !== 0 && posX != null && posX != undefined) {
+      prms = prms.append('posX', String(posX));
+      prms = prms.append('posY', String(posY));
+      if(maxFromPos !== 0 && maxFromPos != null && maxFromPos != undefined) {
+        prms = prms.append('maxFromPos', String(maxFromPos));
+      }
+    }
+
+    prms = prms.append('isFree', String(isFree));
+
+    if(styleName !== "" && styleName != null && styleName != undefined) {
+      prms = prms.append('styleName', styleName);
+    }
+    if(begin && begin != null && begin != undefined) {
+      prms = prms.append('begin', String(begin));
+    }
+    if(end && end != null && end != undefined) {
+      prms = prms.append('end', String(end));
+    }
+
+    return this._http.get<EventModel>
+    (`${environment.Spring_API_URL}/festival/query`,
+     {params: prms})
+      .map(data => Object.values(data).map(fest => new EventModel(fest)));
+
+  }
+\end{verbatim}
