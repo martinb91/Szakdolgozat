@@ -6,7 +6,7 @@
 \begin{java}
 \end{java}
 
-A fesztiválok megkereséséhez használtam a legkomplexebb folyamatot. Amelyben először a felület felől meg kell vizsgálni, hogy a keresett paramétereket megadta-e a felhasználó, és csak azokat a paramétereket küldjük el a szerveroldalra . Az x és y koordinátát egy google maps API-n keresztül szerzem meg, ahol beírja a felhasználó a kívánt települést én pedig már a településhez tartozó koordinátákkal dolgozok tovább. Ha nem ír be semmit, akkor ezek az értékek üresek maradnak és a helytől való távolságot sem érdemes elküldeni a túloldalra. Amint látható a HttpParams objektumnak csak string típusú változókat lehet átadni, így castolni kellett karakterlánccá az értékeket. A dolog érdekessége, hogy a Spring oldalon ki lehet venni más típusként is, pedig a Java egy szigorúbban típusos nyelv mint az Angular.
+A fesztiválok megkereséséhez használtam a legkomplexebb folyamatot. Amelyben először a felület felől meg kell vizsgálni, hogy a keresett paramétereket megadta-e a felhasználó, és csak azokat a paramétereket küldjük el a szerveroldalra . Az x és y koordinátát egy google maps API-n keresztül szerzem meg, ahol beírja a felhasználó a kívánt települést, a rendszer pedig már a településhez tartozó koordinátákkal dolgozik tovább. Ha nem ír be semmit, akkor ezek az értékek üresek maradnak és a helytől való távolságot sem érdemes elküldeni a túloldalra. Amint látható a HttpParams objektumnak csak string típusú változókat lehet átadni, így castolni kellett karakterlánccá az értékeket. A dolog érdekessége, hogy a Spring oldalon ki lehet venni más típusként is, pedig a Java egy szigorúbban típusos nyelv mint az Angular.
 A lekérdezésből visszaérkezett adathalmazt leképezzük a modellnek megfelelő formára és a modellekből készült tömbbel tér vissza a metódus a megjelenítési réteghez.
 
 \begin{verbatim}
@@ -35,9 +35,69 @@ A lekérdezésből visszaérkezett adathalmazt leképezzük a modellnek megfelel
     }
 
     return this._http.get<EventModel>
-    (`${environment.Spring_API_URL}/festival/query`,
-     {params: prms})
+    (`${environment.Spring_API_URL}/festival/query`, {params: prms})
       .map(data => Object.values(data).map(fest => new EventModel(fest)));
 
   }
+\end{verbatim}
+
+A controller az alábbi metódussal veszi át a beérkező kérést. Amint az látható, a metódus egyik paraméterét sem kötelező átadni neki, hisz ez egy lekérdezés, jöhet kevesebb információval is kérés. Ha érkezik dátum érték azt Date formátumra kell konvertálnunk és csak ezután hívhatjuk meg a a festivalService festsByQuery metódusát.
+
+\begin{verbatim}
+	@RequestMapping(value = "/query", method = RequestMethod.GET)
+	public List<FestivalDTO> festsByQuerry(
+	@RequestParam(value = "styleName", required = false) String style,
+										   @RequestParam(value = "isFree", required = false) boolean isFree,
+										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
+										   @RequestParam(value = "begin", required = false) LocalDate beginDate,
+										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
+										   @RequestParam(value = "end", required = false) LocalDate endDate,
+										   @RequestParam(value = "posX", required = false) Double posX,
+										   @RequestParam(value = "posY", required = false) Double posY,
+										   @RequestParam(value = "maxFromPos", required = false) Double maxFromPos){
+		Date begin = null;
+		Date end = null;
+		if (beginDate != null){
+			begin = Date.from(beginDate.atStartOfDay().atZone(ZoneId.systemDefault())
+			.toInstant()); }
+		if (endDate != null){
+			end = Date.from(endDate.atStartOfDay().atZone(ZoneId.systemDefault())
+			.toInstant());}
+		return festivalService.festsByQuery( style, isFree, begin, end,
+		 posX, posY, maxFromPos); }
+\end{verbatim}
+
+A festsByQuery metódust a következőképpen implementáltam.
+
+\begin{verbatim}
+    public List<FestivalDTO> festsByQuery(String style, boolean isFree, Date begin, Date end, Double posX, Double posY, Double maxFromPos) {
+        List<Festival> festivals = new ArrayList<>();
+        if (style == null) {
+            if (!isFree) {
+                festivals = datesWithoutStyle(begin, end, posX, posY, maxFromPos);
+            } else {
+                festivals = datesWithStyle("free", begin, end, posX, posY, maxFromPos);
+            }
+        } else {
+            if (!isFree) {
+                festivals = datesWithStyle(style, begin, end, posX, posY, maxFromPos);
+            } else {
+                for (Festival festival : datesWithStyle(style, begin, end, posX, posY, maxFromPos)){
+                    System.out.println(festival.getName());
+                    for (FestivalStyle festivalStyle : festival.getStyles()){
+                        if(festivalStyle.getStyle().toLowerCase().equals("free")){
+                            festivals.add(festival);
+                        }
+                    }
+                }
+            }
+        }
+
+        List<FestivalDTO> festivalDTOS = new ArrayList<>();
+        for (Festival festival : festivals) {
+            System.out.println(festival.getName());
+            festivalDTOS.add(modelMapper.map(festival, FestivalDTO.class));
+        }
+        return festivalDTOS;
+    }
 \end{verbatim}

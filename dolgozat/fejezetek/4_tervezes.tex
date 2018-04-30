@@ -29,7 +29,6 @@ JPA(Java Persistence API)-t használok az adatbázishoz való hozzáféréshez. 
 
 A DAO(Data Access Object) és a Java Bean-ek közötti leképezésre saját magam által készített leképező osztályokat terveztem készíteni, de szerencsére találtam egy ModelMapper nevű modult ami megoldja helyettem ezt a dolgot, természetesen előfordulhat, hogy majd kézzel is kell ilyen osztályt definiálnom, ha speciális igények merülnek fel.
 
-
 \subsubsection{RESTful API}
 
 A két rendszer RESTful API-n keresztül kommunikál egymással. Esetünkben és általánosságban is igaz, hogy itt a két rendszer JSON fájlok cseréjével oldja meg a kommunikációt egy egységes interfészen keresztül.
@@ -56,6 +55,11 @@ A megvalósuló projektből kliens oldalon ki fog maradni a desktop és a mobil 
 \caption{Szerver-kliens architektúra}
 \label{fig:architecture}
 \end{figure}
+
+\subsection{Fejlesztői környezetek}
+
+A fejlesztéshez a JetBrains termékeit fogom használni. A szerveroldali fejlesztéshez az InteliJ IDEA nevű szoftvert, a front-end-hez pedig a WebStorm-ot. Azért döntöttem mellettük, mert nagyon színvonalas eszközök, sokrétűen támogatják a fejlesztést. 
+Ezenkívül a Postman alkalmazást használom a minta kérések beküldéséhez, ezáltal a funkciók teszteléséhez szerver oldalon. 
 
 \section{Az alkalmazás tervezése}
 
@@ -153,7 +157,23 @@ Készítettem egy ábrát(\ref{fig:mvc}. ábra), hogy a projekt egész szerkezet
 \label{fig:mvc}
 \end{figure}
 
+Az ábrán megfigyelhető, hogy a repository osztályokon keresztül fér hozzá az adatbázishoz a rendszer, természetesen az adatbázis eléréséhez, kell ismernie egy felhasználó név, jelszó párost és egy elérési útvonalat a rendszernek az adatbázishoz, amelyet általában valamilyen környezeti változóban szokás megadni. A repository osztályokban fogjuk megadni az SQL lekérdezéseket, amelyeket gyakran ki sem kell írni, mert a keretrendszer az adatbázis struktúra ismeretében legenerálja azokat metódus neveket és megfogalmazza hozzá a lekérdezést, ha a CRUDRepository-t kiterjeszti az interfészünk . Természetesen ezek a nevek natív SQL-re konvertálódnak a lekérdezés alkalmával. Mivel ritkán fogunk bonyolultabb lekérdezéseket definiálni, így gyakran elegek lesznek, ha pedig bonyolultabb lekérdezést szeretnénk használni, akkor \texttt{ @Query } paraméterként megadhatjuk vagy natív SQL-ként vagy a JPQL lekérdező nyelv segítségével. A JPQL-t használom, mert ennek a szintaxisával jobb barátságot ápol az IntelliJ IDEA, és ad rá kódkiegészítést. A repository-k  lekérdezettek olyan típusokkal amelyek mező szinten definiáltak az adatbázisban vagy entity(bean) típusokkal térhetnek vissza. A módosítás, törlés és új létrehozása is a bean-ekre vonatkozik vagy annak egyes mezőire.
 
+A service rétegben foglalnak helyet a mapper és a service osztályok, interfészek. A serviceket szokás interfészként megadni és létrehozni egy olyan osztályt ami ezeket a szolgáltatásokat implementálja. A service-k metódusai a controllertől kapják a kéréseket és a repository-hoz intézik a saját kéréseiket.  A service osztályokban történik meg a beérkezett adatok feldolgozása és az elvégzendő műveleteket is itt hajtatjuk végre, majd a végrehajtott eredményeket letároljuk és/vagy kommunikáljuk a UI felé a controller segítségével. Általánosságban az is elmondható, hogy a repository felől entity-ket kezel míg a a controller fele Data Transfer Object-eket (továbbiakban DTO). A Mapper osztályra azért lesz szükség, hogy a DTO osztályokat Bean-ekké és a Bean-eket DTO-ká alakítsa oda-vissza.
+
+A kontrollerek azért felelősek, hogy figyeljék, hogy nem-e érkezik a kliens oldalról valamilyen kérés, és ha érkezett, akkor ezt kiszolgálják. Ez a modul állítja össze a kérésekre a válaszokat. Itt DTO formátumban fogadjuk az objektumokat, illetve ilyen formában is továbbítjuk őket a túl oldalra. Mint már a service-nél írtam, a controller a service-hez továbbítja a hálózaton kapott információkat a metódusaik meghívásával. A controller-nél minden metódus másik URI-n érkező kérésekre figyel, de ez triviális.
+
+A túl oldalon is találkozunk a service-kel, itt azért felelnek, hogy a kérést intézzék a back-end felé és a visszakapott választ lekezeljék. A kapott értékek valamilyen modell-re leképezhetőek, így definiálhatunk saját modelleket vagy használhatunk olyanokat is amiket a keretrendszer definiál. Sajátokat fogok készíteni, ezek a DTO-knak a tükörképei lesznek JSON formátumban definiálva, hiszen az Angular ezt az adatstruktúrát kezeli könnyedén. 
+
+A komponensbe már modell formátumban érkeznek az adatok, a komponenstől is érkezhet modellt átadva a kérés a service felé, de a lekérdezéseknél ennél jóval kevesebb információ is elég. Ha az adatokon módosításokat végzünk, akkor természetesen minden releváns adatra szükségünk van és ilyenkor már modellt érdemes átadni a service metódusainak.
+A komponens view része megjeleníti a böngésző segítségével a kapott információkat. A class része pedig szolgáltatja a megjelenítendő adatot, olyan formában amilyet a view igényel, illetve a kiváltott eseményeket kezeli, ha extra információra van szüksége, akkor azokat elkéri a service-ken keresztül.
+
+Két típusú esemény van, az egyik amelyiket a felhasználó vált ki azzal, hogy használja a rendszert, ezek a view-n keresztül érkeznek. Vannak a felhasználótól független események is, amelyek akkor is kiváltódnak, ha a felhasználó nem nyúlt a rendszerhez, ezek általában a classban keletkeznek, de akár jöhetnek a  szerver oldalról is.
+
+\subsubsection{Egy példa a struktúrára}
+
+Egy kis példát nézzünk erre a front-end-től az adatbázisig, egy űrlapot kitölt a felhasználó, ha minden mezőt megfelelően kitöltött, és rányom a küldés gombra, akkor az meghívja az egyik service valamelyik metódusát. Ha nem sikerült megfelelően kitölteni akkor jön egy figyelmeztetés a class-tól, hogy mi a gond, apróbb logikát amúgy a View is tárolhat. Előbb-utóbb sikerül mindent megfelelően kitöltenie, akkor már a service réteghez is eljut, ahol egy HTTP kérést intéz a szerverhez, itt az interfész érzékeli, hogy jött valamilyen kérés és megpróbálja leképezni, a kontrollerekre, ha nem sikerül akkor visszautasítja, ha talál olyat amelyikre illeszkedik, akkor a gondjaira bízza a kapott információkat, természetesen ettől még megtagadhatja a kiszolgálást, ha olyan tartományból jön vagy nem azonosította magát a kérelmező fél és a rendszer igényli. A controller tovább hívja a service réteget és átadja neki a DTO objektumot paraméterként. Itt pedig a repository rétegnek hívjuk meg a mentés metódusát. Persze előtte le kell képezni a DTO objektumot bean-né. Ezt megtehetjük mapper osztály segítségével vagy kézzel is. Struktúrától függően ki is hagyhatjuk a DTO objektumokat és ilyenkor már a controller réteg bean-t vesz át. A visszatérési értéket pedig a hívási láncon visszafele elindulva eljuttatjuk a front-endnek, és ha minden rendben ment akkor ezt jelezzük a felhasználó számára, ha nem akkor informáljuk a hiba okáról. 
+ 
 \subsection{Konkrét funkciók}
 
 \begin{comment}{Ezt itt érdemes részletesebben kifejteni, vagy specifikációs jelleggel, vagy pedig már a konkrét implementációt emlegetve.}
@@ -162,7 +182,7 @@ Készítettem egy ábrát(\ref{fig:mvc}. ábra), hogy a projekt egész szerkezet
 Lekérdezések: % a címeket formázni. 
 \begin{itemize}
 \item Az összes fesztivált visszaadó funkció, amely mindezt a kezdés időpontja szerint adja vissza. Ez az alapértelmezett, ha a fesztiválok menüpontra kattintunk.
-\item Fesztivál visszaadás Id alapján. Egy fesztivált kiválasztunk, a részleteit, illetve a programját az azonosítója alapján kapjuk vissza. 
+\item Egy konkrét fesztivál visszaadása az ID alapján. Ha egy fesztivált kiválasztunk a felületen, akkor az id alapján a részleteit, illetve a programját az azonosítója alapján kapjuk vissza. 
 \item Kiválasztott stílus alapján megkapjuk azon fesztiválok listáját, amelyek a kategória alá tartoznak.
 \item Fesztiválok település alapján, ez megvalósulhat API alapján, illetve amíg az nincs addig az egyed leírásából kinyerhető lesz a helyszín. 
 \item Fesztivál koordinátáitól 10 km távolságra eső szállások. Akár lehet megadott távolság is, de a szállás keresést nem szeretném a felhasználóra bízni. Hanem a fesztivál kiválasztásakor ajánl a rendszer a fesztiválhoz közeli szállásokat. De akár ez megvalósulhat önálló funkcióként is, ahol megadott koordinátától, megadott távolságra lévő szállásokat tudunk megkeresni, itt a megadott koordináta lehet a fesztivál, a felhasználó meg kiválaszthatja, hogy milyen távolságon belül keres szállást.
