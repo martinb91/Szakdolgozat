@@ -6,8 +6,6 @@
 
 % TODO: Az alkalmazás felépítéséről UML ábrák. Minél részletesebben bemutatva, hogy minek kellene majd elkészülnie.
 
-%Konkrétan leírni, hol mit és miért választottam. pl harison
-
 Az alkalmazástervezési fázist megelőzte a technológiai tervezés fázisa. Először a technológiai tervezéssel kezdem a fejezetet a back-end-től a front-end felé.
 
 \section{Technológia}
@@ -181,28 +179,53 @@ Egy kis példát nézzünk erre a front-end-től az adatbázisig, egy űrlapot k
 
 Lekérdezések: % a címeket formázni. 
 \begin{itemize}
-\item Az összes fesztivált visszaadó funkció, amely mindezt a kezdés időpontja szerint adja vissza. Ez az alapértelmezett, ha a fesztiválok menüpontra kattintunk.
-\item Egy konkrét fesztivál visszaadása az ID alapján. Ha egy fesztivált kiválasztunk a felületen, akkor az id alapján a részleteit, illetve a programját az azonosítója alapján kapjuk vissza. 
-\item Kiválasztott stílus alapján megkapjuk azon fesztiválok listáját, amelyek a kategória alá tartoznak.
-\item Fesztiválok település alapján, ez megvalósulhat API alapján, illetve amíg az nincs addig az egyed leírásából kinyerhető lesz a helyszín. 
-\item Fesztivál koordinátáitól 10 km távolságra eső szállások. Akár lehet megadott távolság is, de a szállás keresést nem szeretném a felhasználóra bízni. Hanem a fesztivál kiválasztásakor ajánl a rendszer a fesztiválhoz közeli szállásokat. De akár ez megvalósulhat önálló funkcióként is, ahol megadott koordinátától, megadott távolságra lévő szállásokat tudunk megkeresni, itt a megadott koordináta lehet a fesztivál, a felhasználó meg kiválaszthatja, hogy milyen távolságon belül keres szállást.
-\item Fesztiválok keresése két dátum közötti intervallumban, ha a felhasználó az egyiket üresen hagyja, arra is fel kell készíteni a rendszert.
-\item Fesztiválok fellépő alapján listázzuk ki az összes olyan fesztivált, amelyiken fellép a kiválasztott fellépő.
-\item Koncertek fellépő alapján, hasonló mint az előző, csak itt a pontos időpont is kiderül, hogy mikor lesz a fellépés, illetve a koncert specifikus részletek. %lehet bevezetek egy új adattagot leírás néven a koncerthez.
-\item Koncertek fesztivál alapján:  Kiválasztott fesztivál programja. itt érdemes lehet valamilyen rendezési elvet használni. Napokra bontani, betűrend szerint rendezni, vagy színpad szerint csoportosítani. % ehhez kell egy színpad adattag.
-\item Fellépők listázása betűrendben.
-\item Fellépők visszaadása név, vagy névrészlet alapján.
-\item Az összes olyan fellépő visszaadása amelyiknek a stílusa megegyezik a lekért stílussal. A kérés érkezhet egy hashtag-re kattintásból, de lehetőség lesz stílusra is keresni.
-\item Lakóhelytől, vagy egy a felhasználótól bekért pozíciótól megadott távolságon belüli fesztiválok.
-\item Összes stílust visszaadó funkció, amely értékkészletből könnyebben tud választani, ha esetleg nem jutna eszébe, vagy nem gondolna az esetleges kategóriákra.
+\item Az összes fesztivált visszaadó funkció, amely mindezt a kezdés időpontja szerint adja vissza, illetve amelyik fesztivál már véget ért azt már nincs értelme visszaadni a felhasználónak. Ez az alapértelmezett, ha a fesztiválok menüpontra kattintunk. A megvalósítása egy egyszerű lekérdezés eredménye lesz az adatbázisból. Mint minden lekérdezés ez is az egész hívási láncon végig fog menni amit a példában is megadtunk. Ahol ez megkerülhető azt külön jelezni fogom.
+ 
+\item Egy konkrét fesztivál visszaadása. Ha egy fesztivált ráklikkeléssel kiválasztunk a felületen és ezáltal több információt szeretnénk róla megtudni. Akkor ez kettő vagy három hívást fog generálni. Megtehetjük azt, hogy átadjuk a fesztivál modelljét a listából a fesztiválrészletek weboldalnak, vagy az id-ja alapján lekérdezzük újra. Én a lekérdezés mellett döntöttem mert a többi lekérdezést így-is úgyis végre kell hajtani és azokat is id alapján fogjuk megtenni. Az egyik ilyen kérés ez esetben a fesztivál közelében lévő szállások lekérdezése, a másik pedig a fesztiválhoz tartozó koncertek listája.   
+
+\item Fesztivál koordinátáitól 10 km távolságon belülre eső szállások. Akár lehetne megadott távolság szerinti keresés, de a szállás keresést nem szeretném a felhasználóra bízni. A fesztivál kiválasztásakor ajánl a rendszer a fesztiválhoz közeli szállásokat, amikor az előző pontban megszeretne tudni több információt egy fesztiválról. A későbbiekben akár ez megvalósulhat önálló funkcióként is, ahol megadott koordinátától, megadott távolságra lévő szállásokat tudunk megkeresni. Ez esetben majd a megadott koordináta lehet a fesztivál, és a felhasználó meg kiválaszthatja majd, hogy milyen távolságon belül szeretne találni, de egyenlőre beégetett távolság lesz megadva.
+
+\item Koncertek fesztivál alapján: Ez a másik lekérdezés lesz amikor egy általunk kiválasztott fesztivál programját betöltöttük. A fesztivál id-ja alapján elkérjük a szerver oldalról azokat a koncerteket, amelyek a megadott fesztiválhoz kapcsolódnak, és kijelezzük a felhasználó számára a koncert kezdés idejét és fellépő nevét. És itt ha a fellépőre kattint, akkor a fellépőről is megtudhat információkat. A későbbiekben valamilyen rendezési elv is bekerülhetne, jelenleg csak egy listaként ömlesztem. De lehetne napokra bontani vagy színpad szerint csoportosítani, ehhez viszont az adatstruktúrába egy színpad elemnek is be kell majd kerülnie, ez a tervezés előző fázisaiból kimaradt.
+
+\item Fesztiválok névrészlet alapján:  Ez azoknak kedvez akik már tudják mit keresnek, csak mondjuk a programját szeretnék majd megtekinteni. Ezt elég lehet csak a front-enden kezelni egy map-peléssel, azokra szűrve, amely fesztiválok nevében megtalálható a megadott névrészlet, ilyen esetben nem kell gombot nyomni a felületen, hanem elég csak azt figyeljük, hogy történt-e változás az inputon, és ha igen akkor újra map-peljük a tömböt.
+
+\item Kiválasztott stílus alapján megkapjuk azon fesztiválok listáját, amelyek a kategória alá tartoznak. Ez kétféleképpen fog megvalósulni. Az egyik a hashtag-re kattintva, leszűri azokat a fesztiválokat, ahol megtalálható a megadott stílus, ekkor nem muszáj elkérni a back-end-től a kellő információkat, elegendő az adott feltételek szerint megcsinálni a leképzést. A másik a részletes keresés esetén, ez majd a következő pontban fejtem ki.
+
+\item Komplex keresés, ez alatt több keresési kritérium szerinti keresést értünk. Az egyes lehetőségeket alább pontokba szedve részletezem: 
+\begin{itemize}
+\item Meg lehet keresni település alapján, illetve településtől való távolság alapján. Ez úgy fog megvalósulni, ha a rendszer felhasználója megadja a fesztiválkereső modulban a települést, akkor a térkép API-tól elkérjük a hely koordinátáit és majd azokat küldöm be, ha a felhasználó ad meg távolságot is a pozíciótól akkor a távolságot is be küldjük. Ezzel kapcsolatban felmerül egy kérdés, hogyan lesz a koordinátákból km és fordítva. Szerencsére nem én vagyok az első aki ezt a kérdést felteszi, így az internet segítségével gyorsan rátaláltam a Haversine formulára. A módszernek az esetünkben van egy kis hibája, hiszen gömbbel számol, de mint tudjuk a föld geoid. Ez egy Magyarország méretű és természeti adottságú ország esetén jelentős torzulást nem okoz. A formulába behelyettesítve a két x és a két y koordinátát ezzel megkapjuk a távolságukat kilométerben, ha az kisebb mint a megadott távolság, akkor megfelel számunkra, ha nem akkor sajnos nem. Mivel egy település koordináták halmaza, így akkor is alkalmaznunk kell a Haversine algoritmust, ha nem adott meg a felhasználó paramétert ilyen esetben 5 km alatti eredményekre szűrünk. 
+
+\item Fesztiválok keresése két dátum közötti intervallumban, ha a felhasználó az egyiket, vagy mindkettőt üresen hagyja, arra is fel készítjük a rendszert. Mindkettő üresen hagyásának esetén akkor a lekérdezés időpontjában még véget nem ért fesztiválokat adjuk vissza. Ha a felső érték üres és az alsó érték van megadva, akkor a keresés időpontjában még véget nem ért fesztiváloktól a megadott időponting elkezdődötteket adjuk vissza. Ha az felső érték van megadva, akkor a megadott időpontkor már elkezdődötteket adjuk vissza. Ha mind kettő meg van adva, akkor a csak alsó érték és a csak felső érték megadásának a metszetét adjuk vissza.
+
+\item Stílus alapú keresés a fesztiválhoz. A jegyeket nem valósítjuk meg és úgy döntöttem, hogy a stílusoknál jelenítem meg. A \#free paramétert vezettem be a stílusoknál erre az esetre. És mivel innentől ez egy stílus lesz, ezt is a stílusoknál kezelem. Emiatt megint lesz 4 esetünk. Az első, nem pipáljuk be a checkboxban, hogy ingyenes, és nem adunk meg semmilyen stílust, ez esetben a keresést nem érintik ezek a paraméterek. A második, megadjuk hogy ingyenes, ilyenkor azokat a fesztiválokat szelektáljuk le amihez tartozik egy free stílusú címke(hashtag). A harmadik eset, ha csak stílus van megadva. Ugyan az történik mint az előző esetben, csak nem free-vel küldjük be a kérést. Amikor mind kettő megvan adva, akkor pedig a stílussal küldjük be a kérést, és a visszakapott listából még leszűrjük azokat amelynek van free stílusa is és csak azokat adjuk át a felület számára.
+\item Az itt felsoroltak kombinációira is fel kell majd készítenünk a programunkat, a felsoroltak alapján méltán kapta a komplex keresés nevet ez a pont.
+\end{itemize}
+
+\item Az összes fellépő visszaadása, Fellépők menüpontra kattintva elkérjük az adatbázisban található összes fellépőt, és kilistázzuk ezeket. Hasonló, mint a fesztiváloknál, csak itt nem kell annyi mindenre figyelnünk.
+
+\item Fellépők visszaadása névrészlet alapján és/vagy stílus részlet alapján. Ugyanúgy fog működni, mint a fesztiváloknál a név részlet szerinti keresés, csak itt még egy metódus fog figyelni, hogy nem-e történt változás. 
+
+\item Az összes olyan fellépő visszaadása amelyiknek a stílusa megegyezik a lekért stílussal. Ez akkor következik be, ha hashtag-re kattint a felhasználó, ilyenkor lekérdezzük azokat a stílusokat, amelyek értéke megegyezik a kérttel, mivel a JPA össze is kapcsolja a fellépővel, így már csak annyi a dolgunk, hogy visszaadjuk a stílusokhoz tartozó fellépőket.
+
+\item Fellépő részletei, a fellépő összes részlete elérhetővé válik számunkra, ez ugyan azt a struktúrát követi mint a fesztiváloknál volt, csak ide nem tartoznak szállások, viszont a koncerteket itt is elérhetjük.
+
+\item Koncertek fellépő alapján, itt a pontos időpont is kiderül, hogy mikor lesz a fellépés, egy egyszerű szelektálás a fellépő id-ja alapján. Ez akkor hívódik meg amikor a fellépő részleteit kívánjuk betölteni.
+
+\item Összes stílust visszaadó funkció, amely értékkészletből könnyebben tud választani, ha esetleg nem jutna eszébe, vagy nem gondolna az esetleges kategóriákra. Itt le kell kérdezni az összes stílust és egy szűrést kell végezni, hogy mindegyik csak egyszer szerepeljen a listába. Ez a keresés illetve az új felvitele esetén jöhet jól.
 \end{itemize}
 
 Új elemek hozzáadása:
 \begin{itemize}
-\item Szállások felvitele pozíciójával együtt.
-\item Fesztivál felvitele pozíciójával és stílusaival együtt.
+\item Szállás felvitele pozíciójával együtt, itt oda kell figyelni arra, hogy minden olyan mezőt kitöltsön a feltöltő ami a szállás szempontjából releváns, a back-end oldalon pedig fontos a hozzátartozó pozíciót is lementeni, nem elég csak a szállást.
+
+\item Fesztivál felvitele pozíciójával és stílusaival együtt. Miden releváns adatra szükségünk lesz, egyes értékeket validáni is érdemes, ilyen lehet a koordináták értéke. Hiszen ez 180 - -180-ig terjedhet, vagy a fesztivál kezdete ne legyen később mint a vége. Itt a stílusok lementésére is oda kell figyelni, a pozícióján kívül.
+
+\item Zenekar felvitele a stílusaival együtt. A stílusok lementésére oda kell figyelni és arra, hogy a releváns adatokat bekérjük, a felviteleknél a JPA-ra bízzuk az id generálást, mint már azt a fejezetben említettem.
+
+\item Kép felvitele, A front-end-en elkészül egy képfelvivő modul és ezt több helyen is el fogom helyezni. A fesztiváloknál és a fellépőknél mindenképpen, a front-end-en a képfeltöltő service osztályának a feltöltés metódusa mindig azt a path-t hívja meg amit paraméterben megkap, tehát ha a fesztiválét akkor a fesztivál kontrollerének megfelelő metódusát fogja meghívni. A path-nak része az id. A túloldalon aszerint mentjük le ahonnan érkezett. Először módosítjuk a képnevét, valami randomizált dolgot hozzá kell fűzni, hogy ugyanolyan nevű képből akár több is felkerülhessen. Le kell kérdezni id szerint azt az objektumot aminek megkaptuk az id-ját és típusát és annak módosítani a kép adattagját a kép nevére, a képet pedig egy közös mappába mentjük el, ahonnan a neve alapján már könnyen kinyerhető, ami ilyenkor már az egyedi azonosítója lesz.
+
 \item Koncert felvitele, ami valójában egy fellépő és egy fesztivál összekapcsolása.
-\item Zenekar felvitele a stílusaival együtt.
+
 \item Új további stílusok hozzáadása zenekarhoz. Itt esetleg bevezetésre kerülhet egy érték készlet is.
 \item Plusz stílusok hozzáadása egy fesztiválhoz.
 \end{itemize}
