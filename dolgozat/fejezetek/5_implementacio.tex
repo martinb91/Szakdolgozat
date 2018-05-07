@@ -2,102 +2,123 @@
 
 % TODO: Ide kerülhetnek a konkrét kódrészek.
 % TODO: Le lehet írni, hogy mit volt egyszerűbb/komplikáltabb összerakni.
+Ebben a fejezetben igyekszem bemutatni néhány izgalmasabb esetet, amelyek vagy a bonyolultságuk miatt érdekesek vagy számomra rengeteg fejtörést okoztak amire elkészültek.
 
-\begin{java}
-\end{java}
-
-A fesztiválok megkereséséhez használtam a legkomplexebb folyamatot. Amelyben először a felület felől meg kell vizsgálni, hogy a keresett paramétereket megadta-e a felhasználó, és csak azokat a paramétereket küldjük el a szerveroldalra . Az x és y koordinátát egy google maps API-n keresztül szerzem meg, ahol beírja a felhasználó a kívánt települést, a rendszer pedig már a településhez tartozó koordinátákkal dolgozik tovább. Ha nem ír be semmit, akkor ezek az értékek üresek maradnak és a helytől való távolságot sem érdemes elküldeni a túloldalra. Amint látható a HttpParams objektumnak csak string típusú változókat lehet átadni, így castolni kellett karakterlánccá az értékeket. A dolog érdekessége, hogy a Spring oldalon ki lehet venni más típusként is, pedig a Java egy szigorúbban típusos nyelv mint az Angular.
+\subsubsection{Fesztivál keresés}
+A fesztiválok megkereséséhez használtam a legkomplexebb folyamatot. Amelyben először a felület felől meg vizsgáljuk, hogy melyik keresési paramétereket adta meg a felhasználó, és csak azokat a paramétereket küldjük el a szerveroldalra, amelyeket megadta. Az x és y koordinátát egy google maps API-n keresztül szerzem meg, ahol beírja a felhasználó a kívánt települést, a rendszer pedig már a településhez tartozó koordinátákkal dolgozik tovább. Ha nem ír be semmit, akkor ezek az értékek üresek maradnak és a helytől való távolságot sem érdemes elküldeni a túloldalra. Amint látható a HttpParams objektumnak csak string típusú változókat lehet átadni, így castolni kellett karakterlánccá az értékeket. A dolog érdekessége, hogy a Spring oldalon ki lehet venni más típusként is.
 A lekérdezésből visszaérkezett adathalmazt leképezzük a modellnek megfelelő formára és a modellekből készült tömbbel tér vissza a metódus a megjelenítési réteghez.
 
-\begin{verbatim}
-  getEventsByQuery(posX: number, posY: number, maxFromPos: number, 
-  isFree: boolean, styleName: string, begin: Date, end: Date)
-   : Observable<EventModel[]> {
-    let prms = new HttpParams();
-    if(posX !== 0 && posX != null && posX != undefined) {
-      prms = prms.append('posX', String(posX));
-      prms = prms.append('posY', String(posY));
-      if(maxFromPos !== 0 && maxFromPos != null && maxFromPos != undefined) {
-        prms = prms.append('maxFromPos', String(maxFromPos));
-      }
-    }
+A metódus egyik paraméterét sem kötelező átadni neki, hisz ez egy lekérdezés, jöhet kevesebb információval is kérés. Ha érkezik dátum érték azt Date formátumra kell konvertálnunk és csak ezután hívhatjuk meg a a FestivalService festsByQuery metódusát.
 
-    prms = prms.append('isFree', String(isFree));
+A festsByQuery metódust implementáltam A FestivalServiceImpl osztályban. A függvény paraméter szignatúrája a következő: \texttt{(String style, boolean isFree, Date begin, Date end, Double posX, Double posY, Double maxFromPos)} a visszatérési értéke egy \texttt{FestivalDTO} lista. A rendszert minden egyes lehetséges kombinációra fel kell készíteni, természetesen lesznek olyan lekérdezések, amelyeket többször is meghívhatóak más paraméterrel. Abból ered ez, hogy az ingyenességet nem boolean változóban tárolom, hanem stílusparaméterként.
+Ha nem kapunk stílust akkor az alábbi ágba fut a programunk.
+\begin{java}
+if (!isFree) {
+festivals = datesWithoutStyle(begin, end, posX, posY, 
+maxFromPos);
+} else {
+    festivals = datesWithStyle("free", begin, end, posX, posY,
+    maxFromPos);
+}
+\end{java}
 
-    if(styleName !== "" && styleName != null && styleName != undefined) {
-      prms = prms.append('styleName', styleName);
-    }
-    if(begin && begin != null && begin != undefined) {
-      prms = prms.append('begin', String(begin));
-    }
-    if(end && end != null && end != undefined) {
-      prms = prms.append('end', String(end));
-    }
+Ha a felhasználó nem pipálta be, hogy ingyenes legyen a kiválasztott fesztivál, akkor lekérdezzük az adatbázisból a megadott dátumok szerinti eredményt.
+Természetesen itt is előfordulhat, hogy nem adott meg dátumokat. Mind a négy lehetséges esetben már belenyúlunk az adatbázisba. Ha sem a kezdő, sem a végdátuma nincs megadva az intervallumnak amelybe keresünk, akkor mindent visszaadunk ami jelen pillanatban még nem fejeződött be.
 
-    return this._http.get<EventModel>
-    (`${environment.Spring_API_URL}/festival/query`, {params: prms})
-      .map(data => Object.values(data).map(fest => new EventModel(fest)));
+\begin{java}
+festivalRepository.findByEndDateAfterOrderByBeginDate
+(new Date(begin.getTime() - 1));
+\end{java}
 
+A fenti kódot használhatjuk, ha ismerjük az intervallum kezdetét, de a végét nem. Az előző esetben is ezt a kódot kell használni csak a pillanatnyi dátummal meghívva.
+A kód a \texttt{CrudRepository} kiterjesztésével létrehozott \texttt{FestivalRepository} interfészt hívja meg amelyben ha bizonyos név konvenciókat betartunk, akkor automatikusan legenerálja a Query-t(lekérdezést) számunkra. De mint látható ez meglehetősen hosszú metódus neveket szül. A függvény az alábbi paraméterrel azokat adja vissza, amelyiket fesztiválokat a megadott pillanattól kezdve még érdemes meglátogatni. A -1 érték azért van ott, mert sajnos megvannak a határai az automatikusan generált lekérdezésnek és a <= relációt tudtam kisajtolni belőle, csak a < jelet, így egy egységgel csökkentem és akkor már azt kapjuk vissza amit szeretnénk a program kezdésének időpontja szerint rendezve.
+
+\begin{java}
+findByEndDateAfterAndBeginDateBeforeOrderByBeginDate(
+new Date(), new Date(end.getTime() + 1));
+\end{java}
+
+Ha csak azt adja meg a felhasználónk, hogy melyik időpontig alkalmas neki, akkor a \texttt{FestivalRepository} fenti függvényét érdemes meghívni a megadott paraméterekkel.
+Ugyan ez a függvény lesz jó nekünk arra, ha mindkettő dátum benne van a kérésben. Az első paramétert le kell cserélnünk \texttt{new Date(begin.getTime() - 1)}-re, hiszen itt megvan adva a \texttt{begin} érték is.
+
+Ezek után a visszakapott értékekkel meg kell hívni a \texttt{workWithPositions(festivals, posX, posY, maxFromPos)} függvényt a megadott szignatúrával. Ez a függvény a Haversine formula segítségével megvizsgálja a megadott paraméterek alapján az átadott fesztiválokat. Ha nem kaptunk pozíciót akkor vissza adunk mindent, ha csak pozíciót kaptunk, akkor az 5 km-en belülieket adjuk vissza, ha kapunk távolságot és pozíciót, akkor a pozíciótól megadott távolságon belüli fesztiválokat adja vissza.
+
+Elképzelhető az is, hogy kiválasztotta a felhasználó, hogy ingyenes fesztiválok érdeklik, vagy esetleg stílust adott meg. Előfordulhat az is, hogy mindkettőt megadta a felhasználó. Mindhárom esetben a fesztivál keresés részben megadott kód else ágában lefutó \texttt{datesWithStyle} függvényre lesz szükségünk, ami nagyon hasonlóan fog működni mint a \texttt{datesWithoutStyle} csak a lekérdezés összes ágában össze kell kapcsolni a \texttt{FestivalStyle} táblával és onnan lekérdezni azokat amelyiknek a \texttt{style} mezője tartalmazza az átadott értéket, a további műveletek már nem változnak ugyan azokon a függvényhívásokon kell átesnie a visszakapott listának. A teljesség igénye nélkül nézzünk meg egy ilyen lekérdezést JPQL segítségével.
+
+\begin{java}
+@Query("select f from Festival f inner join f.styles stl where 
+lower(stl.style) like lower(:myStyle) and f.endDate >= :begin
+and f.beginDate <= :end order by f.beginDate")
+List<Festival> 
+findByBeginDateBeforeAndEndDateAfterAndStyleOrderByBeginDate
+(@Param("myStyle")String style, @Param("begin")Date begin, 
+@Param("end")Date end);
+\end{java}
+
+Láthatóan itt a kezdő és a végdátum is érkezik paraméterben a stílus mellett. A két táblát összekapcsoljuk és a két stílust összehasonlítjuk, úgy hogy mindkettőnek a karaktereit kisbetűsre cseréljük, mert az SQL érzékeny a kis és nagybetűk közti különbségére. Ezután megnézzük, hogy a lekért intervallum kezdő időpontja kisebb vagy egyenlő-e mint a fesztivál befejező és a végdátuma nagyobb vagy egyenlő mint a fesztivál kezdési időpontja, majd rendezzük a kezdés időpontja szerint. Az így keletkezett listával tér vissza a függvény. A fentebb említett esetben annyi lesz a különbség, hogy milyen paramétert adunk át a \texttt{datesWithStyle} függvénynek, illetve mind kettő átadása esetén meghívjuk a kapott stílussal és kód szinten leszűrjük a free paraméterre. Az elkészült listát visszaadjuk a felületnek.
+
+Később rájöttem, hogy a problémát lehetett volna egy kicsivel konszolidáltabban kezelni. Egy \texttt{QueryBuilder}(lekérdezés építő) osztály létrehozásával. Ahol minden paraméteren végigmenve azokat a paramétereket fűzzük fel a lekérdezésre, amelyek nem null értékkel jönnek. A pozícióval kapcsolatos számításokat, illetve ha jön stílus és ingyenes, akkor azt is kód szinten kell külön kezelni. 
+
+\subsubsection{Stílus hozzáadása}
+A front-end-en a legkomolyabb problémát a dinamikusan bővülő és csökkenő stílusok tömbje okozta. Tehát, ha módosítani szeretnénk egy fellépő stílusainak tömbjét(ez a probléma ugyanúgy jelentkezett a fesztiválok esetén), azt bővítéssel vagy csökkentéssel vagy az értékek módosításával tehetem meg. A probléma esetén az elem értékének módosítása irreleváns. Példaként vigyünk fel egy új fellépőt. Az üres fellépő inicializálásához a lenti kódrészletre lesz szükségünk.
+\begin{java}
+ this.myForm = this._fb.group({
+        name: [''],
+        id: [0],
+        description: [''],
+        styles: this._fb.array([])
+      });
+\end{java}
+Az \texttt{\_fb} változó \texttt{FormBuilder} típusú, míg a \texttt{myForm} egy \texttt{FormGroup} típusú változó. A \texttt{FormBuilder} mint a neve mutatja, arra alkalmas, hogy egy űrlap struktúráját definiáljuk a különböző metódusain keresztül. A \texttt{styles} ilyen esetben egy üres tömbként jön létre. Új stílust a tömbhöz az \texttt{addStyle} metódussal adhatunk, amely tovább hívja az \texttt{initStyle} metódust. Új esetében nem jön a \texttt{Style} típusú paraméter, tehát üresen inicializáljuk, a hozzáadott cellát a felületen.
+\begin{java}
+addStyle(s?: Style) {
+    const control = <FormArray>this.myForm.controls['styles'];
+    const styleCtrl = this.initStyle(s);
+    control.push(styleCtrl);
+}
+\end{java}
+Viszont ha módosításra töltjük be akkor az átvett \texttt{EventModel} objektumban megkapott stílusok alapján inicializálja a rendszer, a HTML fájlban indított for ciklus segítségével. Ilyenkor az \texttt{initStyle} metódus \texttt{if (s) \{ sVal = s; \} } ágába is belefut és ezáltal a visszatérési érték már nem egy érintetlen objektum lesz, hanem az adatbázisból érkező értékekkel lesz feltöltve. Természetesen a grafikusfelületről manuálisan van mód ilyen esetben is új üres stílusokat hozzáadni, majd szerkeszteni ezeket. 
+\begin{java}
+  initStyle(s?: Style) {
+    let sVal = new Style();
+    sVal.id=0;
+    if (s) { sVal = s; }
+    return this._fb.group({
+      style: [sVal.style],
+      id: [sVal.id]
+    })
   }
-\end{verbatim}
+\end{java}
+A törléshez az alábbi metódust használhatjuk. Itt a tömb i-edik elemével csökkentjük a tömböt. A HTML tag tárolja, hogy hányadik elem és innen tudjuk kinyerni az információt a törléshez.
+\begin{java}
+ removeStyle(i: number) {
+    const control = <FormArray>this.myForm.controls['styles'];
+    control.removeAt(i);
+  }
+\end{java}
+A lenti kis HTML kódrészlet hivatott arra, hogy átadja az inputokat a \texttt{StyleComponent} részére a megjelenítendő stílus objektumok tulajdonságait. Az első paraméter magát a stílus modellt adja át, míg a második a megjelenítés módját, hogy szerkesztésre adjuk át vagy csak megtekintésre. Ezek a folyamatok szinkronban lesznek a befoglaló kódrésszel, tehát ha változtatom a \texttt{viewForm} értékét kívülről, akkor ezt a \texttt{StyleComponent}-ben is változást idéz elő.
+\begin{java}
+<div class="panel-body" [formGroupName]="i">
+     <app-style [group]="myForm.controls.styles.controls[i]"
+     [viewForm]="viewForm"></app-style>
+</div>
+\end{java}
 
-A controller az alábbi metódussal veszi át a beérkező kérést. Amint az látható, a metódus egyik paraméterét sem kötelező átadni neki, hisz ez egy lekérdezés, jöhet kevesebb információval is kérés. Ha érkezik dátum érték azt Date formátumra kell konvertálnunk és csak ezután hívhatjuk meg a a festivalService festsByQuery metódusát.
+\subsubsection{Fellépő törlése}
+A fellépő törlése az implementálandó feladatok közül egyszerűbbek közé tartozott. Viszont elnéztem az URI-t amit megadtam a back-end-en, így elég sok idő volt mire feloldottam a hibát. Nézzük át a folyamatot: Az Angular oldali \texttt{ArtistService} osztály \texttt{deleteById} metódusának meghívásával indítunk egy HTTP hívást a Spring-hez.
 
-\begin{verbatim}
-	@RequestMapping(value = "/query", method = RequestMethod.GET)
-	public List<FestivalDTO> festsByQuerry(
-	@RequestParam(value = "styleName", required = false) String style,
-										   @RequestParam(value = "isFree", required = false) boolean isFree,
-										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
-										   @RequestParam(value = "begin", required = false) LocalDate beginDate,
-										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
-										   @RequestParam(value = "end", required = false) LocalDate endDate,
-										   @RequestParam(value = "posX", required = false) Double posX,
-										   @RequestParam(value = "posY", required = false) Double posY,
-										   @RequestParam(value = "maxFromPos", required = false) Double maxFromPos){
-		Date begin = null;
-		Date end = null;
-		if (beginDate != null){
-			begin = Date.from(beginDate.atStartOfDay().atZone(ZoneId.systemDefault())
-			.toInstant()); }
-		if (endDate != null){
-			end = Date.from(endDate.atStartOfDay().atZone(ZoneId.systemDefault())
-			.toInstant());}
-		return festivalService.festsByQuery( style, isFree, begin, end,
-		 posX, posY, maxFromPos); }
-\end{verbatim}
+\begin{java}
+return this._http.delete(
+'\${environment.Spring_API_URL}/artists/delete',{ params });
+\end{java}
 
-A festsByQuery metódust a következőképpen implementáltam.
-
-\begin{verbatim}
-    public List<FestivalDTO> festsByQuery(String style, boolean isFree, Date begin, Date end, Double posX, Double posY, Double maxFromPos) {
-        List<Festival> festivals = new ArrayList<>();
-        if (style == null) {
-            if (!isFree) {
-                festivals = datesWithoutStyle(begin, end, posX, posY, maxFromPos);
-            } else {
-                festivals = datesWithStyle("free", begin, end, posX, posY, maxFromPos);
-            }
-        } else {
-            if (!isFree) {
-                festivals = datesWithStyle(style, begin, end, posX, posY, maxFromPos);
-            } else {
-                for (Festival festival : datesWithStyle(style, begin, end, posX, posY, maxFromPos)){
-                    System.out.println(festival.getName());
-                    for (FestivalStyle festivalStyle : festival.getStyles()){
-                        if(festivalStyle.getStyle().toLowerCase().equals("free")){
-                            festivals.add(festival);
-                        }
-                    }
-                }
-            }
-        }
-
-        List<FestivalDTO> festivalDTOS = new ArrayList<>();
-        for (Festival festival : festivals) {
-            System.out.println(festival.getName());
-            festivalDTOS.add(modelMapper.map(festival, FestivalDTO.class));
-        }
-        return festivalDTOS;
-    }
-\end{verbatim}
+Paraméterként csak az id-t adjuk át, mivel ez alapján már egyértelműen azonosítható az objektum. A túloldalon átvesszük a paramétert \texttt{@RequestParam("id") Integer id} kifejezés segítségével.
+Majd meg kell hívni a \texttt{deleteArtistById(id)} metódust az \texttt{ArtistService} típusú \texttt{artistService} objektumon és természetesen az \texttt{id}-t tovább adjuk paraméterként. A \texttt{deleteArtistById} metódust megfigyelve láthatjuk, hogy fel kell szabadítanunk a foglalt erőforrásait. A két típusú erőforrás - más néven olyan adatok az adatbázisban, amelyek hivatkoznak a megadott objektumra - amelyet ki kell törölni mielőtt a fellépőt törölnénk, azok a törlendő adatra hivatkozó koncertek és stílusok. A koncertek és a fesztiválstílusok között nem áll fenn függőség, így mindegy melyiket töröljük előbb. Megfigyelhetjük a következő blokkban, hogy én milyen sorrendben tettem.
+\begin{java}
+concertRepository.deleteByArtist_Id(id);
+musicStyleRepository.
+deleteMusicStyleByArtist(artistRepository.findOne(id));
+return artistRepository.deleteById(id);
+\end{java}
+Visszatérek a fellépő törlésének az eredményével, ez egy egész számmal tér vissza, a törölt elemek számával, mivel id alapján töröltük, így ez a szám csak 1 és 0 lehet.
+\subsubsection{Next}

@@ -174,10 +174,7 @@ Egy kis példát nézzünk erre a front-end-től az adatbázisig, egy űrlapot k
  
 \subsection{Konkrét funkciók}
 
-\begin{comment}{Ezt itt érdemes részletesebben kifejteni, vagy specifikációs jelleggel, vagy pedig már a konkrét implementációt emlegetve.}
-\end{comment}
-
-Lekérdezések: % a címeket formázni. 
+Lekérdezések:
 \begin{itemize}
 \item Az összes fesztivált visszaadó funkció, amely mindezt a kezdés időpontja szerint adja vissza, illetve amelyik fesztivál már véget ért azt már nincs értelme visszaadni a felhasználónak. Ez az alapértelmezett, ha a fesztiválok menüpontra kattintunk. A megvalósítása egy egyszerű lekérdezés eredménye lesz az adatbázisból. Mint minden lekérdezés ez is az egész hívási láncon végig fog menni amit a példában is megadtunk. Ahol ez megkerülhető azt külön jelezni fogom.
  
@@ -224,29 +221,39 @@ Lekérdezések: % a címeket formázni.
 
 \item Kép felvitele, A front-end-en elkészül egy képfelvivő modul és ezt több helyen is el fogom helyezni. A fesztiváloknál és a fellépőknél mindenképpen, a front-end-en a képfeltöltő service osztályának a feltöltés metódusa mindig azt a path-t hívja meg amit paraméterben megkap, tehát ha a fesztiválét akkor a fesztivál kontrollerének megfelelő metódusát fogja meghívni. A path-nak része az id. A túloldalon aszerint mentjük le ahonnan érkezett. Először módosítjuk a képnevét, valami randomizált dolgot hozzá kell fűzni, hogy ugyanolyan nevű képből akár több is felkerülhessen. Le kell kérdezni id szerint azt az objektumot aminek megkaptuk az id-ját és típusát és annak módosítani a kép adattagját a kép nevére, a képet pedig egy közös mappába mentjük el, ahonnan a neve alapján már könnyen kinyerhető, ami ilyenkor már az egyedi azonosítója lesz.
 
-\item Koncert felvitele, ami valójában egy fellépő és egy fesztivál összekapcsolása.
+\item Koncert felvitele, ami valójában egy fellépő és egy fesztivál összekapcsolása. Itt az összes fesztivált és fellépőt bekérem egy listában, és a listából kiválaszthatja az admin, hogy melyik fesztiválhoz, melyik koncertet szeretné felvinni. és még egy kezdési időpontot kell kiválasztania és már mentheti is.
 
-\item Új további stílusok hozzáadása zenekarhoz. Itt esetleg bevezetésre kerülhet egy érték készlet is.
-\item Plusz stílusok hozzáadása egy fesztiválhoz.
+\item Új további stílusok hozzáadása zenekarhoz. A módosítás menüben tudja majd felvinni illetve lecserélni, törölni a stílusokat.
+
+\item Felhasználó regisztrációja. A kötelező adatok megadása után lehet regisztrálni a rendszerben, arra oda kell figyelni, hogy a két jelszónak meg kell egyeznie, egyébként nem rögzíthetjük az adatbázisban, mert elképzelhető, hogy az egyiket elgépelte.
+\end{itemize}
+
+Módosítások:
+\begin{itemize}
+
+\item Stílusok módosítása a fesztivállal vagy a fellépővel együtt történik.
+
+\item Kép cseréje, új fájl feltöltésével történik meg, ilyenkor az adatbázisban az új kép nevére jön létre referencia.
+
+\item Fesztivál módosítása, ezen belül meghívandó a helyszín módosítása és itt hajtható végre a stílusok törlése, módosítása, vagy új felvitele. A beküldött adatokat lecseréljük a megadott id alapján, természetesen az id nem változtatható.
+
+\item Zenekar módosítása. A fesztivál törléséhez hasonlóan lehet a stílussal  kapcsolatos módosításokat elérni a felületen, és az adatok cseréje, ritkán van rá szükség.
+
+\item Koncert módosítása, jelenleg nem releváns. 
+\item Szállás módosítása, jelenleg nem releváns. Ez nem kerül megvalósításra.
 \end{itemize}
 
  Elemek törlése:
 \begin{itemize}
-\item Stílusok törlése. Vonatkozik mind a zenei, mind a fesztivál stílusokra. 
+\item Stílusok törlése. A fesztiválok és fellépők módosításánál érhető el ez a funkció.
+
+\item Kép törlése, akkor törlődik a régi kép, ha újat rakunk fel. Pontosabban lecserélődik, mert a képet nem törlöm, csak a referencia szűnik meg ami rá mutat.
+%ezek nem működnek.
 \item Koncert törlése.
 \item Fesztivál törlése, itt figyelni kell arra, hogy a törlés előtt fel kell szabadítani minden olyan erőforrást ami függ tőle. Tehát törölni kell a koncertjeit, stílusait és a koncert helyszínt is.
 \item Fellépő törlése nem jellemző, ha mégis kell akkor azt meg lehet oldani adatbázis szinten is.
 \item Szállás törlésénél is figyelni kell, hogy a hozzátartozó helyszínt is törölni kell vele együtt.
 \item Amelyik fesztivál és koncert elmúlt, tehát a befejezés dátumán már az aktuális naptári idő  túlhaladt, azt archiválni kell. Erre a funkcióra elég egy triggert írni. Archiválás megvalósítása megoldható úgy, hogy átmozgatjuk egy másik táblába, vagy egy új változó bevezetésével, és azt hogy elérhető-e elég igazról hamisra állítani. Esetleg a mindent vissza adó függvény csak azt adja vissza amelynek a befejező dátuma nagyobb mint az aktuális dátum.
-\end{itemize}
-Módosítások:
-\begin{itemize}
-\item Helyszín módosítása.
-\item Stílust nem érdemes módosítani. Jobb megoldás a törölés, és helyette egy másikat felvinni.
-\item Fesztivál módosítása Ezen belül meghívható a helyszín módosítás és itt hajtható végre a stílusok törlés vagy új felvitele.
-\item Zenekar módosítása. A fesztivál törléséhez hasonlóan itt lehet a stílus törlését is elérni a felületen.
-\item Koncert módosítása.
-\item Szállás módosítása, beleértve a pozíciójának a módosítását. 
 \end{itemize}
 
 \begin{comment}{Az egyes hibalehetőségeket is sorra kellene majd venni!}
@@ -254,5 +261,3 @@ Módosítások:
 
 \begin{comment}{Meg kellene nézni, hogy hogy lehetne esetleg még jobban csoportosítani a listaelemekben említett dolgokat, és inkább alpontokba rendezni alcímekkel együtt.}
 \end{comment}
-
-\subsection{Struktúra}

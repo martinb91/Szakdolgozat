@@ -8,40 +8,39 @@
 
 % TODO: Java egységtesztek bemutatása. Például kereséshez, szűréshez, regisztrációhoz.
 \section{Telepítés}
+
+Mindkét keretrendszer független az operációs rendszerektől, tehát minden népszerű operációs rendszert használó számítógépen el tudjuk indítani az alkalmazásokat.
+
 \subsection{Spring}
 
-\begin{comment}{Ez a rész is lehet kicsit tárgyilagosabb}
-\end{comment}
+A Spring Boot 1.5.8.RELEASE kiadást használtam, ez a Java 7-es verzióját igényli - a 8 vagy újabb ajánlott - a fordításhoz. Tehát érdemes telepíteni a lehető legújabb Java-t, mind a JRE-t mind a JDK-t.
 
-[23] Spring alkalmazást minimum Java 6-os fordítóval lehet lefordítani futtatható alkalmazássá. Én a Spring Boot 1.5.8.RELEASE kiadást használtam. Itt már csak a Java 7-es verziója használható - a 8 vagy újabb ajánlott - fordításra. Én a Java 8-at használtam, amikor belevágtam a fejlesztésbe, akkor még a Java 9 nem volt elérhető. Azóta már megjelent a 10 is, de én nem váltottam verziót. Alapvetően Java 8 specifikus dolgokat sem használtam, a Java újabb verzióival még nem volt időm megismerkedni.
+Maven segítségével töltjük le azokat a jar fájlokat amelyektől függ az alkalmazásunk. A 3.5.0 verzió volt akkor a legújabb verzió és általam használt verzió is ez. A Maven 3.5.0 szintén igényli a Java hetedik verzióját vagy újabb kiadásait. A projekt pom.xml fájljában definiált csomagok az alkalmazás függőségei, ezeket a fordítás előtt le fogja tölteni, ha nem találja meg őket az erre a célra lefoglalt mappában. Ezeknek a csomagoknak vannak további függőségeik, azokat is feloldja a Maven, amíg a függőségi fán hiányzó levelet talál, addig folytatja ezt az eljárást. Így levesz minden terhet a vállunkról.
 
-Maven segítségével töltöttem le azokat a jar fájlokat amelyektől függ az alkalmazásunk. A 3.5.0 verzió volt akkor a legújabb verzió és általam használt verzió is ez. A Maven 3.5.0 szintén igényli a minimum a Java hetedik verzióját.
+\subsection{Angular}
 
-A Maven-nek az alábbi csomagokat kell letöltenie:
-\begin{verbatim}
-spring-boot-starter-web
-spring-boot-starter-data-jpa
-spring-boot-starter-test
-spring-boot-devtools
-ojdbc14
-\end{verbatim}
-
-% Az adatbázis még nem bíztos hogy oracle lesz, jelenleg H2-van alatta.
-
-\subsection{Frontend}
-
-[31] A front-end részhez először telepítettem egy Node.js-t. Az akkor elérhető legfrissebb verziót, amely a 9.10.1 volt. Ez a keretrendszer weboldaláról(nodejs.org) letölthető. Erre azért volt szükségünk, mert ebben található egy npm nevű modul. Az npm vagy Node Package Manager, mint a neve is mutatja csomagok telepítésére és karbantartására való.
+[31] A front-end részhez először telepíteni kell egy Node.js-t. Az akkor elérhető legfrissebb verziót, amely a 9.10.1 volt. Ez a keretrendszer weboldaláról(nodejs.org) letölthető. Erre azért volt szükségünk, mert ebben található egy npm nevű modul. Az npm vagy Node Package Manager, mint a neve is mutatja csomagok telepítésére és karbantartására való.
 
 Egy csomagot kétféleképpen lehet installálni az egyik a helyi telepítés és a globális telepítés. Globálisan olyan csomagokat szokás telepíteni amiket többnyire terminálból akarunk futtatni.
-Mi az Angular CLI 1.7.0-t globálisan telepítettük npm segítségével, hiszen parancssorból szeretnénk indítani majd a szervert.
+Mi az Angular CLI 1.7.0-t globálisan telepítettük npm segítségével, hiszen parancssorból szeretnénk indítani majd a kiszolgálást.
 
-A következő paranccsal érhetjük ezt el, hogy a legfrissebb verziót telepítse: npm install -g @angular/cli
+A következő paranccsal érhetjük ezt el, hogy a legfrissebb verziót telepítse: \texttt{npm install -g @angular/cli}
 Elvileg visszafelé kompatibilis a rendszer, tehát ha a legújabb globális verzió van fent a gépen akkor a régebbi vagy azonos verziószámú projektet képes lesz futtatni. Én Angular 5.2.0-ás verziószámú projektet futtattam benne, és minden gond nélkül elindult.
+Minden projekthez tartozik egy \texttt{package.json}, úgy mint a Maven-nél a \texttt{pom.xml}, ez tárolja a projekt függőségeit. Ezeket le kell tölteni, ha van olyan amelyik nincs telepítve, én ezt már lokálisan tettem meg. Terminál segítségével ezt úgy tehetjük meg, hogy benavigálunk a projekt mappájába és futtatjuk az \texttt{npm install} parancsot, jelentősebb időbe telik mire letölt mindent amire szükség lesz a projekt futtatásához. Majd ezután, ha minden rendben ment, akkor az \texttt{ng serve} parancsra elkezd futni a program. A terminálra kiírja, hogy melyik porton indult el, ez a \texttt{localhost:4200} gyári beállításon. Ha a back-end oldali alkalmazás is fut a \texttt{localhost:8080}-as porton, akkor már az adatok is vizualizálódnak.
 
 \section{Tesztelés}
 
-\subsection{Felhasználói felület}
-A felhasználói felületet csak manuális tesztekkel tudtam tesztelni, hogy minden úgy működik-e ahogy azt a rendszertől elvártam.
+\subsection{Felhasználói felület tesztelése}
+A felhasználói felületet funkcionális tesztekkel manuálisan tudtam tesztelni, hogy minden úgy működik-e, ahogy azt a rendszertől elvártam. A tesztelés másik módja az volt, hogy JSON pipe segítségével megjelenítettem az adatokat a felületen, és így valós időben tudtam követni az interakcióim hatására bekövetkező változásokat. Van lehetőség a funkcionális tesztek automatizálására a front-end oldalon, de időmből nem futotta ennek elsajátítására.
 
-\begin{comment}{Ide majd jó lenne azért írni néhány dolgot a frontend és a backend automatizált tesztelésével kapcsolatban is.}
-\end{comment}
+\subsection{Back-end tesztelése}
+
+A back-end-nél szokás használni a test driven fejlesztést, ez azt jelenti hogy először megírjuk a teszteket és utána a kódot hozzá. Minden modul akkor áll készen, ha definiált tesztek sikeresen lefutottak. Majd jöhet a következő modul, viszont azt már úgy kell elkészítenünk, hogy a saját tesztjei is lefussanak, illetve a régebben elkészített modulok tesztjei is sikeresek maradjanak. 
+
+Egység teszt, ezzel egyetlen egy metódus működését tesztelhetjük, csak a  legelemibb megoldásokat tesztelhetjük vele.
+
+Az egység tesztek után az integrációs teszteket szokták elvégezni, azt vizsgálja, hogy a modulok jól tudnak-e együttműködni.
+
+Stresszteszt, arra használatos, hogy kiderítsük mekkora aktivitásnak tehetjük ki az alkalmazást. JMeter segítségével.
+
+Postman test
