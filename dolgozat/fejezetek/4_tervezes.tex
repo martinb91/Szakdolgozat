@@ -179,7 +179,7 @@ Egy kis példát nézzünk erre a front-end-től az adatbázisig, egy űrlapot k
  
 \subsection{Konkrét funkciók}
 
-Lekérdezések:
+\subsubsection{Lekérdezések:}
 \begin{itemize}
 \item Az összes fesztivált visszaadó funkció, amely mindezt a kezdés időpontja szerint adja vissza, illetve amelyik fesztivál már véget ért azt már nincs értelme visszaadni a felhasználónak. Ez az alapértelmezett, ha a fesztiválok menüpontra kattintunk. A megvalósítása egy egyszerű lekérdezés eredménye lesz az adatbázisból. Mint minden lekérdezés ez is az egész hívási láncon végig fog menni amit a példában is megadtunk. Ahol ez megkerülhető azt külön jelezni fogom.
  
@@ -216,7 +216,7 @@ Lekérdezések:
 \item Összes stílust visszaadó funkció, amely értékkészletből könnyebben tud választani, ha esetleg nem jutna eszébe, vagy nem gondolna az esetleges kategóriákra. Itt le kell kérdezni az összes stílust és egy szűrést kell végezni, hogy mindegyik csak egyszer szerepeljen a listába. Ez a keresés illetve az új felvitele esetén jöhet jól.
 \end{itemize}
 
-Új elemek hozzáadása:
+\subsubsection{Új elemek hozzáadása:}
 \begin{itemize}
 \item Szállás felvitele pozíciójával együtt, itt oda kell figyelni arra, hogy minden olyan mezőt kitöltsön a feltöltő ami a szállás szempontjából releváns, a back-end oldalon pedig fontos a hozzátartozó pozíciót is lementeni, nem elég csak a szállást.
 
@@ -233,7 +233,7 @@ Lekérdezések:
 \item Felhasználó regisztrációja. A kötelező adatok megadása után lehet regisztrálni a rendszerben, arra oda kell figyelni, hogy a két jelszónak meg kell egyeznie, egyébként nem rögzíthetjük az adatbázisban, mert elképzelhető, hogy az egyiket elgépelte.
 \end{itemize}
 
-Módosítások:
+\subsubsection{Módosítások:}
 \begin{itemize}
 
 \item Stílusok módosítása a fesztivállal vagy a fellépővel együtt történik.
@@ -248,15 +248,25 @@ Módosítások:
 \item Szállás módosítása, jelenleg nem releváns. Ez nem kerül megvalósításra.
 \end{itemize}
 
- Elemek törlése:
+\subsubsection{Elemek törlése:}
 \begin{itemize}
 \item Stílusok törlése. A fesztiválok és fellépők módosításánál érhető el ez a funkció.
 
 \item Kép törlése, akkor törlődik a régi kép, ha újat rakunk fel. Pontosabban lecserélődik, mert a képet nem törlöm, csak a referencia szűnik meg ami rá mutat.
 %ezek nem működnek.
-\item Koncert törlése.
-\item Fesztivál törlése, itt figyelni kell arra, hogy a törlés előtt fel kell szabadítani minden olyan erőforrást ami függ tőle. Tehát törölni kell a koncertjeit, stílusait és a koncert helyszínt is.
-\item Fellépő törlése nem jellemző, ha mégis kell akkor azt meg lehet oldani adatbázis szinten is.
+\item Fesztivál törlése, itt figyelni kell arra, hogy a törlés előtt fel kell szabadítani minden olyan erőforrást ami függ tőle. Tehát törölni kell a koncertjeit, stílusait és a fesztiválhelyszínt is.
+\item Fellépő törlése nem jellemző, de ha mégis szükség lenne rá, akkor a stílusait is törölni kell.
 \item Szállás törlésénél is figyelni kell, hogy a hozzátartozó helyszínt is törölni kell vele együtt.
-\item Amelyik fesztivál és koncert elmúlt, tehát a befejezés dátumán már az aktuális naptári idő  túlhaladt, azt archiválni kell. Erre a funkcióra elég egy triggert írni. Archiválás megvalósítása megoldható úgy, hogy átmozgatjuk egy másik táblába, vagy egy új változó bevezetésével, és azt hogy elérhető-e elég igazról hamisra állítani. Esetleg a mindent vissza adó függvény csak azt adja vissza amelynek a befejező dátuma nagyobb mint az aktuális dátum.
+\item Amelyik fesztivál és koncert elmúlt, tehát a befejezés dátumán már az aktuális naptári idő  túlhaladt, azt archiválni kell. Erre a funkcióra elég egy trigger-t írni. Archiválás megvalósítása megoldható úgy, hogy átmozgatjuk egy másik táblába, vagy egy új változó bevezetésével, és azt hogy elérhető-e elég igazról hamisra állítani. Esetleg a mindent vissza adó függvény csak azt adja vissza amelynek a befejező dátuma nagyobb mint az aktuális dátum.
 \end{itemize}
+
+\subsection{Egyes hiba lehetőségek}
+
+\subsubsection{Adatbázishoz kapcsolódás}
+Adatbázis műveletek esetén előfordulhat, hogy valamilyen okból nem érhető el az adatbázis, ilyenkor SQLException váltódik ki az egyes adatbázis műveletek esetén. Nekünk erre azért nem kell jelenleg még nem kell készülnünk, mert az adatbázisunk egy in-memory h2, ez a szoftverrel indul és áll le és külön hálózat sem kell hozzá, hogy elérjük. Ha valódi adatbázisra cseréljük, akkor kivételkezelést kell minden olyan kódrészhez írni, amelyik az adatbázissal interakcióba lép.
+
+\subsubsection{Adatbázisból null értékkel való lekérdezés}
+Az adatbázisból nem szabad null értékkel lekérdezni. Ezt helyes kódszervezéssel ki tudjuk kerülni. A Spring Security segítségével be lehet állítani úgy, hogy a rendszert csak megadott IP címekről érkező kérések tudnak módosítani back-end API-n keresztül.
+
+\subsubsection{Rossz adattípus érkezik}
+A felhasználói felületről új adat felvitelénél rosszul kitöltött adatok esetén előfordulhatna az, hogy például numerikus adat helyett egy string érkezik, és azt sajnos nem tudja kezelni a keretrendszer. Ilyen esetben NumberFormatException keletkezik, ha a felhasználói felületen minden beviteli mezőt szigorúan validálunk, akkor ilyen nem fordulhat elő. Esetleg érdemes lehet kivételkezelést is használni a backend oldalon, ahol ez bekövetkezhet. 
