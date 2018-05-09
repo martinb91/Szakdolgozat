@@ -5,7 +5,7 @@
 Ebben a fejezetben igyekszem bemutatni néhány izgalmasabb esetet, amelyek vagy a bonyolultságuk miatt érdekesek vagy számomra rengeteg fejtörést okoztak amire elkészültek.
 
 \subsubsection{Fesztivál keresés}
-A fesztiválok megkereséséhez használtam a legkomplexebb folyamatot. Amelyben először a felület felől meg vizsgáljuk, hogy melyik keresési paramétereket adta meg a felhasználó, és csak azokat a paramétereket küldjük el a szerveroldalra, amelyeket megadta. Az x és y koordinátát egy google maps API-n keresztül szerzem meg, ahol beírja a felhasználó a kívánt települést, a rendszer pedig már a településhez tartozó koordinátákkal dolgozik tovább. Ha nem ír be semmit, akkor ezek az értékek üresek maradnak és a helytől való távolságot sem érdemes elküldeni a túloldalra. Amint látható a HttpParams objektumnak csak string típusú változókat lehet átadni, így castolni kellett karakterlánccá az értékeket. A dolog érdekessége, hogy a Spring oldalon ki lehet venni más típusként is.
+A fesztiválok megkereséséhez használtam a legkomplexebb folyamatot. Amelyben először a felület felől meg vizsgáljuk, hogy melyik keresési paramétereket adta meg a felhasználó, és csak azokat a paramétereket küldjük el a szerveroldalra, amelyeket megadta. Az x és y koordinátát egy google maps API-n keresztül szerzem meg, ahol beírja a felhasználó a kívánt települést, a rendszer pedig már a településhez tartozó koordinátákkal dolgozik tovább. Ha nem ír be semmit, akkor ezek az értékek üresek maradnak és a helytől való távolságot sem érdemes elküldeni a túloldalra. Amint látható a HttpParams objektumnak csak string típusú változókat lehet átadni, így cast-olni kellett karakterlánccá az értékeket. A dolog érdekessége, hogy a Spring oldalon ki lehet venni más típusként is.
 A lekérdezésből visszaérkezett adathalmazt leképezzük a modellnek megfelelő formára és a modellekből készült tömbbel tér vissza a metódus a megjelenítési réteghez.
 
 A metódus egyik paraméterét sem kötelező átadni neki, hisz ez egy lekérdezés, jöhet kevesebb információval is kérés. Ha érkezik dátum érték azt Date formátumra kell konvertálnunk és csak ezután hívhatjuk meg a a FestivalService festsByQuery metódusát.
@@ -55,7 +55,7 @@ findByBeginDateBeforeAndEndDateAfterAndStyleOrderByBeginDate
 @Param("end")Date end);
 \end{java}
 
-Láthatóan itt a kezdő és a végdátum is érkezik paraméterben a stílus mellett. A két táblát összekapcsoljuk és a két stílust összehasonlítjuk, úgy hogy mindkettőnek a karaktereit kisbetűsre cseréljük, mert az SQL érzékeny a kis és nagybetűk közti különbségére. Ezután megnézzük, hogy a lekért intervallum kezdő időpontja kisebb vagy egyenlő-e mint a fesztivál befejező és a végdátuma nagyobb vagy egyenlő mint a fesztivál kezdési időpontja, majd rendezzük a kezdés időpontja szerint. Az így keletkezett listával tér vissza a függvény. A fentebb említett esetben annyi lesz a különbség, hogy milyen paramétert adunk át a \texttt{datesWithStyle} függvénynek, illetve mind kettő átadása esetén meghívjuk a kapott stílussal és kód szinten leszűrjük a free paraméterre. Az elkészült listát visszaadjuk a felületnek.
+Láthatóan itt a kezdő és a végdátum is érkezik paraméterben a stílus mellett. A változókat a \texttt{@Param} annotáció segítségével tudjuk átadni a \texttt{@Query} számára. A JPQL a kettőspont segítségével ismeri fel a paraméterként kapott változókat. A két táblát összekapcsoljuk és a két stílust összehasonlítjuk, úgy hogy mindkettőnek a karaktereit kisbetűsre cseréljük, mert az SQL érzékeny a változók tartalmában levő kis és nagybetűk közti különbségére. Ezután megnézzük, hogy a lekért intervallum kezdő időpontja kisebb vagy egyenlő-e mint a fesztivál befejező és a végdátuma nagyobb vagy egyenlő mint a fesztivál kezdési időpontja, majd rendezzük a kezdés időpontja szerint. Az így keletkezett listával tér vissza a függvény. A fentebb említett esetben annyi lesz a különbség, hogy milyen paramétert adunk át a \texttt{datesWithStyle} függvénynek, illetve mind kettő átadása esetén meghívjuk a kapott stílussal és kód szinten leszűrjük a free paraméterre. Az elkészült listát visszaadjuk a felületnek.
 
 Később rájöttem, hogy a problémát lehetett volna egy kicsivel konszolidáltabban kezelni. Egy \texttt{QueryBuilder}(lekérdezés építő) osztály létrehozásával. Ahol minden paraméteren végigmenve azokat a paramétereket fűzzük fel a lekérdezésre, amelyek nem null értékkel jönnek. A pozícióval kapcsolatos számításokat, illetve ha jön stílus és ingyenes, akkor azt is kód szinten kell külön kezelni. 
 
@@ -109,7 +109,7 @@ A fellépő törlése az implementálandó feladatok közül egyszerűbbek köz�
 
 \begin{java}
 return this._http.delete(
-'\${environment.Spring_API_URL}/artists/delete',{ params });
+'${environment.Spring_API_URL}/artists/delete',{ params });
 \end{java}
 
 Paraméterként csak az id-t adjuk át, mivel ez alapján már egyértelműen azonosítható az objektum. A túloldalon átvesszük a paramétert \texttt{@RequestParam("id") Integer id} kifejezés segítségével.
@@ -121,4 +121,27 @@ deleteMusicStyleByArtist(artistRepository.findOne(id));
 return artistRepository.deleteById(id);
 \end{java}
 Visszatérek a fellépő törlésének az eredményével, ez egy egész számmal tér vissza, a törölt elemek számával, mivel id alapján töröltük, így ez a szám csak 1 és 0 lehet.
-\subsubsection{Next}
+
+\subsubsection{Új koncert felvitele}
+A koncert rögzítéséhez a felületen először be kell jelentkeznünk, ilyenkor láthatóvá válik ez a menüpont. A komponens inicializálásakor betöltjük a fesztiválok listáját és a fellépők listáját a felületre, hogy aki rögzíteni szeretné a koncertet annak már csak össze kelljen kattintgatni. Viszont, ha olyan fellépőhöz vagy fesztiválhoz szeretnénk koncertet felvinni amit még nem tartalmaz a rendszer azt előtte rögzítenünk kell. Miután kiválasztottuk a listából a fellépőt és a fesztivált egy \texttt{DateTimePicker} segítségével kiválaszthatjuk az időpontot is, hogy pontosan mikor lesz a koncert. A koncert felvitele gombra kattintva lefut az \texttt{onSubmit} metódus, amely továbbhívja a \texttt{concertService} \texttt{save} metódusát aminek át kell adni egy ConcertModel-t lementésre. A ConcertModel-be csak az esemény és a fellépő id-ját küldöm, bele lehetett volna pakolni az egész objektumot mind kettő esetén, de nem láttam értelmét. A \texttt{DateTimePicker} segítségével kiválasztott dátum olyan formátum generálódik le amit a Spring nem tud átvenni \texttt{Date}-ként, így újra inicializálom saját magával. Ezután a számunkra megfelelő formátumban, de ugyanazzal az értékkel lesz létrehozva, így már küldhetjük a back-end oldalra. Egy  \texttt{HttpClient} típusú objektum post metódusát megfelelően paraméterezve tehetjük meg.
+\begin{java}
+this._http.post(
+`${environment.Spring_API_URL}/concert/new.json`, concert);
+\end{java}
+Ezt a kérést az alábbi metódus fogja átvenni.
+\begin{java}
+@RequestMapping(path="/new.json", method = RequestMethod.POST)
+public void addConcert(@RequestBody ConcertDTO concertDTO){
+	concertService.addConcert(concertDTO);
+}
+\end{java}
+A  \texttt{@ReqestMapping} annotáció segítségével megadhatjuk, hogy melyik csatornát figyelje a metódusunk, és ha a megadott csatornán jön valami, akkor meghívódik a hozzárendelt metódus. Az újabb verziószámú Springek esetén már bevezették a  \texttt{@PostMapping} annotációt. Az annotációs részt lecserélhetnénk \texttt{@PostMapping("/new.json")} sorra és egyenértékű lenne a jelenlegivel, én a fejlesztői környezet színezése miatt átláthatóbbnak találom a jelenlegit. A \texttt{@RequestBody} annotáció segítségével a bejövő kérés body részét nyerhetjük ki. A DI(Dependency Injection)-ról még nem esett szó. Belelendültem az annotációkba, akkor essen pár szó arról is, hogyan kerülnek a controller objektumokba a service objektumok. A controller egy \texttt{@Autowired} annotáció segítségével a konténertől kérhet egy példányt a bean-ekből. 
+
+De mi is az a konténer? A konténer tárolja és menedzseli a beanek élet ciklusait. A konténer feljegyzi, hogy milyen bean-eket ismer és ezekből tud kiosztani minden osztály számára, amelyik igényi. Tehát a konténer segítségével töltöttük fel a \texttt{concertService} változót egy \texttt{ConcertService} típusú bean-nel, és így már meghívhatjuk a metódusait. Az \texttt{addConcert} metódus lekérdezi id alapján a fesztivált majd a fellépőt és beállítja ezeket a koncert adattagjaiként és végül visszatér a mentett objektummal.
+
+\subsubsection{Fellépő módosítása}
+A fellépőnél előfordulhat, hogy módosítani kell, valamelyik adatát, például új stílus irányzatban is kipróbálja magát és egy új stílust kell felvinni. A folyamat nagyon hasonló mint az új felvitele esetén csak itt előre betöltjük a UI-ra a módosítható adatait. A felületről elküldött kérés a front-end \texttt{ArtistService} \texttt{save} metódusát hívja meg. Itt van egy elágazás ami az a alapján szelektálja a beérkezett modellt, hogy  van-e id-ja. Mivel a módosítandó objektum id-ja különbözni fog nullától így ebbe az ágba futunk ilyen esetben és ilyenkor egy PUT(módosító) kérést fogunk intézni a back-end felé. A szokásos úton a controller-en keresztül, ahol nem történik vele semmi, csak továbbhívódik eljutunk az \texttt{ArtistService} \texttt{updateArtist} metódusához. Ilyenkor null értékkel érkezik a picture adattag, mert a képfeltöltésre külön eljárás van, tehát be kell töltenünk az adatbázisban elmentett kép nevét, csak így menthetjük el, különben elveszne a felhasználóhoz tartozó kép. Innentől már nem különbözik az eljárás a mentéstől, ezért nem duplikáljuk a kódot inkább meghívjuk az \texttt{addArtist} metódust, amiben lementjük a fellépőnket. A stílusok változását nehezebb detektálni. 
+
+\subsubsection{Bejelentkezés}
+
+\subsubsection{Képek betöltése}
