@@ -1,7 +1,5 @@
 \Chapter{Implementáció}
 
-% TODO: Ide kerülhetnek a konkrét kódrészek.
-% TODO: Le lehet írni, hogy mit volt egyszerűbb/komplikáltabb összerakni.
 Ebben a fejezetben igyekszem bemutatni néhány izgalmasabb esetet, amelyek vagy a bonyolultságuk miatt érdekesek vagy számomra rengeteg fejtörést okoztak amire elkészültek.
 
 \subsubsection{Fesztivál keresés}
@@ -12,6 +10,7 @@ A metódus egyik paraméterét sem kötelező átadni neki, hisz ez egy lekérde
 
 A festsByQuery metódust implementáltam A FestivalServiceImpl osztályban. A függvény paraméter szignatúrája a következő: \texttt{(String style, boolean isFree, Date begin, Date end, Double posX, Double posY, Double maxFromPos)} a visszatérési értéke egy \texttt{FestivalDTO} lista. A rendszert minden egyes lehetséges kombinációra fel kell készíteni, természetesen lesznek olyan lekérdezések, amelyeket többször is meghívhatóak más paraméterrel. Abból ered ez, hogy az ingyenességet nem boolean változóban tárolom, hanem stílusparaméterként.
 Ha nem kapunk stílust akkor az alábbi ágba fut a programunk.
+
 \begin{java}
 if (!isFree) {
 festivals = datesWithoutStyle(begin, end, posX, posY, 
@@ -140,8 +139,78 @@ A  \texttt{@ReqestMapping} annotáció segítségével megadhatjuk, hogy melyik 
 De mi is az a konténer? A konténer tárolja és menedzseli a beanek élet ciklusait. A konténer feljegyzi, hogy milyen bean-eket ismer és ezekből tud kiosztani minden osztály számára, amelyik igényi. Tehát a konténer segítségével töltöttük fel a \texttt{concertService} változót egy \texttt{ConcertService} típusú bean-nel, és így már meghívhatjuk a metódusait. Az \texttt{addConcert} metódus lekérdezi id alapján a fesztivált majd a fellépőt és beállítja ezeket a koncert adattagjaiként és végül visszatér a mentett objektummal.
 
 \subsubsection{Fellépő módosítása}
-A fellépőnél előfordulhat, hogy módosítani kell, valamelyik adatát, például új stílus irányzatban is kipróbálja magát és egy új stílust kell felvinni. A folyamat nagyon hasonló mint az új felvitele esetén csak itt előre betöltjük a UI-ra a módosítható adatait. A felületről elküldött kérés a front-end \texttt{ArtistService} \texttt{save} metódusát hívja meg. Itt van egy elágazás ami az a alapján szelektálja a beérkezett modellt, hogy  van-e id-ja. Mivel a módosítandó objektum id-ja különbözni fog nullától így ebbe az ágba futunk ilyen esetben és ilyenkor egy PUT(módosító) kérést fogunk intézni a back-end felé. A szokásos úton a controller-en keresztül, ahol nem történik vele semmi, csak továbbhívódik eljutunk az \texttt{ArtistService} \texttt{updateArtist} metódusához. Ilyenkor null értékkel érkezik a picture adattag, mert a képfeltöltésre külön eljárás van, tehát be kell töltenünk az adatbázisban elmentett kép nevét, csak így menthetjük el, különben elveszne a felhasználóhoz tartozó kép. Innentől már nem különbözik az eljárás a mentéstől, ezért nem duplikáljuk a kódot inkább meghívjuk az \texttt{addArtist} metódust, amiben lementjük a fellépőnket. A stílusok változását nehezebb detektálni. 
+A fellépőnél előfordulhat, hogy módosítani kell, valamelyik adatát, például új stílus irányzatban is kipróbálja magát és egy új stílust kell felvinni. A folyamat nagyon hasonló mint az új felvitele esetén csak itt előre betöltjük a UI-ra a módosítható adatait. A felületről elküldött kérés a front-end \texttt{ArtistService} \texttt{save} metódusát hívja meg. Itt van egy elágazás ami az a alapján szelektálja a beérkezett modellt, hogy  van-e id-ja. Mivel a módosítandó objektum id-ja különbözni fog nullától így ebbe az ágba futunk ilyen esetben és ilyenkor egy PUT(módosító) kérést fogunk intézni a back-end felé. A szokásos úton a controller-en keresztül, ahol nem történik vele semmi, csak továbbhívódik eljutunk az \texttt{ArtistService} \texttt{updateArtist} metódusához. Ilyenkor null értékkel érkezik a picture adattag, mert a képfeltöltésre külön eljárás van, tehát be kell töltenünk az adatbázisban elmentett kép nevét, csak így menthetjük el, különben elveszne a felhasználóhoz tartozó kép. Innentől már nem különbözik az eljárás a mentéstől, ezért nem duplikáljuk a kódot inkább meghívjuk az \texttt{addArtist} metódust, amiben lementjük a fellépőnket. A stílusok változását nehezebb detektálni. Itt az igazi probléma az, hogyha törlünk a listából egyet. Ilyen esetben le kell szűrni azokat amik az adatbázisban tárolt stíluslistában és a paraméterként érkező listának a metszete, ha marad olyan adatbáziselem amelyik nem található meg a metszetben azt törölni kell az adatbázisból. Hiszen ez azt jelenti, hogy a felületen törölték. Az alábbi kód azt mutatja meg, hogy ezt hogyan oldottam meg.
+\begin{java}
+public void changeStyles(Artist artist) {
+	List<MusicStyle> ms = new ArrayList<>();
+	for (MusicStyle musicStyle :
+		musicStyleRepository.findByArtist(artist)) {
+		boolean var = false;
+		for(MusicStyle m : artist.getStyles()){
+			if (m.getId()==musicStyle.getId() && 
+				!m.getStyle().equals("")){
+				var = true;
+				break;
+			}
+		}
+		if (!var){
+			ms.add(musicStyle);
+		}
+	}
+	musicStyleRepository.delete(ms);
+	addStyles(artist);
+}
+\end{java}
+Az külső for ciklussal lekérdezzük az adatbázisban a fellépőhöz tartozó stílusokat. A belsőben pedig egyesével összehasonlítjuk az adatbázis egyes elemeinek az id-ával minden a felületről érkezett stílus id-ával, ha a kettő között definiált \texttt{var} változó nem változik true-ra, tehát a felületen kitörölték a stílust, akkor hozzá adjuk a törlendő elemek listájához, ha minden elemet megvizsgáltunk akkor töröljük is ezeket.
+Az utolsó sorban meghívott \texttt{addStyle} metódus lementi az adatbázisba a stílusokat.
 
 \subsubsection{Bejelentkezés}
+A bejelentkezésnél a beküldött információkat base64-es kódolással küldjük át a back-end oldalra, erre az  interneten fellelhető megoldások közül kértem segítségül egyet, mert itt szabványos kérést kell beküldeni, hogy a Java \texttt{Principal} objektuma automatikusan ellenőrizni tudja, hogy a felhasználónév és jelszó páros érvényes-e, és ez alapján vissza adjuk a választ. A kapott válasz alapján a front-end ki tudja nyerni a következő pár sor segítségével, hogy a felhasználónak sikerült-e magát azonosítani.
+\begin{java}
+let user = response.json().principal;
+if (user) {
+	this._user=user;
+	this.isLoggedin=response.json().authorized;
+}
+\end{java}
+A response változó az maga a válasz objektum, és abból nyerhető ki, a user és az hogy sikerült-e az autorizáció.
 
-\subsubsection{Képek betöltése}
+\subsubsection{Képek feltöltése}
+A képfeltöltéshez is körülnéztem az interneten, hogy milyen eljárásokat szoktak használni, találtam egyet és azt szabtam személyre, mivel nekem nem más feladatra kellett mint az ottani példában. Külön mentési eljárást használtam modelltípusonként. A fájl kiválasztása a fellépő vagy a fesztivál módosítása oldalon lehetséges itt tölthetünk fel képet. Ugyan az a modul épül be mindkettőbe, csak inputként más paramétert adunk át a komponensnek, hogy tudja miszerint kell majd tovább adni a back-end-nek. A feltöltés gombra kattintva az alábbi sor fogja elindítani a feltöltést.
+\begin{java}
+this.uploadService.pushFileToStorage(this.currentFile,
+ this.params)
+\end{java}
+Ahol a paraméterek az egyik maga a fájl, a másik pedig egy string, amely azt tárolja, hogy fesztiválként vagy fellépőként kell-e meghívni spring alkalmazás interfészét, illetve az objektum id-ját is hozzáfűzzük.
+\begin{java}
+const req = new HttpRequest('POST', 
+`${environment.Spring_API_URL}/${prms}`, formdata, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+\end{java}
+A fenti \texttt{req} változó tartalmával fogjuk meghívni a Spring interfészét a következő sor segítségével, ahol a \texttt{http} változó az ilyenkor szokásos \texttt{HttpClient} típusú objektumra referencia. 
+\begin{java}
+return this.http.request(req);
+\end{java}
+A paraméterben érkező fájlt \texttt{@RequestParam("file") MultipartFile file} kódrésszel nyerhetjük ki, az id-t pedig az URL tartalmazza, így \texttt{@PathVariable int id} kódrészlet segít nekünk megszerezni, hogy melyik fellépőhöz kell lementeni.
+Tekintsük ezt meg, mondjuk a fellépő esetében. Ilyenkor a függőség injektálást az alábbiak alapján kell elvégezni.
+\begin{java}
+@Autowired
+public void setStoreFileService(ArtistServiceImpl 
+storeFileService) {
+	this.storeFileService = storeFileService;
+} 
+\end{java}
+Mivel a \texttt{ArtistServiceImpl} osztály implementálja a \texttt{StoreFileService} interfészt, ezért az interfészre hivatkozó referencia dinamikus típusaként felveheti az őt implementáló osztályt. Az osztályban felüldefiniáltak szerint fog működni a \texttt{storeFile(MultipartFile file, int id)} függvény, amelyet meg is hívunk, hiszen ez lesz felelős a tárolásért. Nézzük át a függvény fontosabb sorait.
+\begin{java}
+String newName =  currentDate + file.getOriginalFilename();
+Files.copy(file.getInputStream(),
+this.rootLocation.resolve(newName));
+Artist artist = artistRepository.findOne(id);
+artist.setPicture(newName);
+artistRepository.save(artist);
+\end{java}
+Az első sor azért felelős, hogy összefűzze a jelenlegi dátumot  a fájl nevével, ez segít kiszűrni a névütközésből eredő hibákat. A következő sorban lementjük az új névvel \texttt{rootLocation}-ben beállított mappába. Ezután megkeressük az id-hoz tartozó fellépő objektumot az adatbázisban, beállítjuk a képnevét a \texttt{picture} attribútumon és lementjük a módosított objektumot.
+
+\subsection{Képernyőképek áttekintése}
