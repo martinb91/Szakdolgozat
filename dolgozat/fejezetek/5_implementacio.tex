@@ -213,4 +213,68 @@ artistRepository.save(artist);
 \end{java}
 Az első sor azért felelős, hogy összefűzze a jelenlegi dátumot  a fájl nevével, ez segít kiszűrni a névütközésből eredő hibákat. A következő sorban lementjük az új névvel \texttt{rootLocation}-ben beállított mappába. Ezután megkeressük az id-hoz tartozó fellépő objektumot az adatbázisban, beállítjuk a képnevét a \texttt{picture} attribútumon és lementjük a módosított objektumot.
 
-\subsection{Képernyőképek áttekintése}
+\section{Képernyőképek áttekintése}
+A fejezet végén tekintsük át nagy vonalakban a fontosabb funkciókat, hogyan és hol érhetjük el az alkalmazásban. 
+\begin{figure}
+\centering
+\includegraphics[scale=0.45]{kepek/artistList.jpg}
+\caption{Fellépők listája}
+\label{fig:artistList}
+\end{figure}
+
+Kezdjük a fellépők listázásával, a navbar-on a fellépőkre kattintással az \ref{fig:artistList} ábrán látható kép fogad bennünket. Amint látható, kilistázza a program az összes fellépőt ami le van tárolva benne. Amelyikhez van kép is elmentve, ahhoz a képet is betölti, amelyikhez nincs ahhoz pedig egy alapértelmezett képet rendel. A  két keresőmezőbe, ha beleírunk valami szöveget akkor leszűri azokra, amelyek tartalmazzák a beírt szövegrészletet értelemszerűen a fellépő nevénél a nevére, a stílusnál a stílusra szűr. Jobb felül a kék gomb amit be is karikáztam, az csak akkor jelenik meg, ha a felhasználó bejelentkezik, és ahogy a felírata is mutatja új fellépő  rögzítési helyéhez navigál. A stílusra kattintásra leszűri az olyan stílusuakra a halmazt, mint amire kattintottunk, ezt bordóval jelöltem. A továbbra kattintva a  fellépő részleteit ismerhetjük meg.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.45]{kepek/festList.jpg}
+\caption{Fesztiválok listája}
+\label{fig:festList}
+\end{figure}
+
+Az első keresés az hasonló lesz mint a fellépők listázásánál, viszont itt csak névre lehet a gombnélküli direktszűrő funkciót alkalmazni. A részletes keresés részt már kitárgyaltuk részletesen, ezt a funkciót a következő (piros blokkban) láthatjuk az \ref{fig:festList} ábrán. Sajnos nem nagyon értek a dízájnhoz, így kicsit összecsúsztak, de funkcióját tekintve működik. A többi dolog úgy működik, mint a fellépők listázásánál.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{kepek/artistDet.jpg}
+\caption{Fellépők részletei}
+\label{fig:artistDet}
+\end{figure}
+
+Fellépő részletei, amint az \ref{fig:artistDet} ábrán látható itt nem aktívak az input mezők, mert nem vagyunk belépve, ha belépünk akkor megjelenik egy szerkesztés gomb és ha arra kattintunk akkor szerkeszthetjük az adatokat. Ezt meglehetett volna úgy is oldani, hogy nem input mezőbe vezetem ki a tulajdonságokat, hanem egy külön nézetet készítek a szerkesztésnek és a nem szerkesztési résznek és nem csak a szerkeszthetőségét tiltom le. Az alsó részen a fellépő koncert naptárát tekinthetjük meg.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{kepek/eventDet.jpg}
+\caption{Fesztiválok részletei}
+\label{fig:event1Det}
+\end{figure}
+
+Esemény részletei, itt egy belépett felhasználó esetén láthatjuk aki rá kattintott a szerkesztés gombra. A fesztivál képe alatt ilyenkor megjeleni a képfeltöltő blokk, ha kiválasztunk egy képet feltöltésre, akkor az upload gombra kattintva tölthetjük fel. Az esemény kezdete és vége egy Date-Time-Picker segítségével választható ki, ezt majd később meg is mutatom kinyitott állapotban.  Az esemény koordinátáit lehet kézzel szerkeszteni vagy a térképen levő marker(fekete oválisban lévő píros tüske) segítségével, ezt a markert csak szerkesztés módban lehet mozgatni.  A lilával jelölt körben lévő X segítségével törölhetjük a stílusokat, illetve a narancs sárga oválisban található feliratra kattintva újat hozhatunk létre. A mentéssel rögzíthetjük a változásokat, új fesztivál felvitele esetén csak szimplán lementjük új fesztiválként, ebből leszűrhetó az is, hogy ugyanezt az űrlapot töltjük be új felvitele esetén is. A törlésre kattintva törölhetjük a fesztivált az adatbázisból. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.64]{kepek/eventDet2.jpg}
+\caption{Fesztiválok részletei}
+\label{fig:event2Det}
+\end{figure}
+A következő blokkban találjuk a fesztivál programját. Itt a fesztivál nevére kattintva elnavigálhatunk a fesztiválhoz, de ez az eset főleg a fellépőknél érdekes. Az előadó nevére kattintva pedig az előadó részleteit tekinthetjük meg. Az utolsó részben pedig szállásokat ajánlunk a fesztiválozók számára, ezek a fesztiváltól maximum 5 km-re elhelyezkedő szállások lesznek. A tovább gombra kattintva elnavigáljuk a fesztivál weboldalára. 
+\begin{figure}
+\centering
+\includegraphics[scale=0.64]{kepek/festFoot.jpg}
+\caption{Fesztiválok részletei}
+\label{fig:event3Det}
+\end{figure}
+Az oldal fejlécét találjuk, itt találjuk a menüket, amik közül lehet választani. Az eseményekre kattintva jönnek be a fesztiválok listája, a fellépőkre kattintva a fellépők listája. Az új szállás és az új koncert menü csak akkor jelenik meg a nav-bar-on, ha bejelentkezünk. A profile-ra írányít bennünket az oldal ha sikerült belépnünk. A kilépéssel hagyhatjuk el az oldalt. Amég nem lépünk be addig az utolsó négy menű nem látszik, viszont van helyette bejelentkezés és regisztráció fül. A sárgával jelölt részen látható nyilak jelzik, hogy ez egy lenyilló lista. A listaelemek pedig a fesztiválok és a fellépők. A koncert időpontját itt is picker segítségével választhatjuk ki.  
+\begin{figure}
+\centering
+\includegraphics[scale=0.64]{kepek/concertUp.png}
+\caption{Koncert rögzítése}
+\label{fig:concert}
+\end{figure}
+A fesztivál listát láthatjuk kinyítva és a pickert. A fesztiválok listájában csak a még el nem múlott fesztiválok jelennek meg. A date-time-picker segítségével pedig könnyedén kiválaszthatjuk a számunkra kellő dátumot.
+\begin{figure}
+\centering
+\includegraphics[scale=0.64]{kepek/concertUpOpen.png}
+\caption{Koncert rögzítése}
+\label{fig:concertOpen}
+\end{figure}
