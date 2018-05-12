@@ -286,5 +286,3 @@ Az adatbázisból nem szabad null értékkel lekérdezni. Ezt helyes kódszervez
 
 \subsubsection{Rossz adattípus érkezik}
 A felhasználói felületről új adat felvitelénél rosszul kitöltött adatok esetén előfordulhatna az, hogy például numerikus adat helyett egy string érkezik, és azt sajnos nem tudja kezelni a keretrendszer. Ilyen esetben NumberFormatException keletkezik, ha a felhasználói felületen minden beviteli mezőt szigorúan validálunk, akkor ilyen nem fordulhat elő. Esetleg érdemes lehet kivételkezelést is használni a backend oldalon, ahol ez bekövetkezhet. 
-
-\subsubsection{Dátum formátum}
