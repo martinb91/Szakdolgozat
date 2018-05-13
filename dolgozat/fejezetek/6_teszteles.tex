@@ -1,47 +1,43 @@
 \Chapter{Telepítés, tesztelés}
 
-% TODO: Az alkalmazás üzembehelyezését, konfigurációját részletesen bemutatni!
+\Section{Telepítés}
 
-% TODO: Példa néhány felhasználói tesztre. Le lehet írni, hogy mi az amit közben korrigálni kellett. A javítás módját is le lehet írni.
+Mindkét keretrendszer független az operációs rendszerektől, tehát minden népszerű operációs rendszert használó számítógépen el tudjuk indítani az alkalmazásokat. A következő szakaszokban azt mutatom be, hogy milyen verziójú szoftvereket érdemes használni az alkalmazás telepítéséhez, illetve, hogy a telepítés milyen nagyobb lépésekből áll.
 
-% TODO: Frontend teszteléséhez használható eszközök bemutatása és néhány konkrét példa a tesztekre.
+\SubSection{Spring}
 
-% TODO: Java egységtesztek bemutatása. Például kereséshez, szűréshez, regisztrációhoz.
-\section{Telepítés}
+A \textit{Spring Boot} 1.5.8.RELEASE kiadást használtam. Ez a Java 7-es verzióját igényli -- a 8 vagy újabb ajánlott -- a fordításhoz. Tehát érdemes telepíteni a lehető legújabb Java verziót, mind a JRE, mind pedig a JDK tekintetében \cite{23}.
 
-Mindkét keretrendszer független az operációs rendszerektől, tehát minden népszerű operációs rendszert használó számítógépen el tudjuk indítani az alkalmazásokat.
+\textit{Maven} segítségével tölthetjük le azokat a \texttt{jar} kiterjesztésű fájlokat, amelyek szükségesek az alkalmazás működéséhez. A 3.5.0 verzió volt a dolgozat megírása idején a legújabb verzió, ezért ezt használtam. A \textit{Maven} 3.5.0 szintén igényli a Java hetedik verzióját (vagy annál újabb kiadásait). A projekt \texttt{pom.xml} fájljában definiált csomagok az alkalmazás függőségei, ezeket a fordítás előtt le fogja tölteni a \textit{Maven}, ha nem találja meg őket az erre a célra lefoglalt mappában. Ezeknek a csomagoknak vannak további függőségeik, azokat is feloldja. Amíg a függőségi fán hiányzó levelet talál, addig folytatja ezt az eljárást, így levesz minden terhet a fejlesztők válláról a függőségek kezelését illetően.
 
-\subsection{Spring}
+\SubSection{Angular}
 
-A Spring Boot 1.5.8.RELEASE kiadást használtam, ez a Java 7-es verzióját igényli - a 8 vagy újabb ajánlott - a fordításhoz. Tehát érdemes telepíteni a lehető legújabb Java-t, mind a JRE-t mind a JDK-t.
+A front-end részhez először telepíteni kell a \textit{Node.js}-t \cite{31}. Az aktuálisan elérhető legfrissebb verzió a 9.10.1 volt. Ez a keretrendszer weboldaláról (\texttt{nodejs.org}) letölthető. Erre azért volt szükségünk, mert ebben található egy \texttt{npm} nevű modul. Az \texttt{npm} vagy \textit{Node Package Manager}, mint a neve is mutatja, csomagok telepítésére és karbantartására való.
 
-Maven segítségével töltjük le azokat a jar fájlokat amelyektől függ az alkalmazásunk. A 3.5.0 verzió volt akkor a legújabb verzió és általam használt verzió is ez. A Maven 3.5.0 szintén igényli a Java hetedik verzióját vagy újabb kiadásait. A projekt pom.xml fájljában definiált csomagok az alkalmazás függőségei, ezeket a fordítás előtt le fogja tölteni, ha nem találja meg őket az erre a célra lefoglalt mappában. Ezeknek a csomagoknak vannak további függőségeik, azokat is feloldja a Maven, amíg a függőségi fán hiányzó levelet talál, addig folytatja ezt az eljárást. Így levesz minden terhet a vállunkról.
-
-\subsection{Angular}
-
-[31] A front-end részhez először telepíteni kell egy Node.js-t. Az akkor elérhető legfrissebb verziót, amely a 9.10.1 volt. Ez a keretrendszer weboldaláról(nodejs.org) letölthető. Erre azért volt szükségünk, mert ebben található egy npm nevű modul. Az npm vagy Node Package Manager, mint a neve is mutatja csomagok telepítésére és karbantartására való.
-
-Egy csomagot kétféleképpen  lehetséges telepíteni az egyik mód a lokális telepítés és létezik a globális telepítés. Globálisan azokat a csomagokat installáljuk amelyeket terminálból szeretnénk a későbbiekben elindítani.
-Mi az Angular CLI 1.7.0-t globálisan telepítettük npm segítségével, hiszen parancssorból szeretnénk indítani majd a kiszolgálást.
+Egy csomagot kétféleképpen lehetséges telepíteni. Az egyik mód a lokális telepítés, a másik pedig a globális. Globálisan azokat a csomagokat installáljuk amelyeket terminálból szeretnénk a későbbiekben elindítani.
+Az Angular CLI 1.7.0-t globálisan telepíthetjük \texttt{npm} segítségével, hiszen parancssorból szeretnénk indítani majd a kiszolgálást.
 
 A következő paranccsal érhetjük ezt el, hogy a legfrissebb verziót telepítse: \texttt{npm install -g @angular/cli}
-Elvileg visszafelé kompatibilis a rendszer, tehát ha a legújabb globális verzió van fent a gépen akkor a régebbi vagy azonos verziószámú projektet képes lesz futtatni. Én Angular 5.2.0-ás verziószámú projektet futtattam benne, és minden gond nélkül elindult.
-Minden projekthez tartozik egy \texttt{package.json}, úgy mint a Maven-nél a \texttt{pom.xml}, ez tárolja a projekt függőségeit. Ezeket le kell tölteni, ha van olyan amelyik nincs telepítve, én ezt már lokálisan tettem meg. Terminál segítségével ezt úgy tehetjük meg, hogy benavigálunk a projekt mappájába és futtatjuk az \texttt{npm install} parancsot, jelentősebb időbe telik mire letölt mindent amire szükség lesz a projekt futtatásához. Majd ezután, ha minden rendben ment, akkor az \texttt{ng serve} parancsra elkezd futni a program. A terminálra kiírja, hogy melyik porton indult el, ez a \texttt{localhost:4200} gyári beállításon. Ha a back-end oldali alkalmazás is fut a \texttt{localhost:8080}-as porton, akkor már az adatok is vizualizálódnak.
+Elvileg visszafelé kompatibilis a rendszer, tehát ha a legújabb globális verzió van fent a gépen akkor a régebbi vagy azonos verziószámú projektet képes lesz futtatni. Az \textit{Angular} 5.2.0-ás verziószámú projektet futtattam benne, és minden gond nélkül elindult.
 
-\section{Tesztelés}
+Minden projekthez tartozik egy \texttt{package.json}, úgy mint a \textit{Maven} esetében a \texttt{pom.xml}. Ez tárolja a projekt függőségeit. Ezeket le kell tölteni, ha van olyan amelyik nincs telepítve. Ezt már célszerűnek tartottam lokálisan megtenni. Terminál segítségével ezt úgy tehetjük meg, hogy a projekt mappájába navigálunk, és futtatjuk az \texttt{npm install} parancsot. Jelentősebb időbe telik, mire letölt mindent amire szükség lesz a projekt futtatásához. Ezután, ha minden rendben ment, akkor az \texttt{ng serve} parancsra elkezd futni a program. A terminálra kiírja, hogy melyik porton indult el, ez a \texttt{localhost:4200} a gyári beállítások szerint. Amennyiben a back-end oldali alkalmazás is fut a \texttt{localhost:8080}-as porton, akkor már az adatok is vizualizálódnak.
 
-\subsection{Felhasználói felület tesztelése}
-A felhasználói felületet funkcionális tesztekkel manuálisan tudtam tesztelni, hogy minden úgy működik-e, ahogy azt a rendszertől elvártam. A tesztelés másik módja az volt, hogy JSON pipe segítségével megjelenítettem az adatokat a felületen, és így valós időben tudtam követni az interakcióim hatására bekövetkező változásokat. Van lehetőség a funkcionális tesztek automatizálására a front-end oldalon, de időmből nem futotta ennek elsajátítására.
+\Section{Tesztelés}
 
-\subsection{Back-end tesztelése}
+A tesztelés minden alkalmazás esetében kiemelt fontosságú \cite{18}. A következő szakaszokban említés szintjén bemutatom, hogy milyen jellegű tesztelésre van szükség egy webalkalmazás esetében.
 
-A Spring-nél szokás használni a tesztelés által irányított fejlesztést(TDD), ez azt jelenti hogy először megírjuk a teszteket és utána a kódot hozzá. Minden modul akkor áll készen, ha definiált tesztek sikeresen lefutottak. Majd jöhet a következő modul, viszont azt már úgy kell elkészítenünk, hogy a saját tesztjei is lefussanak, illetve a régebben elkészített modulok tesztjei is sikeresek maradjanak. Én nem így készítettem el a modult, csak már a kész modulokat teszteltem.
+\SubSection{Felhasználói felület tesztelése}
 
-Először a back-enddel készültem el, és nem volt felhasználói felületem(UI) aminek segítségével az egyes kéréseket szimulálhattam volna, így Postman segítségével küldtem be a minta kéréseimet és ezáltal teszteltem fejlesztési időben.
+A felhasználói felületet funkcionális tesztekkel manuálisan tudtam tesztelni, hogy minden úgy működik-e, ahogy azt a rendszertől elvártam. A tesztelés másik módja az volt, hogy \textit{JSON pipe} segítségével megjelenítettem az adatokat a felületen, és így valós időben tudtam követni az interakcióim hatására bekövetkező változásokat. Van lehetőség a funkcionális tesztek automatizálására a front-end oldalon. Az \textit{Angular} ehhez számos lehetőséget biztosít, amelyre dolgozatomban részletesen már nem térnék ki.
 
-Ezután jöttek az egységtesztek.
-Egység teszt, ezzel egyetlen egy metódus működését tesztelhetjük, csak a  legelemibb megoldásokat tesztelhetjük vele.
+\SubSection{Back-end tesztelése}
 
-Az egység tesztek után az integrációs teszteket szokták elvégezni, azt vizsgálja, hogy a modulok jól tudnak-e együttműködni.
+A \textit{Spring}-nél szokás használni a teszt vezérelt fejlesztést (\textit{Test Driven Development}). Ez azt jelenti, hogy először megírjuk a teszteket, és utána a kódot hozzá. Minden modul akkor áll készen, ha definiált tesztek sikeresen lefutottak. Ezt követően jöhet csak a következő modul, viszont azt már úgy kell elkészítenünk, hogy a saját tesztjei is lefussanak, illetve a régebben elkészített modulok tesztjei is sikeresek maradjanak. A dolgozat megírásakor csak a kész modulok tesztelésénél maradtam.
 
-Stresszteszteket JMeter segítségével készítettem. A stressztesztek arra használatosak, hogy kiderítsük mekkora aktivitásnak tehetjük ki az alkalmazást.
+Először a back-enddel készültem el, és nem volt felhasználói felületem amelynek segítségével az egyes kéréseket elküldhettem volna. Ahhoz, hogy mégis vizsgálni tudjam a működést, a Postman segítségével küldtem be a minta kéréseimet, és ezáltal teszteltem az aktuálisan fejlesztett elemeket.
+
+Az alkalmazást a megbízhatóság érdekében érdemes lesz a későbbiekben egységtesztekkel bővíteni. Ezekkel az adott metódusok működését tesztelhetjük, elemi egységekként.
+
+A függetlenül már tesztelt modulok egy nagyobb egységként való, továbbra is helyes működését integrációs tesztek készítésével garantálhatjuk. Ahogy az alkalmazásban a funkciók száma gyarapodik, nyilván az ilyen jellegű tesztekre is egyre nagyobb szükség lesz majd.
+
+Stresszteszteket \textit{JMeter} segítségével készítettem. A stressztesztek arra használatosak, hogy kiderítsük mekkora aktivitásnak tehetjük ki az alkalmazást. A tesztek olyan tekintetben csak próbálkozás jellegűek, hogy mind a várható felhasználószámra, mind pedig a rendelkezésre álló infrastruktúrára vonatkozóan csak nagyvonalú becslések állnak jelenleg rendelkezésre.

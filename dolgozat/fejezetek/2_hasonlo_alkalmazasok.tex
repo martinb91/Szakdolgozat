@@ -2,7 +2,7 @@
 
 Az elkészülő alkalmazás specifikációja előtt érdemes áttekinteni, hogy pontosan milyen szolgáltatások kapcsolódnak egy fesztiválhoz. Ez segít majd behatárolni az alkalmazás szükséges funkciót. Fontos továbbá ennek kapcsán megvizsgálni, hogy milyen hasonló alkalmazások érhetők már el, illetve azok milyen feladatokat és milyen formában látnak el.
 
-\section{Fesztiválokhoz kapcsolódó szolgáltatások}
+\Section{Fesztiválokhoz kapcsolódó szolgáltatások}
 
 Először nézzük meg, hogy pontosan hogyan definiálhatnánk, hogy mi tekintünk fesztiválnak.
 
@@ -14,17 +14,17 @@ sport vagy egyéb – eseménysorozat, amelynek
 célja, hogy közönsége részére kiemelten színvonalas,
 értékközvetítő, minőségi, ismereteket is bővítő és egyben
 szórakoztató, szabadidős közösségi élményt nyújtson.”
-(Magyar Fesztivál Szövetség)  [21]
+(Magyar Fesztivál Szövetség \cite{21})
 
 A hazai turizmus bevételeinek jelentős részét a program azon belül a fesztiválturizmus adja.
 
-A fenti kijelentésemet bizonyítja két interneten talált cikk is, melyek viszonylag frissek voltak a témában. Az egyikből kiderül, hogy Magyarországon több mint 9000 fesztivált rendeznek egy év alatt és ezeknek 40 százaléka vonz tízezer főnél több látogatót. Jellemzően magyarok látogatják ezeket. A fesztiválok jelentősen megnyújtják a turisztikai főszezont és csökkentik a turizmusforgalom Balaton-Budapest központúságát. A magyar lakosság 1/3-a lelkesedik a fesztiválokért. Jelentős részük a fiataloknak szól, így a 15-30 éves kor között a számarányuk a duplája is lehet.(turizmus.com Dübörög a fesztiválturizmus cikke alapján [16]). 
-A külföldi látogatók alapján a Sziget fesztivál a Balaton Sound és a VOLT fesztivál kiemelkedőek, Sorrendben 85-45-10\%-os külföldiek részaránya. Csak a Szigetnek köszönhetően 300 ezer vendég éjszakát töltöttek az országban a külföldi turisták. A fesztiválok az országba irányuló turizmus 10-12\%-át adják és évi 100 milliárdos bevételt generálnak a gazdaság számára.(portfólió cikke alapján [15])
+A fenti kijelentésemet bizonyítja két interneten talált cikk is, melyek viszonylag frissek voltak a témában. Az egyikből kiderül, hogy Magyarországon több mint 9000 fesztivált rendeznek egy év alatt és ezeknek 40 százaléka vonz tízezer főnél több látogatót. Jellemzően magyarok látogatják ezeket. A fesztiválok jelentősen megnyújtják a turisztikai főszezont és csökkentik a turizmusforgalom Balaton-Budapest központúságát. A magyar lakosság harmada lelkesedik a fesztiválokért. Jelentős részük a fiataloknak szól, így a 15-30 éves kor között a számarányuk a duplája is lehet.(turizmus.com Dübörög a fesztiválturizmus cikke alapján \cite{16}). 
+A külföldi látogatók alapján a Sziget fesztivál a Balaton Sound és a VOLT fesztivál kiemelkedőek, Sorrendben 85-45-10\%-os külföldiek részaránya. Csak a Szigetnek köszönhetően 300 ezer vendég éjszakát töltöttek az országban a külföldi turisták. A fesztiválok az országba irányuló turizmus 10-12\%-át adják és évi 100 milliárdos bevételt generálnak a gazdaság számára \cite{15}.
 
 A dolgozatomban a klasszikus értelembe vett zenei vagy zenei vonatkozású fesztiválokra fókuszálok.
 A fesztiválokhoz nagyon változatos és sokrétű funkció csoportok tartoznak, melyeket több szempont alapján kategorizálhatunk. Az elkészülő szoftver funkcióinak behatárolásához, a követelményspecifikáció elkészítéséhez vegyük ezeket sorra.
 
-\subsection{Közvetlenül kapcsolódó funkciók}
+\SubSection{Közvetlenül kapcsolódó funkciók}
 
 A fesztiválozáshoz, mint szolgáltatáshoz közvetlenül kapcsolódó funkciók az alábbiak.
 \begin{itemize}
@@ -35,7 +35,7 @@ A fesztiválozáshoz, mint szolgáltatáshoz közvetlenül kapcsolódó funkció
 \item Szállási lehetőségek a fesztivál területen.
 \end{itemize}
 
-\subsection{Közvetve kapcsolódó funkciók}
+\SubSection{Közvetve kapcsolódó funkciók}
 
 Közvetve kapcsolódó funkciók: Amelyeket nem érzékel, amikért nem fizetne önmagában, illetve nem kell tudnia a fesztiválozónak, de kényelmetlenül érezné magát, ha nem valósulnának meg. Ilyenek például az alábbiak.
 \begin{itemize}
@@ -51,7 +51,7 @@ Közvetve kapcsolódó funkciók: Amelyeket nem érzékel, amikért nem fizetne 
 \item Véradásért cserében valamilyen ellenszolgáltatás.
 \end{itemize}
 
-\subsection{Az alkalmazás szempontjából kiemelt funkciók}
+\SubSection{Az alkalmazás szempontjából kiemelt funkciók}
 
 Melyek azok a szolgáltatások, amelyek érdekelni fogják a felhasználót, szeretne előretudni róla, és ezeket egy információs rendszerben meg lehet jeleníteni.
 \begin{itemize}
@@ -66,40 +66,41 @@ Melyek azok a szolgáltatások, amelyek érdekelni fogják a felhasználót, sze
 \item Strandolási lehetőség. A zenei fesztiválok jelentős része nyáron van és vízközelben, hogy a közönségnek legyen lehetősége védekezni a meleg ellen.
 \end{itemize}
 
-\section{Konkurens alkalmazások}
+\SubSection{Konkurens alkalmazások}
 
 Az interneten fellelhető már egypár elterjed Fesztivál/Esemény kereső alkalmazás, vannak hiányosságaik és tartalmaznak frappáns ötleteket is. A következő szakaszok ezeket tekintik át.
 
-\subsection{Fesztiválkalauz.hu}
+\SubSection{Fesztiválkalauz.hu}
 
-1. http://www.fesztivalkalauz.hu : Az első dolog amivel a felhasználó találkozik az a felhasználói felület, amelynek körülbelül a felét használta ki a fejlesztő. Jelenleg egy 14"-os kijelzőn nézve ez zavaróan kicsi. Feltehetőleg ez azért is van így, mert nagyjából 10 éves fejlesztés, és akkor még nem volt ekkora kijelző választék - sem méret, sem eszköz tekintetében - amelyeken weboldalakat jelenítettünk meg, így elég volt egy statikus méretre és betűtípusra beállítani a weboldalt. Jelenleg divatosak a reszponzív weboldalak, amelyek igyekeznek kiküszöbölni ezt a problémát.
-[1] ,,A reszponzív design lényege, hogy egy weboldalunk van, viszont ez az oldal másképp reagál az egyes képernyőméretekre. Az elemeinek szélessége lecsökken, a menüpontok összerendeződnek, ahol 4 oszlopos megjelenés volt, az végül már fokozatosan 1-re csökken, de a weboldal funkcionalitása megmarad.''
-A viszonylag fejlett fesztiválkereső nekem tetszik, sok mindenre rálehet keresni, könnyen és átláthatóan.
-Lehet település, kerület, illetve megye szerint is keresni. Típus és dátum szerinti keresés is támogatott. Sőt módunkban áll a következőhavi eseményeket is lekérdezni egy kattintással, erről ha szeretnénk, hírlevelet is kérhetünk. A szabad szavas kereső, annyira azért mégsem szabad, mert csak a címben keres a leírásban sajnos nem.
+\texttt{http://www.fesztivalkalauz.hu}. Az első dolog amivel a felhasználó találkozik az a felhasználói felület, amelynek körülbelül a felét használta ki a fejlesztő. Jelenleg egy 14"-os kijelzőn nézve ez zavaróan kicsi. Feltehetőleg ez azért is van így, mert nagyjából 10 éves fejlesztés, és akkor még nem volt ekkora kijelző választék - sem méret, sem eszköz tekintetében - amelyeken weboldalakat jelenítettünk meg, így elég volt egy statikus méretre és betűtípusra beállítani a weboldalt. Jelenleg divatosak a reszponzív weboldalak, amelyek igyekeznek kiküszöbölni ezt a problémát.
 
-\subsection{Utazzithon.hu}
+A reszponzív kialakítás manapság alapelvárásnak tekinthető \cite{1}. Ez főként azért lényeges, mert az eddigi, klasszikus értelemben vett webböngészős megjelenítés mellett különböző eszközök, különböző képernyőméretekkel és arányokkal teszik elérhetővé a tartalmakat. Törekedni kell arra, hogy átméretezést követően is áttekinthető és kezelhető maradjon a felhasználói felület.
 
-2. https://www.utazzitthon.hu/program : Az oldal mint a szlogenje is mondja: "Belföldi szállás, program és látnivaló 1 helyen", szállásokat és programokat közvetít az érdeklődőknek. A felület már reszponzív tervezés eredménye, ennek köszönhetően átlátható és könnyen használható akár mobileszközről is. A keresés nagyon világos, kereshetünk régió, tájegység, város szerint és program, látnivaló típusok alapján. Az adatbázisuk programok tekintetében elég gazdag, amikor megtekintettem közel 8000 programot ajánlottak. Itt jegyet is vásárolhatunk az egyes programokra.
+A viszonylag fejlett fesztiválkereső nekem tetszik, sok mindenre rálehet keresni, könnyen és átláthatóan. Lehet település, kerület, illetve megye szerint is keresni. Típus és dátum szerinti keresés is támogatott. Sőt módunkban áll a következőhavi eseményeket is lekérdezni egy kattintással, erről ha szeretnénk, hírlevelet is kérhetünk. A szabad szavas kereső, annyira azért mégsem szabad, mert csak a címben keres a leírásban sajnos nem.
 
-\subsection{Fesztival.eu}
+\SubSection{Utazzithon.hu}
 
-3. http://www.fesztival.eu/: A weboldal régi dizájnnal készült. A keresője nagyjából hasonló funkciókat tükrözött, mint az eddigiekben megjelenő keresési lehetőségek. Sajnos az adatbázisában csak egy fesztivál volt megtalálható, amikor ott jártam, így tesztelni nem volt módom.
+\texttt{https://www.utazzitthon.hu/program}. Az oldal mint a szlogenje is mondja: "Belföldi szállás, program és látnivaló 1 helyen", szállásokat és programokat közvetít az érdeklődőknek. A felület már reszponzív tervezés eredménye, ennek köszönhetően átlátható és könnyen használható akár mobileszközről is. A keresés nagyon világos, kereshetünk régió, tájegység, város szerint és program, látnivaló típusok alapján. Az adatbázisuk programok tekintetében elég gazdag, amikor megtekintettem közel 8000 programot ajánlottak. Itt jegyet is vásárolhatunk az egyes programokra.
 
-\subsection{Fesztiválnaptár.hu}
+\SubSection{Fesztival.eu}
 
-4. http://www.fesztivalnaptar.hu : Az iranymagyarorszag.hu által működtetett weboldal. Feltehetően az utazzitthon.hu-hoz hasonlóan a szállások közvetítése a főprofilja, és ezek mellé jönnek be a fesztiválok, koncertek mint kiegészítőszolgáltatások. Szabad szavas kereséssel és kronológiai sorrend szerinti érhetőek el a programok. A szabad szavas kereső viszont keres a leírásban is, ami sokat könnyít a felhasználó számára. A felület nem reszponzív és régebbi stílusú. Nem nagy meglepetés, hogy 100-nál kevesebb esemény programját találjuk meg. Itt jelenik meg egyedül a nemzetköziesítés, a magyaron kívül angolul és németül is elérhetőek a programok, habár a programokhoz tartozó leírások csak magyarul érhetőek el.
+\texttt{http://www.fesztival.eu}. A weboldal régi dizájnnal készült. A keresője nagyjából hasonló funkciókat tükrözött, mint az eddigiekben megjelenő keresési lehetőségek. Sajnos az adatbázisában csak egy fesztivál volt megtalálható, amikor ott jártam, így tesztelni nem volt módom.
 
-\subsection{Programturizmus.hu}
+\SubSection{Fesztiválnaptár.hu}
 
-5. https://www.programturizmus.hu/ : Az utolsó keresést támogató rendszerhez érkeztünk amit találtam, és szerintem a legletisztultabb felülettel és szolgáltatásokkal. Természetesen modern weboldal lévén, platformtól és kijelző mérettől függetlenül szépen megjelenik bármilyen eszközön. Az oldal nem csak fesztiválokra, hanem szinte minden olyan lehetőséget hivatott bemutatni, ami kimozdítja a fotelból a felületen böngésző felhasználót, ez a hozzáállás a szlogenben is tükröződik - ,,Ne maradj otthon''. Találunk itt a vásárok, látnivalók, és gasztronómián belül, Kolbásztöltő versenytől, a Kutyakiállításon át a Régiségvásárig mindent. Persze megjelennek a már klasszikusnak mondható szállások is. A keresés a már az előzőekben megszokott lehetőségek szerint lehetséges. Viszont az "Események" mellett megjelenik három új lehetőség is, az egyik az "Ajánlat" menü, a másik az "Érdekesség", ezek valami alapján kitüntetett események, viszont az utolsó talán a legérdekesebb. Ez pedig a koordináták alapján megmutatja, hogy hol is lesznek helyileg az események egy google térképen. A jegyet itt is vásárolhatunk. Ha egy fesztivált részletesebben megnézünk, meglepőmódon a jegyen, a címen és szálláson kívül még a környékbeli étkezési lehetőségeket is tanácsolja számunkra a weboldal.
+\texttt{http://www.fesztivalnaptar.hu}. Az iranymagyarorszag.hu által működtetett weboldal. Feltehetően az utazzitthon.hu-hoz hasonlóan a szállások közvetítése a főprofilja, és ezek mellé jönnek be a fesztiválok, koncertek mint kiegészítőszolgáltatások. Szabad szavas kereséssel és kronológiai sorrend szerinti érhetőek el a programok. A szabad szavas kereső viszont keres a leírásban is, ami sokat könnyít a felhasználó számára. A felület nem reszponzív és régebbi stílusú. Nem nagy meglepetés, hogy 100-nál kevesebb esemény programját találjuk meg. Itt jelenik meg egyedül a nemzetköziesítés, a magyaron kívül angolul és németül is elérhetőek a programok, habár a programokhoz tartozó leírások csak magyarul érhetőek el.
 
-\subsection{Élményem.hu}
+\SubSection{Programturizmus.hu}
 
-5+1. http://elmenyem.hu : Az oldal nem rendelkezik fesztiválkereső résszel. Ez inkább egy blog, de rengeteg aktualitással, hírekkel szolgál a jövőben megrendezendő eseményekkel kapcsolatban. 
+\texttt{https://www.programturizmus.hu}. Az utolsó, keresést támogató rendszerhez érkeztünk amit találtam, és szerintem a legletisztultabb felülettel és szolgáltatásokkal. Természetesen modern weboldal lévén, platformtól és kijelző mérettől függetlenül szépen megjelenik bármilyen eszközön. Az oldal nem csak fesztiválokra, hanem szinte minden olyan lehetőséget hivatott bemutatni, ami kimozdítja a fotelból a felületen böngésző felhasználót, ez a hozzáállás a szlogenben is tükröződik - ,,Ne maradj otthon''. Találunk itt a vásárok, látnivalók, és gasztronómián belül, Kolbásztöltő versenytől, a Kutyakiállításon át a Régiségvásárig mindent. Persze megjelennek a már klasszikusnak mondható szállások is. A keresés a már az előzőekben megszokott lehetőségek szerint lehetséges. Viszont az "Események" mellett megjelenik három új lehetőség is, az egyik az "Ajánlat" menü, a másik az "Érdekesség", ezek valami alapján kitüntetett események, viszont az utolsó talán a legérdekesebb. Ez pedig a koordináták alapján megmutatja, hogy hol is lesznek helyileg az események egy google térképen. A jegyet itt is vásárolhatunk. Ha egy fesztivált részletesebben megnézünk, meglepőmódon a jegyen, a címen és szálláson kívül még a környékbeli étkezési lehetőségeket is tanácsolja számunkra a weboldal.
 
-\subsection{Weboldalak összegzése}
+\SubSection{Élményem.hu}
 
-A fenti oldalakról a paramétereik alapján egy táblázatot készítettem. (\ref{fig:apps}) 
+\texttt{http://elmenyem.hu}. Az oldal nem rendelkezik fesztiválkereső résszel. Ez inkább egy blog, de rengeteg aktualitással, hírekkel szolgál a jövőben megrendezendő eseményekkel kapcsolatban. 
+
+\Section{Weboldalak összegzése}
+
+A fenti oldalakról a paramétereik alapján egy táblázatot készítettem (\ref{fig:apps}. ábra).
 
 \begin{figure}
 \centering
@@ -124,7 +125,7 @@ Szállási lehetőségeket a fesztiválkalauz és a fesztivál.eu-n kívül mind
 
 Fellépő alapú keresést sajnos egyik oldal sem szolgáltat számunkra.
 
-\section{További lehetséges szolgáltatások}
+\Section{További lehetséges szolgáltatások}
 
 Az itt felsorolt weboldalak természetesen a jövőben változásokon eshetnek át. Ezek a szakdolgozat írás közbeni állapotokat tükröznek.
 
@@ -150,10 +151,10 @@ Extra lehetőségek, amelyekkel nem éltek az itt feltüntetett weboldalak:
 
 \item Visszacsatolás: A legtöbb ilyen eseményt többször megrendezik, vannak olyanok amik már 20-30 éves hagyományra tekintenek vissza. Így az értékelések, mind a szervezők, mind a szolgáltatást igénybe vevők számára hasznos információt nyújtanak.
 
-\item Étkezés: Amire csak a programturizmus.hu gondolt, és alapvetően egy jó kis kiegészítő szolgáltatás, hisz fiziológiai szükségletet elégít ki.
+\item Étkezés: Amire csak a \textit{programturizmus.hu} gondolt, és alapvetően egy jó kis kiegészítő szolgáltatás, hisz fiziológiai szükségletet elégít ki.
 
 \end{itemize}
 
-\section{Differencia az eddig létező és a saját alkalmazásom között}
+\Section{Differencia az eddig létező és a saját alkalmazásom között}
 
 Az eddigiek alapján meg kell határozni, hogy miket szeretnénk, ha megvalósítana az alkalmazásunk, miben lesz más vagy jobb mint a többi a piacon fellelhető alkalmazás. Én igyekszem két új aspektust bevezetni, amelyeket ott nem, vagy nem egészen így alkalmaztak. Az egyik a fellépő alapú szemlélet. Szeretném, ha nemcsak a fesztiválról tudnánk meg többet, hanem az ott fellépő zenekarokról is érhetnénk el információkat. Ha nem ismerem őket, akkor rákattintva megtudhatok róluk pár információt, illetve az oldalra felvitt fesztiválok alapján a turné állomásokat. A másik aspektus a kulcsszavak bevezetése mint fesztivál, mint fellépő oldalon. Hasonlóval találkozhattunk egy-két általam is bemutatott oldalon. Amilyen paraméterek számításba jöhetnek: zenei stílusok, fesztivál stílusok, sátrazási lehetőség, kutyabarát. A divatos nevén a hashtag-ek. Adatbázis és program szinten stílusnak nevezem el, de talán ez egy kicsit tágabb fogalom. A következő fejezetben ezeket részletezzük is.
