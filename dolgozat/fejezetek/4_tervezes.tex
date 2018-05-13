@@ -63,11 +63,11 @@ A szoftverek verziókövetését pedig a \textit{GitHub} segítségével végzem
 
 \Section{Az alkalmazás tervezése}
 
-Az alkalmazás tervezésének és felépítésének egyik igen fontos lépése az adatbázis, annak sémáinak megtervezése. Ehhez a következőkben ER modellt fogok használni, amely egy széles körben elterjedt és bevállt adatbázis tervezési módszer \cite{11}, \cite{12}, \cite{13}.
+Az alkalmazás tervezésének és felépítésének egyik igen fontos lépése az adatbázis, annak sémáinak megtervezése. Ehhez a következőkben ER (\textit{Entity-Relationship}) modellt fogok használni, amely egy széles körben elterjedt és bevállt adatbázis tervezési módszer \cite{11}, \cite{12}, \cite{13}.
 
 \SubSection{ER modell}
 
-ER-modellt használtam ahhoz, hogy szemléltessem az egyedek között fennálló relációkat és láthatóvá tegyem a megtervezett adatbázis architektúrát (\ref{fig:er}., \ref{fig:usEr}. ábra).
+ER modellt használtam ahhoz, hogy szemléltessem az egyedek között fennálló relációkat és láthatóvá tegyem a megtervezett adatbázis architektúrát (\ref{fig:er}., \ref{fig:usEr}. ábra).
 
 \begin{figure}[h!]
 \centering
@@ -115,7 +115,7 @@ Az egyedek között fent álló relációk a következőek:
 \begin{figure}
 \centering
 \includegraphics[scale=0.56]{kepek/uml.png}
-\caption{Osztály diagram}
+\caption{A modell osztályok és kapcsolataik}
 \label{fig:umlclass}
 \end{figure}
 
@@ -175,7 +175,7 @@ Két típusú esemény van.
 \item Vannak a felhasználótól független események is, amelyek akkor is kiváltódnak, ha a felhasználó nem nyúlt a rendszerhez. 
 \end{itemize}
 
-\SubSection{Egy példa a struktúrára}
+\SubSection{Példa egy kérés kiszolgálására}
 
 Nézzünk meg egy példát a többrétegű alkalmazás működésére egészen a front-end-től az adatbázisig!
 Tegyük fel, hogy egy űrlapot kitölt a felhasználó. Amennyiben minden mező értékét megfelelően megadta, és rákattintott a küldés gombra, akkor az meghívja az egyik service valamelyik metódusát. Ha nem sikerült megfelelően kitölteni, akkor jön egy figyelmeztetés a \textit{class}-tól, hogy mi a gond. Minimális mennyiségű alkalmazáslogikát a View is tárolhat. Előbb-utóbb, ha sikerül mindent megfelelően kitöltenie a felhasználónak, akkor már a service réteghez is eljut, ahol egy HTTP kérést intéz a szerverhez. Itt az interfész érzékeli, hogy jött valamilyen kérés és megpróbálja leképezni a kontrollerekre, ha nem sikerül akkor visszautasítja, ha viszont talál olyat amelyikre illeszkedik, akkor a gondjaira bízza a kapott információkat. Természetesen ettől még megtagadhatja a kiszolgálást, ha olyan tartományból jön a kérés, vagy nem azonosította magát a kérelmező fél és ezt a rendszer igényli. A kontroller tovább hívja a service réteget és átadja neki a DTO objektumot paraméterként. Itt pedig a repository rétegnek hívjuk meg a mentés metódusát. Persze előtte le kell képezni a DTO objektumot \textit{bean}-né. Ezt megtehetjük \texttt{Mapper} osztály segítségével vagy kézzel is. Struktúrától függően ki is hagyhatjuk a DTO objektumokat és ilyenkor már a kontroller réteg \textit{bean}-t vesz át. A visszatérési értéket pedig a hívási láncon visszafele elindulva eljuttatjuk a front-end-nek, és ha minden rendben ment, akkor ezt jelezzük a felhasználó számára, ha nem akkor informáljuk a hiba okáról.
