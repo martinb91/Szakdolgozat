@@ -162,7 +162,7 @@ public void addConcert(@RequestBody ConcertDTO concertDTO){
 \end{java}
 
 A \texttt{@ReqestMapping} annotáció segítségével megadhatjuk, hogy melyik csatornát figyelje a metódusunk, és ha a megadott csatornán jön valami, akkor meghívódik a hozzárendelt metódus. Az újabb verziószámú Springek esetén már bevezették a \texttt{@PostMapping} annotációt. Az annotációs részt lecserélhetnénk \\
-\texttt{@PostMapping("/new.json")} sorra és egyenértékű lenne a jelenlegivel. (A fejlesztői környezet színezése miatt átláthatóbbnak találom a jelenlegi változatot). A \texttt{@RequestBody} annotáció segítségével a bejövő kérés \textit{body} részét nyerhetjük ki. A DI (\textit{Dependency Injection})-ról még nem esett szó. Az annotációk kapcsán érdemes megemlíteni azt is, hogy hogyan kerülnek a \textit{controller} objektumokba a \textit{service} objektumok. A \textit{controller} egy \texttt{@Autowired} annotáció segítségével a konténertől kérhet egy példányt a \textit{bean}-ekből. 
+\texttt{@PostMapping("/new.json")} sorra és egyenértékű lenne a jelenlegivel. (A fejlesztői környezet színezése miatt átláthatóbbnak találom a jelenlegi változatot). A \texttt{@RequestBody} annotáció segítségével a bejövő kérés \textit{body} részét nyerhetjük ki. A DI (\textit{Dependency Injection})-ról még nem esett szó \cite{2}. Az annotációk kapcsán érdemes megemlíteni azt is, hogy hogyan kerülnek a \textit{controller} objektumokba a \textit{service} objektumok. A \textit{controller} egy \texttt{@Autowired} annotáció segítségével a konténertől kérhet egy példányt a \textit{bean}-ekből. 
 
 Nézzük meg, hogy mi is az a konténer pontosan. Ez tárolja és menedzseli a \textit{bean}-ek életciklusait. A konténer feljegyzi, hogy milyen \textit{bean}-eket ismer és ezekből tud kiosztani minden osztály számára, amelyik igényi. Tehát a konténer segítségével töltöttük fel a \texttt{concertService} változót egy \texttt{ConcertService} típusú \textit{bean}-nel, és így már meghívhatjuk a metódusait. Az \texttt{addConcert} metódus lekérdezi azonosító alapján a fesztivált majd a fellépőt, és beállítja ezeket a koncert adattagjaiként és végül visszatér a mentett objektummal.
 
@@ -198,8 +198,8 @@ A bejelentkezésnél a beküldött információkat \textit{base64}-es kódoláss
 \begin{java}
 let user = response.json().principal;
 if (user) {
-	this._user = user;
-	this.isLoggedin=response.json().authorized;
+    this._user = user;
+    this.isLoggedin=response.json().authorized;
 }
 \end{java}
 A \texttt{response} változó az maga a válasz objektum, és abból nyerhető ki a \texttt{user}, és az hogy sikerült-e az autorizáció.
@@ -230,12 +230,12 @@ Tekintsük ezt meg, például a fellépő esetében. Ilyenkor a függőség inje
 @Autowired
 public void setStoreFileService(ArtistServiceImpl 
 storeFileService) {
-	this.storeFileService = storeFileService;
+    this.storeFileService = storeFileService;
 } 
 \end{java}
 Mivel a \texttt{ArtistServiceImpl} osztály implementálja a \texttt{StoreFileService} interfészt, ezért az interfészre hivatkozó referencia dinamikus típusaként felveheti az őt implementáló osztályt. Az osztályban felüldefiniáltak szerint fog működni a \texttt{storeFile(MultipartFile file, int id)} függvény, amelyet meg is hívunk, hiszen ez lesz felelős a tárolásért. Nézzük át a függvény fontosabb sorait.
 \begin{java}
-String newName =  currentDate + file.getOriginalFilename();
+String newName = currentDate + file.getOriginalFilename();
 Files.copy(file.getInputStream(),
 this.rootLocation.resolve(newName));
 Artist artist = artistRepository.findOne(id);

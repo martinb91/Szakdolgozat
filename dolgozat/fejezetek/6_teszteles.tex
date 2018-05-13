@@ -6,13 +6,13 @@ Mindkét keretrendszer független az operációs rendszerektől, tehát minden n
 
 \SubSection{Spring}
 
-A \textit{Spring Boot} 1.5.8.RELEASE kiadást használtam. Ez a Java 7-es verzióját igényli -- a 8 vagy újabb ajánlott -- a fordításhoz. Tehát érdemes telepíteni a lehető legújabb Java verziót, mind a JRE, mind pedig a JDK tekintetében.
+A \textit{Spring Boot} 1.5.8.RELEASE kiadást használtam. Ez a Java 7-es verzióját igényli -- a 8 vagy újabb ajánlott -- a fordításhoz. Tehát érdemes telepíteni a lehető legújabb Java verziót, mind a JRE, mind pedig a JDK tekintetében \cite{23}.
 
 \textit{Maven} segítségével tölthetjük le azokat a \texttt{jar} kiterjesztésű fájlokat, amelyek szükségesek az alkalmazás működéséhez. A 3.5.0 verzió volt a dolgozat megírása idején a legújabb verzió, ezért ezt használtam. A \textit{Maven} 3.5.0 szintén igényli a Java hetedik verzióját (vagy annál újabb kiadásait). A projekt \texttt{pom.xml} fájljában definiált csomagok az alkalmazás függőségei, ezeket a fordítás előtt le fogja tölteni a \textit{Maven}, ha nem találja meg őket az erre a célra lefoglalt mappában. Ezeknek a csomagoknak vannak további függőségeik, azokat is feloldja. Amíg a függőségi fán hiányzó levelet talál, addig folytatja ezt az eljárást, így levesz minden terhet a fejlesztők válláról a függőségek kezelését illetően.
 
 \SubSection{Angular}
 
-[31] A front-end részhez először telepíteni kell a \textit{Node.js}-t. Az aktuálisan elérhető legfrissebb verzió a 9.10.1 volt. Ez a keretrendszer weboldaláról (\texttt{nodejs.org}) letölthető. Erre azért volt szükségünk, mert ebben található egy \texttt{npm} nevű modul. Az \texttt{npm} vagy \textit{Node Package Manager}, mint a neve is mutatja, csomagok telepítésére és karbantartására való.
+A front-end részhez először telepíteni kell a \textit{Node.js}-t \cite{31}. Az aktuálisan elérhető legfrissebb verzió a 9.10.1 volt. Ez a keretrendszer weboldaláról (\texttt{nodejs.org}) letölthető. Erre azért volt szükségünk, mert ebben található egy \texttt{npm} nevű modul. Az \texttt{npm} vagy \textit{Node Package Manager}, mint a neve is mutatja, csomagok telepítésére és karbantartására való.
 
 Egy csomagot kétféleképpen lehetséges telepíteni. Az egyik mód a lokális telepítés, a másik pedig a globális. Globálisan azokat a csomagokat installáljuk amelyeket terminálból szeretnénk a későbbiekben elindítani.
 Az Angular CLI 1.7.0-t globálisan telepíthetjük \texttt{npm} segítségével, hiszen parancssorból szeretnénk indítani majd a kiszolgálást.
@@ -23,6 +23,8 @@ Elvileg visszafelé kompatibilis a rendszer, tehát ha a legújabb globális ver
 Minden projekthez tartozik egy \texttt{package.json}, úgy mint a \textit{Maven} esetében a \texttt{pom.xml}. Ez tárolja a projekt függőségeit. Ezeket le kell tölteni, ha van olyan amelyik nincs telepítve. Ezt már célszerűnek tartottam lokálisan megtenni. Terminál segítségével ezt úgy tehetjük meg, hogy a projekt mappájába navigálunk, és futtatjuk az \texttt{npm install} parancsot. Jelentősebb időbe telik, mire letölt mindent amire szükség lesz a projekt futtatásához. Ezután, ha minden rendben ment, akkor az \texttt{ng serve} parancsra elkezd futni a program. A terminálra kiírja, hogy melyik porton indult el, ez a \texttt{localhost:4200} a gyári beállítások szerint. Amennyiben a back-end oldali alkalmazás is fut a \texttt{localhost:8080}-as porton, akkor már az adatok is vizualizálódnak.
 
 \Section{Tesztelés}
+
+A tesztelés minden alkalmazás esetében kiemelt fontosságú \cite{18}. A következő szakaszokban említés szintjén bemutatom, hogy milyen jellegű tesztelésre van szükség egy webalkalmazás esetében.
 
 \SubSection{Felhasználói felület tesztelése}
 

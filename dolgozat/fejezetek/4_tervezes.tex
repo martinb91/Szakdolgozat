@@ -1,20 +1,14 @@
 \Chapter{Tervezés}
 
-% TODO: Adatbázis sémájának a definíciója.
-
-% TODO: Az architektúra bemutatása, hogy hol milyen technológia került felhasználásra. (A szokásos szerver-kliens kialakítás néhány egyedi dologgal.)
-
-% TODO: Az alkalmazás felépítéséről UML ábrák. Minél részletesebben bemutatva, hogy minek kellene majd elkészülnie.
-
 Az alkalmazástervezési fázist megelőzte a technológiai tervezés fázisa. Először a technológiai tervezéssel kezdem a fejezetet a \textit{back-end} oldal irányából a \textit{front-end} felé.
 
-\Section{Technológia}
+\Section{Felhasznált technológiák}
 
-A következő szakaszokban bemutatom, hogy az alkalmazás elkészítéséhez mely technológiák használata mellett döntöttem.
+A következő szakaszokban bemutatom, hogy az alkalmazás elkészítéséhez mely technológiák használata mellett döntöttem. Az Interneten számos magyar nyelvű leírás is elérhető, melyek segítségével egyszerűbben megismerhetők az aktuális trendek és a használati módjuk \cite{6}.
 
 \SubSection{Back-end}
 
-Mindenképpen Java alapú webes alkalmazást szerettem volna létrehozni, mert a Java programozási nyelvet ismertem a legjobban. A Java-n belül a \textit{Spring Boot} keretrendszerre esett a választásom, mert ez egy kompakt és könnyen konfigurálható rendszer. Ekkora méretű webes projektnél, nincs is feltétlenül értelme komplexebb rendszert használni, így én sem tettem.
+Mindenképpen Java alapú webes alkalmazást szerettem volna létrehozni, mert a Java programozási nyelvet ismertem a legjobban \cite{7}, \cite{14}. A Java-n belül a \textit{Spring Boot} keretrendszerre esett a választásom, mert ez egy kompakt és könnyen konfigurálható rendszer \cite{3}. Ekkora méretű webes projektnél, nincs is feltétlenül értelme komplexebb rendszert használni, így én sem tettem.
 
 Az alkalmazásszerver egy \textit{Tomcat} szerver, amely be van építve a keretrendszerbe. \textit{Spring Boot} applikációnkat egy \textit{Spring Security} modullal bővítettem, amely az autentikációért és az autorizációért felelős, tehát a felhasználók jogosultsági szintjüknek megfelelően férhessenek hozzá az adatokhoz. Azért eset erre a választásom, mert jól illeszkednek egymáshoz.
 
@@ -26,7 +20,7 @@ A DAO (\textit{Data Access Object}) és a Java \textit{Bean}-ek közötti lekép
 
 \SubSection{RESTful API}
 
-A két rendszer \textit{RESTful} API-n keresztül kommunikál egymással. Esetünkben és általánosságban is igaz, hogy itt a két rendszer JSON fájlok cseréjével oldja meg a kommunikációt egy egységes interfészen keresztül.
+A két rendszer \textit{RESTful} API-n keresztül kommunikál egymással \cite{8}. Esetünkben és általánosságban is igaz, hogy itt a két rendszer JSON fájlok cseréjével oldja meg a kommunikációt egy egységes interfészen keresztül.
 A REST API szolgáltatásait \aref{fig:rest}. ábrán tekinthetjük meg.
 
 \begin{figure}
@@ -38,9 +32,9 @@ A REST API szolgáltatásait \aref{fig:rest}. ábrán tekinthetjük meg.
 
 \SubSection{Front-end}
 
-A kliens oldal elkészítését \textit{Angular} keretrendszer segítségével oldottam meg. Azért esett a választásom erre a keretrendszerre, mert elég népszerű, jól dokumentált. Egy olyan környezetet biztosít, amivel a felmerülő problémák jelentős részét egyszerűen meg lehet oldani. Ez az előnye és a hátránya is, hiszen ha eltérünk az előirányzott fejlesztési elvektől -- más megoldást szeretnénk választani -- könnyen szélmalomharcot vívhatunk a keretrendszerrel. Ezek okán a legtöbb probléma felmerülése esetén könnyű megoldást találni az internet segítségével.
+A kliens oldal elkészítését \textit{Angular} keretrendszer segítségével oldottam meg \cite{4}. Azért esett a választásom erre a keretrendszerre, mert elég népszerű, jól dokumentált. Egy olyan környezetet biztosít, amivel a felmerülő problémák jelentős részét egyszerűen meg lehet oldani. Ez az előnye és a hátránya is, hiszen ha eltérünk az előirányzott fejlesztési elvektől -- más megoldást szeretnénk választani -- könnyen szélmalomharcot vívhatunk a keretrendszerrel. Ezek okán a legtöbb probléma felmerülése esetén könnyű megoldást találni az internet segítségével. A fejlesztéshez nem szükségszerű, de célszerűnek tünt \textit{Node.js}-t használnom \cite{17}.
 
-Azért, hogy a felület megjelenése átvihető, egységes, rugalmasan átméretezhető legyen Bootstrap modult használtam.
+Azért, hogy a felület megjelenése átvihető, egységes, rugalmasan átméretezhető legyen \textit{Bootstrap} modult használtam.
 
 Szükség lesz \textit{Google Maps API}-ra, vagy egy másik térkép API-ra, ahol meg tudom jeleníteni a pozíciókat, hogy egyes helyszínek könnyebben behatárolhatóak legyenek.
 
@@ -65,9 +59,11 @@ A \textit{Postman} alkalmazást használom a minta kérések beküldéséhez, ez
 
 A \textit{JMeter} alkalmazást használom a stressztesztek elvégzéséhez és monitorozásához.
 
-A szoftverek verziókövetését pedig a \textit{GitHub} segítségével végzem.
+A szoftverek verziókövetését pedig a \textit{GitHub} segítségével végzem \cite{5}.
 
 \Section{Az alkalmazás tervezése}
+
+Az alkalmazás tervezésének és felépítésének egyik igen fontos lépése az adatbázis, annak sémáinak megtervezése. Ehhez a következőkben ER modellt fogok használni, amely egy széles körben elterjedt és bevállt adatbázis tervezési módszer \cite{11}, \cite{12}, \cite{13}.
 
 \SubSection{ER modell}
 
@@ -148,7 +144,7 @@ Az Angular-nál érdemes MVC szerű logikát használni, így a tervezésnél ig
 \begin{itemize}
     \item \textit{Service}: Az alkalmazás ezen a rétegen keresztül kommunikál a szerver oldallal, itt jelentős üzleti logika nem jellemzi, mint a back-end oldalon. Főként a kéréseket szokás felépíteni ezen a szinten, tehát itt valósul meg a HTTP kommunikáció.
     \item \textit{Model}: A használt objektumok definícióját adjuk meg itt, és ezekre az objektumokra már le tudjuk képezni a kapott eredményeket.
-    \item \textit{Component}:  Az \textit{Angular} komponensekbe szervezi a legfelső réteget, amelybe tartozik egy ts, egy css, és egy HTML fájl. A CSS és a HTML fájlok adják az oldal megjelenését tehát a \textit{View}-t. Az alkalmazás logkája \textit{TypeScript}-ben is implementálható, vagyis az, hogy az egyes bekövetkezett eseményekre az adott környezetben milyen válasz reakciót kell adni. A komponensek további komponenseket tartalmazhatnak, amelyek tudnak kommunikálni egymással.
+    \item \textit{Component}:  Az \textit{Angular} komponensekbe szervezi a legfelső réteget, amelybe tartozik egy ts, egy css, és egy HTML fájl. A CSS és a HTML fájlok adják az oldal megjelenését tehát a \textit{View}-t. Az alkalmazás logkája \textit{TypeScript}-ben is implementálható, vagyis az, hogy az egyes bekövetkezett eseményekre az adott környezetben milyen válasz reakciót kell adni \cite{10}. A komponensek további komponenseket tartalmazhatnak, amelyek tudnak kommunikálni egymással.
 \end{itemize}
 
 \SubSection{A teljes struktúra bemutatása}
@@ -305,5 +301,5 @@ Az adatbázisból nem szabad \texttt{null} értékkel lekérdezni. Ezt helyes k�
 
 \SubSection{Rossz adattípus érkezik}
 
-A felhasználói felületről új adat felvitelénél rosszul kitöltött adatok esetén előfordulhatna az, hogy például numerikus adat helyett egy string érkezik, és azt sajnos nem tudja kezelni a keretrendszer. Ilyen esetben NumberFormatException keletkezik, ha a felhasználói felületen minden beviteli mezőt szigorúan validálunk, akkor ilyen nem fordulhat elő. Esetleg érdemes lehet kivételkezelést is használni a backend oldalon, ahol ez bekövetkezhet. 
+A felhasználói felületről új adat felvitelénél rosszul kitöltött adatok esetén előfordulhatna az, hogy például numerikus adat helyett egy string érkezik, és azt sajnos nem tudja kezelni a keretrendszer. Ilyen esetben \texttt{NumberFormatException} keletkezik, ha a felhasználói felületen minden beviteli mezőt szigorúan validálunk, akkor ilyen nem fordulhat elő. Esetleg érdemes lehet kivételkezelést is használni a backend oldalon, ahol ez bekövetkezhet. 
 
